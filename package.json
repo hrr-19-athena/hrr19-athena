@@ -1,0 +1,19 @@
+{
+  "name": "hrr19-athena",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hrr-19-athena/hrr19-athena.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hrr-19-athena/hrr19-athena/issues"
+  },
+  "homepage": "https://github.com/hrr-19-athena/hrr19-athena#readme"
+}
