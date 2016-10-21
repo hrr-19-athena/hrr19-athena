@@ -1,8 +1,21 @@
 import { CALL_API } from '../middleware/api';
 import Auth0Lock from 'auth0-lock';
+import Axios from 'axios';
 
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_ERROR = 'LOGIN_ERROR';
+let AUTH0_CLIENT_ID='';
+let AUTH0_DOMAIN='';
+
+const options = {
+  languageDictionary: {
+    emailInputPlaceholder: "me@example.com",
+    title: "Persona"
+  },
+  theme: {
+    primaryColor: 'pink'
+  }
+};
 
 function loginSuccess(profile) {
   return {
@@ -19,7 +32,13 @@ function loginError(err) {
 }
 
 export function login() {
-  const lock = new Auth0Lock('AUTH0_CLIENT_ID', 'AUTH0_DOMAIN')
+  Axios('/api/clientcred')
+    .then(response =>{
+        AUTH0_CLIENT_ID=response.AUTH0_CLIENT_ID;
+        AUTH0_DOMAIN=response.AUTH0_DOMAIN;
+      }
+    );
+  const lock = new Auth0Lock(AUTH0_CLIENT_ID, AUTH0_DOMAIN,options)
   return dispatch => {
     lock.show((err, profile, token) => {
       if(err) {
