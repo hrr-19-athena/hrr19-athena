@@ -80,6 +80,81 @@ Content-Type: application/json
 ## * **Services 3rd-Party API Reference**
 
 ## Watson API
+Reqeust Example
+
+``` javascript
+POST:
+personality_insights.profile(params, function(error, response) {
+  if(error) {
+    console.log('error: ', error);
+  } else {
+    console.log(JSON.stringify(response, null, 2));
+  }
+});
+
+```
+
+Response Example:
+
+Note: This resp has been shortened to include only the big5 portion of the personality analysis. Only 2 of the 5 are shown, and of those, only 2 of the subcategories are shown.
+
+``` javascript
+{
+  "word_count": 15223,
+  "processed_language": "en",
+  "personality": [
+    {
+      "trait_id": "big5_openness",
+      "name": "Openness",
+      "category": "personality",
+      "percentile": 0.8011555009552956,
+      "raw_score": 0.7756540425503803,
+      "children": [
+        {
+          "trait_id": "facet_adventurousness",
+          "name": "Adventurousness",
+          "category": "personality",
+          "percentile": 0.8975586904731889,
+          "raw_score": 0.5499070403121904
+        },
+        {
+          "trait_id": "facet_liberalism",
+          "name": "Authority-challenging",
+          "category": "personality",
+          "percentile": 0.6405414845731194,
+          "raw_score": 0.5343564751353819
+        }
+      ]
+    },
+    {
+      "trait_id": "big5_conscientiousness",
+      "name": "Conscientiousness",
+      "category": "personality",
+      "percentile": 0.8100175318417588,
+      "raw_score": 0.6689998488881546,
+      "children": [
+        {
+          "trait_id": "facet_achievement_striving",
+          "name": "Achievement striving",
+          "category": "personality",
+          "percentile": 0.8461329922662831,
+          "raw_score": 0.7424011845488805
+        },
+        {
+          "trait_id": "facet_cautiousness",
+          "name": "Cautiousness",
+          "category": "personality",
+          "percentile": 0.7220362727004178,
+          "raw_score": 0.5296482988959449
+        }
+      ]
+    }
+  ],
+
+
+```
+
+
 
 ## FaceBook API
 
