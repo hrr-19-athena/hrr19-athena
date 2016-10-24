@@ -72,3 +72,9 @@ app.listen(app.get('port'), function() {
 // });
 
 
+// <<<<<<< HEAD
+// =======
+// var port = process.env.PORT || 3000;
+// app.listen(port);
+// console.log('listening at:', port);
+// >>>>>>> added documentation to spec
