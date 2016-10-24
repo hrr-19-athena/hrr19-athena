@@ -32,6 +32,6 @@ coverage
 
 build/
 dist/
-bundle.js
+
 
 server/api-services.js
