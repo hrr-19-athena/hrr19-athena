@@ -1,9 +1,12 @@
 var express = require('express');
-var app        = express();
-var bluemix    = require('../node_modules/bluemix/lib/bluemix.js');
+var bluemix = require('../node_modules/bluemix/lib/bluemix.js');
 var PersonalityInsightsV3 = require('watson-developer-cloud/personality-insights/v3');
-var extend     = require('util')._extend;
+var extend = require('util')._extend;
 var keys = require('./api-services.js');
+
+var app = express();
+
+app.use(express.static('client'));
 
 //CREDENTIALS IF WE NEED TO GENERATE ON THE FLY - still buggy - Vi
 // var credentials = extend({
@@ -57,6 +60,8 @@ app.get('/', function(req, res) {
   res.render('index');
 });
 
-var port = process.env.VCAP_APP_PORT || 3000;
+var port = process.env.port || 3000;
 app.listen(port);
 console.log('listening at:', port);
+
+
