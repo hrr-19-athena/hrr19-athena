@@ -84,6 +84,74 @@ Content-Type: application/json
 ## FaceBook API
 
 ## * **DATABASE**
+Tech Stack: Mongo + Mongoose
+## Model Schema
+
+```
+// without Auth0
+var userSchema = mongoose.Schema({
+    username: String,
+    password: String,
+    twitter: {
+        posts: [String]
+        commonFriends: [String]
+    },
+    facebook: {
+        posts: [String]
+    }
+    watson: {
+        results: [String] //May need to convert toSchema.Types.Mixed
+    }
+});
+
+// with Auth0
+var userSchema = mongoose.Schema({
+    userId: String,
+    twitter: {
+        posts: [String]
+        commonFriends: [String]
+    },
+    facebook: {
+        posts: [String]
+    }
+    watson: {
+        results: [String] //May need to convert toSchema.Types.Mixed
+    }
+});
+
+//export
+module.exports = mongoose.model('User', userSchema);
+```
+
+## User Usage
+
+Require
+
+```
+var User = require('./user/userController.js');
+```
+
+Find All Users
+
+```
+app.get() // need to define for each
+
+```
+
+Find a User
+
+```
+
+```
+
+Add User
+
+```
+
+```
+
+
+
 
 
 ## * **User Authentication**
