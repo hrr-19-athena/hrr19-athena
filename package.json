@@ -38,6 +38,7 @@
     "jwt-decode": "^2.1.0",
     "lodash": "^3.10.1",
     "mongoose": "^4.6.4",
+    "q": "^1.4.1",
     "react": "^0.14.3",
     "react-dom": "^0.14.3",
     "react-redux": "^4.0.0",
