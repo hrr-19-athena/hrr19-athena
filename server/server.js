@@ -74,7 +74,10 @@ var userTweets = {
 // twitter.getUserTimeline({ screen_name: 'HackReactor', count: '20'}, error, success);
 
 //AUTH0 api call
-//app.get('/api/clientcred', )
+app.get('/api/clientcred', function(req, res) {
+  var AUTH0_CLIENT_ID = process.env.AUTH0_CLIENT_ID;
+  var AUTH0_DOMAIN = process.env.AUTH0_DOMAIN;
+});
 
 //TEMPORARY WATSON FOR FAKE HARDCODED DATA -Vi
 watson.personality_insights.profile(watson.params, function(error, response) {
