@@ -1,11 +1,13 @@
 var express = require('express');
 //var morgan = require('morgan');
+
 var bodyParser = require('body-parser');
 // var jwt = require('express-jwt');
 var extend = require('util')._extend;
 var Twitter = require('twitter-node-client').Twitter;
 var watson = require('./watson/watsonController.js');
 
+var userController = require('./user/userController.js');
 
 //EXPRESS SERVER
 var app = express();
@@ -19,6 +21,30 @@ app.use(express.static('__dirname/../client'));
 app.listen(app.get('port'), function() {
   console.log('Listening on port', app.get('port'));
 });
+
+
+//AUTH0 api call
+app.get('/api/clientcred', function(req, res) {
+  var Auth0Cred = {
+    AUTH0_CLIENT_ID : process.env.AUTH0_CLIENT_ID;
+    AUTH0_DOMAIN : process.env.AUTH0_DOMAIN;
+  }
+  res.send(Auth0Cred);
+});
+
+//DATABASE ROUTES
+app.post('/api/users/signin', function(req, res) {
+
+})
+
+app.get('/api/twitterData', function(req, res) {
+
+})
+
+app.get('/api/watsonData', function(req, res) {
+
+})
+
 
 //WHATS GOING ON:
 //REQ from front end
