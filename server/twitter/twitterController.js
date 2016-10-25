@@ -12,10 +12,10 @@ var error = function (err, response, body) {
   console.log('ERROR [%s]', err);
 };
 var success = function (data) {
-  console.log('Data [%s]', JSON.parse(data)[0].id);
-  console.log('Data [%s]', JSON.parse(data)[0].text);
-  console.log('Data [%s]', JSON.parse(data)[0].lang);
-  console.log('Data [%s]', JSON.parse(data)[0].created_at);
+  console.log('id [%s]', JSON.parse(data)[0].id);
+  console.log('text [%s]', JSON.parse(data)[0].text);
+  console.log('lang [%s]', JSON.parse(data)[0].lang);
+  console.log('created_at [%s]', JSON.parse(data)[0].created_at);
 };
 
 // need to refactor and use
@@ -37,3 +37,4 @@ module.exports = {
     twitter.getUserTimeline({ screen_name: screenName, count: count}, error, success);
   }
 };
+
