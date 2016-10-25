@@ -1,11 +1,13 @@
 var express = require('express');
 //var morgan = require('morgan');
+
 var bodyParser = require('body-parser');
 // var jwt = require('express-jwt');
 var extend = require('util')._extend;
 var Twitter = require('twitter-node-client').Twitter;
 var watson = require('./watson/watsonController.js');
 
+var userController = require('./user/userController.js');
 
 //EXPRESS SERVER
 var app = express();
@@ -19,6 +21,37 @@ app.use(express.static('__dirname/../client'));
 app.listen(app.get('port'), function() {
   console.log('Listening on port', app.get('port'));
 });
+
+
+//AUTH0 api call
+app.get('/api/clientcred', function(req, res) {
+  var Auth0Cred = {
+    AUTH0_CLIENT_ID : process.env.AUTH0_CLIENT_ID;
+    AUTH0_DOMAIN : process.env.AUTH0_DOMAIN;
+  }
+  res.send(Auth0Cred);
+});
+
+//DATABASE ROUTES
+app.post('/api/users/signin', function(req, res) {
+  //list one user
+})
+app.post('/api/users/signup', //adduser)
+
+app.get('/api/findAllUsers', userController.listAllUsers);
+app.get('/api/findOneUser', userController.find)
+
+//personaController - where the magic happens
+app.get('/profileAnalysis', function(req, res) {
+  //when profile page loads for user gets finished results for current
+})
+
+app.post('/genAnalysis', function(req, res) {
+  //user data sent in
+  //check in db if persona data exists
+  //if not generate
+})
+
 
 //WHATS GOING ON:
 //REQ from front end
@@ -74,7 +107,10 @@ var userTweets = {
 // twitter.getUserTimeline({ screen_name: 'HackReactor', count: '20'}, error, success);
 
 //AUTH0 api call
-//app.get('/api/clientcred', )
+app.get('/api/clientcred', function(req, res) {
+  var AUTH0_CLIENT_ID = process.env.AUTH0_CLIENT_ID;
+  var AUTH0_DOMAIN = process.env.AUTH0_DOMAIN;
+});
 
 //TEMPORARY WATSON FOR FAKE HARDCODED DATA -Vi
 watson.personality_insights.profile(watson.params, function(error, response) {
