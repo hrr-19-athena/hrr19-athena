@@ -34,15 +34,22 @@ app.get('/api/clientcred', function(req, res) {
 
 //DATABASE ROUTES
 app.post('/api/users/signin', function(req, res) {
+  //list one user
+})
+app.post('/api/users/signup', //adduser)
 
+app.get('/api/findAllUsers', userController.listAllUsers);
+app.get('/api/findOneUser', userController.find)
+
+//personaController - where the magic happens
+app.get('/profileAnalysis', function(req, res) {
+  //when profile page loads for user gets finished results for current
 })
 
-app.get('/api/twitterData', function(req, res) {
-
-})
-
-app.get('/api/watsonData', function(req, res) {
-
+app.post('/genAnalysis', function(req, res) {
+  //user data sent in
+  //check in db if persona data exists
+  //if not generate
 })
 
 
