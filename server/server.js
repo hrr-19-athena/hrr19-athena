@@ -117,7 +117,7 @@ watson.personality_insights.profile(watson.params, function(error, response) {
   if(error) {
     console.log('error: ', error);
   } else {
-    console.log(JSON.stringify(response, null, 2));
+    console.log(JSON.stringify(response.personality, null, 2));
   }
 });
 
