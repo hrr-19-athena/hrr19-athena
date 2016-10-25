@@ -10,9 +10,115 @@ The PERSONA API defines the messaging API between the server and client; and ser
 
 ## * **Server API Reference**
 This API refers to consuming and interacting with the Profile Analysis Data
-## Profile Analysis
 
-### **Generate Twitter Analysis**
+## User Usage
+
+Require Exports Controller
+
+```
+var User = require('./user/userController.js');
+```
+
+
+### **Find All Users**
+
+request all users | type | description
+--- | --- | ---
+allUsers | GET | Returns all the DB users
+
+Actions
+
+> <mark>**GET**</mark> /api/allUsers
+
+POST Example
+
+``` javascript
+GET /api/allUsers
+{
+	"userID" : "83080832582303"
+}
+```
+
+Response Example
+
+``` javascript
+HTTP/1.1 201 OK
+Content-Type: application/json
+[
+ {
+  "status": "success"
+ }
+]
+```
+
+### **Find A User**
+
+get one user | type | description
+--- | --- | ---
+< PATH > | POST | Returns only the provided DB user
+
+Actions
+
+> <mark>**POST**</mark> / < PATH >
+
+POST Example
+
+``` javascript
+POST / < PATH >
+{
+	KEY: VALUE
+}
+```
+
+Response Example
+
+``` javascript
+HTTP/1.1 201 OK
+Content-Type: application/json
+[
+ {
+  "status": "success"
+ }
+]
+
+```
+
+### **Add User**
+
+add one user | type | description
+--- | --- | ---
+< path > | POST | inser new DB user
+
+Actions
+
+> <mark>**POST**</mark> / < path >
+
+POST Example
+
+``` javascript
+POST / < path > 
+{
+	KEY: VALUE
+}
+```
+
+Response Example
+
+``` javascript
+HTTP/1.1 201 OK
+Content-Type: application/json
+[
+ {
+  "status": "success"
+ }
+]
+
+```
+
+
+## Profile Analysis (example)
+
+### **Generate Twitter Analysis** (example)
 
 begin analysis | type | description
 --- | --- | ---
@@ -46,7 +152,7 @@ Content-Type: application/json
 ```
 
 
-### **Twitter Anayzed Profile Results**
+### **Twitter Anayzed Profile Results** (example)
 
 analyze results | type | description
 --- | --- | ---
@@ -80,10 +186,17 @@ Content-Type: application/json
 ## * **Services 3rd-Party API Reference**
 
 ## Watson API
-Reqeust Example
+
+analyze results | type | description
+--- | --- | ---
+personality_insights.profiler(params, callback) | API | Retrieves the analyzed profile
+Actions
+
+> <mark>**API**</mark>
+
+Request Example
 
 ``` javascript
-POST:
 personality_insights.profile(params, function(error, response) {
   if(error) {
     console.log('error: ', error);
@@ -94,7 +207,7 @@ personality_insights.profile(params, function(error, response) {
 
 ```
 
-Response Example:
+Response Example
 
 Note: This resp has been shortened to include only the big5 portion of the personality analysis. Only 2 of the 5 are shown, and of those, only 2 of the subcategories are shown.
 
@@ -154,6 +267,31 @@ Note: This resp has been shortened to include only the big5 portion of the perso
 
 ```
 
+## Twitter API
+This gives access to the Twitter API
+
+twitter results | type | description
+--- | --- | ---
+personality_insights.profiler(params, callback) | API | Retrieves Twitter Data
+Actions
+
+> <mark>**API**</mark>
+
+Request Example
+
+``` javascript
+NEED API DETAILS
+
+```
+
+Response Example
+
+
+``` javascript
+
+
+```
+
 
 
 ## FaceBook API
@@ -198,32 +336,7 @@ var userSchema = mongoose.Schema({
 module.exports = mongoose.model('User', userSchema);
 ```
 
-## User Usage
 
-Require
-
-```
-var User = require('./user/userController.js');
-```
-
-Find All Users
-
-```
-app.get() // need to define for each
-
-```
-
-Find a User
-
-```
-
-```
-
-Add User
-
-```
-
-```
 
 
 
@@ -232,3 +345,38 @@ Add User
 ## * **User Authentication**
 
 ## Auth0
+
+### **Token Exchange** (template)
+
+begin analysis | type | description
+--- | --- | ---
+< PATH > | POST | initiate user crendials
+
+Actions
+
+> <mark>**POST**</mark> / < PATH >
+
+POST Example
+
+``` javascript
+POST / < PATH >
+{
+	"userId" : "< USERID >",
+	"socialType" : "twitter",
+	
+}
+```
+
+Response Example
+
+``` javascript
+HTTP/1.1 201 OK
+Content-Type: application/json
+[
+ {
+  "someKey: "theKey",
+  "status": "success"
+ }
+]
+```
+
