@@ -6,6 +6,8 @@ var Q = require('q');
 var findUser = Q.nbind(UserModel.findOne, UserModel);
 var createUser = Q.nbind(UserModel.create, UserModel);
 var findAll = Q.nbind(UserModel.find, UserModel);
+var userController = require('../user/userController.js');
+
 var _ = require('underscore');
 
 //var objectToJson = require("object-to-json");
@@ -48,6 +50,7 @@ module.exports.handleWatsonPersona = function(twitterFeed, userId, res){
   var contentArray = [results.join('')];
   console.log('Twitter Content Loading into Watson')
   //console.log('ContentArray: ', contentArray);
+  // console.log(results.join(''));
   var params = {
     content_items: contentArray,
     consumption_preferences: true,
@@ -64,23 +67,50 @@ module.exports.handleWatsonPersona = function(twitterFeed, userId, res){
     if (err)
       console.log(err);
     else
-      res.json(profile.personality);
+      // res.json(profile.personality);
       module.exports.massageAndSave(profile, id, res);
   });
 };
 
 
-module.exports.massageAndSave = function(response, id, res){
-  var data = response.personality;
-  findUser({userId: ''})
-    .then(function(user){
-      user.persona = data;
-      user.save();
-    }).then(function(u){
-      console.log(data);
-      console.log('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%');
-      res.json(profile.personality);
-    });
+module.exports.massageAndSave = function(profile, id, res){
+  var findGroup = function(profile){
+    var highest = ["", 0];
+    for (var i = 0; i< profile.personality.length; i++) {
+      var cur = profile.personality[i];
+      if(cur.percentile > highest[1]){
+        highest = [cur.name, cur.percentile];
+      }
+    }
+    return highest[0];
+  };
+  var group = findGroup(profile);
+
+  var data = {
+    id: id,
+    persona: profile.personality,
+    group: group
+  };
+  // req.body.user='HackReactor';
+  userController.addUser(data);
+
+  var sendBack = {
+    personalityScores: profile.personality,
+    group: group
+  };
+  res.json(sendBack);
+  // var data = profile.personality;
+  // findUser({userId: id})
+  //   .then(function(user){
+  //     console.log("GOT TO HERE ", id);
+  //     user.persona = data;
+  //   })
+  //   // .save()
+  //   .then(function(u){
+  //     console.log('FOUND THIS PERSON');
+  //     // console.log('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%');
+  //     res.json(profile.personality);
+  //   });
     // .find()
     // .where('userId').equals(id)
     // .then(function(user){
