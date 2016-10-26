@@ -1,5 +1,5 @@
 var PersonalityInsightsV3 = require('watson-developer-cloud/personality-insights/v3');
-//var keys = require('../api-services.js');
+var keys = require('../api-services.js');
 var UserModel = require('../user/userModel.js');
 var Q = require('q');
 // Promisify mongoose methods with the `q` promise library
@@ -26,7 +26,9 @@ var _ = require('underscore');
 // var personality_insights = watson.personality_insights(credentials);
 
 //CREDENTIALS SECTION - Vi
+//var watsonUN = process.env.WAT_PERS_USRN || keys.watsonPersonality.username;
 var watsonUN = process.env.WAT_PERS_USRN;
+console.log(watsonUN);
 var watsonPW = process.env.WAT_PERS_PASS;
 
 module.exports.personality_insights = new PersonalityInsightsV3({
