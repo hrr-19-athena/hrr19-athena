@@ -1,7 +1,10 @@
-var watson = require('../watson/watsonController');
-//var twitter = require('../twitter/twitterController');
+var watsonCtrl = require('../watson/watsonController');
+var twitterCtrl = require('../twitter/twitterController');
+var userCtrl = require('../user/userController');
+var Q = require('q');
 
-//check if user saved in db
+//check if user saved in db (check for persona data)
+twitterCtrl.getUserPosts(screenName, count);
 //calls twitter function to get data
 //use promises so when twitter data has completed
 

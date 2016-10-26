@@ -6,6 +6,7 @@ var bodyParser = require('body-parser');
 var extend = require('util')._extend;
 var Twitter = require('twitter-node-client').Twitter;
 var watson = require('./watson/watsonController.js');
+var Persona = require('./persona/personaController.js');
 var userController = require('./user/userController.js');
 
 //DATABASE
@@ -45,10 +46,12 @@ app.get('/api/clientcred', function(req, res) {
 });
 
 //DATABASE ROUTES
-// app.post('/api/users/signin', function(req, res) {
-//   //list one user
-// })
-// app.post('/api/users/signup', //adduser)
+
+app.post('/api/users/signin', function(req, res) {
+  //list one user
+});
+app.post('/api/users/signup', userController.addUser);
+
 
 // app.get('/api/findAllUsers', userController.listAllUsers);
 // app.get('/api/findOneUser', userController.find);
