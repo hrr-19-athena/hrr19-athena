@@ -84,6 +84,7 @@ export const ANALYSIS_SUCCESS = 'ANALYSIS_SUCCESS'
 export const ANALYSIS_FAILURE = 'ANALYSIS_FAILURE'
 
 function fetchAnalysis(id) {
+  console.log('id in fetchanalysis:',id)
   return {
     [CALL_API]: {
       types: [ ANALYSIS_REQUEST, ANALYSIS_SUCCESS, ANALYSIS_FAILURE ],

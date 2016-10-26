@@ -12,7 +12,7 @@ var Twitter = require('twitter-node-client').Twitter;
 var twitter = new Twitter();
 
 module.exports = {
-  getUserPosts: function(screenName, count, cb){
+  getUserPosts: function(id, count, cb){
     var twitterPosts = [];
       var userTweet = {
         content: "",
@@ -41,6 +41,6 @@ module.exports = {
         //console.log(JSON.stringify(twitterPosts));
         cb(JSON.stringify(twitterPosts));
       };
-      twitter.getUserTimeline({ screen_name: screenName, count: count}, error, success);
+      twitter.getUserTimeline({ id: id, count: count}, error, success);
     }
 };

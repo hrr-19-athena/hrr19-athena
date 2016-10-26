@@ -11,7 +11,8 @@ module.exports = {
   personaData: function(req, res) {
     //check if persona data exists
     //need to handle flow if data exists send back data if not continue w/ function
-    var userId = req.body.userId;
+    console.log('request:',req.body,req.query);
+    var userId = req.query.id;
     // var userId = 'HackReactor';
     //var screenName = res.body.id;
     //is this a default number of tweets?

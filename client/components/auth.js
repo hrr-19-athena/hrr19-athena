@@ -48,8 +48,10 @@ class Auth extends Component {
   }
 
   handleGetAnalysisClick() {
-    this.props.loadAnalysis(this.state.profile.identities.user_id)
-    console.log(this.state.analysisResult)
+    const id = this.props.profile.user_id.split('|')[1];
+    console.log('id from auth:',id)
+    this.props.loadAnalysis(id)
+    console.log(this.props.analysisResult)
   }
 
 

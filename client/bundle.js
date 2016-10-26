@@ -27673,8 +27673,10 @@
 	  }, {
 	    key: 'handleGetAnalysisClick',
 	    value: function handleGetAnalysisClick() {
-	      this.props.loadAnalysis(this.state.profile.identities.user_id);
-	      console.log(this.state.analysisResult);
+	      var id = this.props.profile.user_id.split('|')[1];
+	      console.log('id from auth:', id);
+	      this.props.loadAnalysis(id);
+	      console.log(this.props.analysisResult);
 	    }
 	  }, {
 	    key: 'handleLogoutClick',
@@ -27892,6 +27894,7 @@
 	var ANALYSIS_FAILURE = exports.ANALYSIS_FAILURE = 'ANALYSIS_FAILURE';
 
 	function fetchAnalysis(id) {
+	  console.log('id in fetchanalysis:', id);
 	  return _defineProperty({}, _api.CALL_API, {
 	    types: [ANALYSIS_REQUEST, ANALYSIS_SUCCESS, ANALYSIS_FAILURE],
 	    endpoint: 'api/user/analysis',
@@ -27928,6 +27931,10 @@
 	var API_ROOT = exports.API_ROOT = 'http://localhost:3000/api/';
 
 	function callApi(endpoint, authenticatedRequest, id) {
+	  console.log('endpoint', endpoint);
+	  console.log('authenticatedRequest:', authenticatedRequest);
+	  console.log('id in middleware:', id);
+	  console.log(arguments);
 
 	  var token = localStorage.getItem('id_token') || null;
 
@@ -27970,6 +27977,7 @@
 	      var endpoint = callAPI.endpoint;
 	      var types = callAPI.types;
 	      var authenticatedRequest = callAPI.authenticatedRequest;
+	      var id = callAPI.id;
 
 
 	      if (typeof endpoint !== 'string') {
@@ -28000,7 +28008,7 @@
 
 	      next(actionWith({ type: requestType }));
 
-	      return callApi(endpoint, authenticatedRequest).then(function (response) {
+	      return callApi(endpoint, authenticatedRequest, id).then(function (response) {
 	        return next(actionWith({
 	          response: response,
 	          authenticatedRequest: authenticatedRequest,
@@ -75882,7 +75890,7 @@
 	            ),
 	            _react2.default.createElement(
 	              'a',
-	              { 'class': 'btn btn-primary btn-lg', href: '#', role: 'button' },
+	              { className: 'btn btn-primary btn-lg', href: '#', role: 'button' },
 	              'How it works'
 	            )
 	          ),

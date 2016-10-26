@@ -16,7 +16,7 @@ class Login extends Component {
              <h1 className='display-1'>Welcome to Persona</h1>
              <h1 className='display-3'>The social network built on who you really are</h1>
              <p className='lead'>Join 4 other people on the planet today to discover the tribes you truly belong to</p>
-             <a class="btn btn-primary btn-lg" href="#" role="button">How it works</a>
+             <a className="btn btn-primary btn-lg" href="#" role="button">How it works</a>
             </div>
             <div
               id='login-widget-container'
