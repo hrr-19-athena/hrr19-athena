@@ -10,10 +10,11 @@ let AUTH0_DOMAIN='camelliatree.auth0.com';
 const options = {
   languageDictionary: {
     emailInputPlaceholder: "me@example.com",
-    title: "Persona"
+    title: 'Persona'
   },
   theme: {
-    primaryColor: 'purple'
+    primaryColor: 'purple',
+    logo: '../style/assets/logosmall.png'
   },
   container: 'login-widget-container',
   auth: {

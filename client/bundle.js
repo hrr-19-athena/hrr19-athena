@@ -95,7 +95,7 @@
 	  _reactRedux.Provider,
 	  { store: store },
 	  _react2.default.createElement(_reactRouter.Router, { history: history, routes: _routes2.default })
-	), document.querySelector('.container'));
+	), document.querySelector('.root'));
 
 /***/ },
 /* 2 */
@@ -27818,10 +27818,11 @@
 	var options = {
 	  languageDictionary: {
 	    emailInputPlaceholder: "me@example.com",
-	    title: "Persona"
+	    title: 'Persona'
 	  },
 	  theme: {
-	    primaryColor: 'purple'
+	    primaryColor: 'purple',
+	    logo: '../style/assets/logosmall.png'
 	  },
 	  container: 'login-widget-container',
 	  auth: {
@@ -75857,10 +75858,116 @@
 	    value: function render() {
 	      return _react2.default.createElement(
 	        'div',
-	        { className: 'jumpotron', style: { backgroundColor: "#F8BBD0" } },
-	        _react2.default.createElement('div', {
-	          id: 'login-widget-container',
-	          className: 'offset-md-6' })
+	        null,
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'jumbotron', style: { backgroundColor: "#F8BBD0" } },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'col-md-7 offset-md-1' },
+	            _react2.default.createElement(
+	              'h1',
+	              { className: 'display-1' },
+	              'Welcome to Persona'
+	            ),
+	            _react2.default.createElement(
+	              'h1',
+	              { className: 'display-3' },
+	              'The social network built on who you really are'
+	            ),
+	            _react2.default.createElement(
+	              'p',
+	              { className: 'lead' },
+	              'Join 4 other people on the planet today to discover the tribes you truly belong to'
+	            ),
+	            _react2.default.createElement(
+	              'a',
+	              { 'class': 'btn btn-primary btn-lg', href: '#', role: 'button' },
+	              'How it works'
+	            )
+	          ),
+	          _react2.default.createElement('div', {
+	            id: 'login-widget-container',
+	            className: '' })
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'row jumbotron', style: { backgroundColor: 'white' } },
+	          _react2.default.createElement(
+	            'h1',
+	            { className: 'display-3', style: { textAlign: 'center' } },
+	            'How It Works'
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'col-sm-6 col-md-4' },
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'thumbnail' },
+	              _react2.default.createElement('img', { src: '...', alt: '...' }),
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'caption' },
+	                _react2.default.createElement(
+	                  'h3',
+	                  null,
+	                  'Link your social accounts'
+	                ),
+	                _react2.default.createElement(
+	                  'p',
+	                  null,
+	                  'Sign up for Persona and have your twitter, facebook, and LinkedLin accounts linked to Persona'
+	                )
+	              )
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'col-sm-6 col-md-4' },
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'thumbnail' },
+	              _react2.default.createElement('img', { src: '...', alt: '...' }),
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'caption' },
+	                _react2.default.createElement(
+	                  'h3',
+	                  null,
+	                  'Analyze your personality'
+	                ),
+	                _react2.default.createElement(
+	                  'p',
+	                  null,
+	                  'Persona\'s smart robots will look at your posts on social media and run an analysis on your personality and values'
+	                )
+	              )
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'col-sm-6 col-md-4' },
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'thumbnail' },
+	              _react2.default.createElement('img', { src: '...', alt: '...' }),
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'caption' },
+	                _react2.default.createElement(
+	                  'h3',
+	                  null,
+	                  'Find true friends'
+	                ),
+	                _react2.default.createElement(
+	                  'p',
+	                  null,
+	                  'We will then introduce you to other people in your area who share similar personality traits and value systems with you.'
+	                )
+	              )
+	            )
+	          )
+	        )
 	      );
 	    }
 	  }]);
