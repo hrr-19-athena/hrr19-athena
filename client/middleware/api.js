@@ -3,6 +3,10 @@ import Axios from 'axios';
 export const API_ROOT = 'http://localhost:3000/api/'
 
 function callApi(endpoint, authenticatedRequest, id) {
+  console.log('endpoint',endpoint);
+  console.log('authenticatedRequest:',authenticatedRequest);
+  console.log('id in middleware:',id);
+  console.log(arguments);
 
   let token = localStorage.getItem('id_token') || null
 
@@ -42,7 +46,7 @@ export default store => next => action => {
     return next(action)
   }
 
-  let { endpoint, types, authenticatedRequest } = callAPI
+  let { endpoint, types, authenticatedRequest, id } = callAPI
 
   if (typeof endpoint !== 'string') {
     throw new Error('Specify a string endpoint URL.')
@@ -65,7 +69,7 @@ export default store => next => action => {
   const [ requestType, successType, failureType ] = types
   next(actionWith({ type: requestType }))
 
-  return callApi(endpoint, authenticatedRequest).then(
+  return callApi(endpoint, authenticatedRequest, id).then(
     response => next(actionWith({
       response,
       authenticatedRequest,
