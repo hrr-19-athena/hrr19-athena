@@ -41,13 +41,13 @@ module.exports.personality_insights = new PersonalityInsightsV3({
 //   }
 // };
 
-
 module.exports.handleWatsonPersona = function(twitterFeed, userId, res){
   id = userId || 'HackReactor';
   var regex = /[a-zA-Z0-9^/:" "{},]/g;
   var results = twitterFeed.match(regex);
   var contentArray = [results.join('')];
-  console.log('ContentArray: ', contentArray);
+  console.log('Content Loading into Watson')
+  //console.log('ContentArray: ', contentArray);
   var params = {
     content_items: contentArray,
     consumption_preferences: true,
