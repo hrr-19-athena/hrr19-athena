@@ -2,6 +2,7 @@ var express = require('express');
 //var morgan = require('morgan');
 
 var bodyParser = require('body-parser');
+var path = require('path');
 // var jwt = require('express-jwt');
 var extend = require('util')._extend;
 var Twitter = require('twitter-node-client').Twitter;
@@ -28,11 +29,16 @@ app.set('port', (process.env.PORT || 3000));
 
 app.use(bodyParser.json());
 
-app.use(express.static('__dirname/../client'));
+app.use(express.static(__dirname+'/../client'));
+
+app.get('*', function (request, response){
+  response.sendFile(path.resolve(__dirname+'/../client/index.html'))
+})
 
 app.listen(app.get('port'), function() {
   console.log('Listening on port', app.get('port'));
 });
+
 
 
 //------------ AUTH0 api call -----------------------

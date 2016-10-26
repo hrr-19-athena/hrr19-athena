@@ -15,7 +15,17 @@ const options = {
   theme: {
     primaryColor: 'pink'
   },
-  container: 'login-widget-container'
+  container: 'login-widget-container',
+  auth: {
+    redirect: true,
+    redirectUrl: window.location.origin + '/user',
+    responseType: 'token',
+    params: {
+      state: JSON.stringify({pathname: window.location.pathname})
+    }
+  },
+  callbackURL: window.location.origin + '/user'
+
 };
 
 function loginSuccess(profile) {
