@@ -9,28 +9,30 @@ var Twitter = require('twitter-node-client').Twitter;
 //   'callBackUrl': 'https://hrr19-athena.herokuapp.com/api/twitter'
 // };
 
+
 var twitter = new Twitter();
 
 module.exports = {
   getUserPosts: function(id, count, cb){
     var twitterPosts = [];
-      var userTweet = {
-        content: "",
-        contenttype: "",
-        //created: "",
-        id: "",
-        language: ""
-      };
+
       var error = function (err, response, body) {
         console.log('ERROR [%s]', err);
       };
       var success = function (data) {
-        console.log('id [%s]', JSON.parse(data)[0].id);
-        console.log('text [%s]', JSON.parse(data)[0].text);
-        console.log('lang [%s]', JSON.parse(data)[0].lang);
+        // console.log('id [%s]', JSON.parse(data)[0].id);
+        // console.log('text [%s]', JSON.parse(data)[0].text);
+        // console.log('lang [%s]', JSON.parse(data)[0].lang);
         //console.log('created_at [%s]', JSON.parse(data)[0].created_at);
         var twitterData = JSON.parse(data);
           twitterData.forEach(function(post) {
+          var userTweet = {
+            content: "",
+            contenttype: "",
+            //created: "",
+            id: "",
+            language: ""
+          };
           userTweet.content = post.text;
           userTweet.contenttype = 'text/plain';
           //userTweet.created = post.created_at;
