@@ -36,13 +36,13 @@ app.listen(app.get('port'), function() {
 
 
 //AUTH0 api call
-// app.get('/api/clientcred', function(req, res) {
-//   var Auth0Cred = {
-//     AUTH0_CLIENT_ID : process.env.AUTH0_CLIENT_ID,
-//     AUTH0_DOMAIN : process.env.AUTH0_DOMAIN
-//   }
-//   res.send(Auth0Cred);
-// });
+app.get('/api/clientcred', function(req, res) {
+  var Auth0Cred = {
+    AUTH0_CLIENT_ID : process.env.AUTH0_CLIENT_ID,
+    AUTH0_DOMAIN : process.env.AUTH0_DOMAIN
+  }
+  res.send(Auth0Cred);
+});
 
 //DATABASE ROUTES
 // app.post('/api/users/signin', function(req, res) {
@@ -118,35 +118,14 @@ var userTweets = {
 
 // twitter.getUserTimeline({ screen_name: 'HackReactor', count: '20'}, error, success);
 
-// var req = {};
-// req.body={};
-// req.body.user = '9';
-// userController.addUser(req);
 
-//AUTH0 api call
-app.get('/api/clientcred', function(req, res) {
-  var AUTH0_CLIENT_ID = process.env.AUTH0_CLIENT_ID;
-  var AUTH0_DOMAIN = process.env.AUTH0_DOMAIN;
-});
+
+
+
 
 
 //HOW TO USE HANDLEWATSONPERSONA -Vi
-app.get('/personality', function(req, res) {
-    watson.handleWatsonPersona(watson.params, '9', res);
-});
-
-// watson.personality_insights.profile(watson.params, function(error, response) {
-//   if(error) {
-//     console.log('error: ', error);
-//   } else {
-//     console.log(JSON.stringify(response.personality, null, 2));
-//   }
+// app.get('/personality', function(req, res) {
+//     watson.handleWatsonPersona(watson.params, '9', res);
 // });
 
-
-// <<<<<<< HEAD
-// =======
-// var port = process.env.PORT || 3000;
-// app.listen(port);
-// console.log('listening at:', port);
-// >>>>>>> added documentation to spec
