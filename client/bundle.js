@@ -97,11 +97,6 @@
 	  _react2.default.createElement(_reactRouter.Router, { history: history, routes: _routes2.default })
 	), document.querySelector('.container'));
 
-	// <Provider store={createStoreWithMiddleware(reducers)}>
-	//   <App />
-
-	// </Provider>
-
 /***/ },
 /* 2 */
 /***/ function(module, exports, __webpack_require__) {
@@ -27610,6 +27605,10 @@
 
 	var _actions = __webpack_require__(258);
 
+	var _auth0Lock = __webpack_require__(285);
+
+	var _auth0Lock2 = _interopRequireDefault(_auth0Lock);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -27617,6 +27616,9 @@
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var AUTH0_CLIENT_ID = 'iIkWEtI63PrpAYxSrOZJcO3Y7o3yIiuw';
+	var AUTH0_DOMAIN = 'camelliatree.auth0.com';
 
 	var Auth = function (_Component) {
 	  _inherits(Auth, _Component);
@@ -27626,22 +27628,27 @@
 
 	    var _this = _possibleConstructorReturn(this, (Auth.__proto__ || Object.getPrototypeOf(Auth)).call(this, props));
 
-	    var lock = new Auth0Lock(AUTH0_CLIENT_ID, AUTH0_DOMAIN, {});
+	    var lock = new _auth0Lock2.default(AUTH0_CLIENT_ID, AUTH0_DOMAIN, {});
 	    var url = window.location.hash;
 	    var start = url.indexOf('&id_token') + 10;
 	    var end = url.indexOf('&token_type');
 	    var token = url.substring(start, end);
-
+	    var that = _this;
 	    _this.handleLogoutClick = _this.handleLogoutClick.bind(_this);
 	    _this.handleGetAnalysisClick = _this.handleGetAnalysisClick.bind(_this);
+
 	    lock.getProfile(token, function (error, profile) {
 	      if (error) {
 	        console.log(error);
 	      }
 	      console.log('profile:', profile);
-	      localStorage.setItem('id_token', token);
-	      localStorage.setItem('profile', JSON.stringify(profile));
+	      if (profile) {
+	        localStorage.setItem('id_token', token);
+	        localStorage.setItem('profile', JSON.stringify(profile));
+	        that.checkAuthentication();
+	      }
 	    });
+
 	    return _this;
 	  }
 
@@ -27656,14 +27663,15 @@
 	      }
 	    }
 	  }, {
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
+	    key: 'componentWillMount',
+	    value: function componentWillMount() {
 	      this.checkAuthentication();
 	    }
 	  }, {
 	    key: 'handleGetAnalysisClick',
 	    value: function handleGetAnalysisClick() {
 	      this.props.loadAnalysis(this.state.profile.identities.user_id);
+	      console.log(this.state.analysisResult);
 	    }
 	  }, {
 	    key: 'handleLogoutClick',
@@ -27865,8 +27873,9 @@
 	function fetchAnalysis(id) {
 	  return _defineProperty({}, _api.CALL_API, {
 	    types: [ANALYSIS_REQUEST, ANALYSIS_SUCCESS, ANALYSIS_FAILURE],
-	    endpoint: 'api/user/' + id,
-	    authenticatedRequest: true
+	    endpoint: 'api/user/analysis',
+	    authenticatedRequest: true,
+	    id: id
 	  });
 	}
 
@@ -27898,15 +27907,19 @@
 
 	var API_ROOT = exports.API_ROOT = 'http://localhost:3000/api/';
 
-	function callApi(endpoint, authenticatedRequest) {
+	function callApi(endpoint, authenticatedRequest, id) {
 
 	  var token = localStorage.getItem('id_token') || null;
+
 	  var config = {};
 
 	  if (authenticatedRequest) {
 	    if (token) {
 	      config = {
-	        headers: { 'Authorization': 'Bearer ' + token }
+	        headers: { 'Authorization': 'Bearer ' + token },
+	        params: {
+	          id: id
+	        }
 	      };
 	    } else {
 	      throw new Error("No token saved!");
@@ -27914,18 +27927,11 @@
 	  }
 
 	  // return Axios(API_ROOT + endpoint, config)
-	  return (0, _axios2.default)(endpoint, config).then(function (response) {
-	    return response.json().then(function (resource) {
-	      return { resource: resource, response: response };
-	    });
-	  }).then(function (_ref) {
-	    var resource = _ref.resource;
-	    var response = _ref.response;
-
-	    if (!response.ok) {
-	      return Promise.reject(resource);
-	    }
-	    return resource;
+	  return _axios2.default.get(endpoint, config).then(function (response) {
+	    console.log('response', response);
+	    return response;
+	  }).catch(function (err) {
+	    console.log(err);
 	  });
 	}
 

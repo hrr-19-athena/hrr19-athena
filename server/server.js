@@ -5,7 +5,7 @@ var bodyParser = require('body-parser');
 var path = require('path');
 // var jwt = require('express-jwt');
 var extend = require('util')._extend;
-var Twitter = require('twitter-node-client').Twitter;
+// var Twitter = require('twitter-node-client').Twitter;
 var watson = require('./watson/watsonController.js');
 var Persona = require('./persona/personaController.js');
 var userController = require('./user/userController.js');
@@ -62,6 +62,7 @@ app.get('/api/findOneUser', userController.find);
 //personaController - where the magic happens
 app.get('/api/user/analysis', Persona.personaData);
   //when profile page loads for user gets finished results for current
+
 
 
 

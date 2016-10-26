@@ -7,6 +7,10 @@ npm-debug.log
 .DS_Store
 .env
 /*.env
+<<<<<<< 5e3c3c6a7a25d832593dc6f112cd725456d1868b
+=======
+server/api-services.js
+>>>>>>> added api call
 
 # IntelliJ
 *.iml

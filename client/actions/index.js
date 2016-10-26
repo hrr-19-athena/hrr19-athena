@@ -86,8 +86,9 @@ function fetchAnalysis(id) {
   return {
     [CALL_API]: {
       types: [ ANALYSIS_REQUEST, ANALYSIS_SUCCESS, ANALYSIS_FAILURE ],
-      endpoint: `analysis/${id}`,
-      authenticatedRequest: true
+      endpoint: 'api/user/analysis',
+      authenticatedRequest: true,
+      id: id
     }
   }
 }
