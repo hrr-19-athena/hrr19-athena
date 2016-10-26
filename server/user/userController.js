@@ -22,10 +22,10 @@ module.exports = {
         res.send(user);
     });
   },
-  addUser: function(req,res){
-    var user = req.body.user;
+  addUser: function(data){
+    // var user = req.body.user;
     createUser({
-       userId: user,
+       userId: data.id,
         twitter: {
             posts: [],
             commonFriends: []
@@ -35,7 +35,9 @@ module.exports = {
         },
         watson: {
             results: []
-        }
+        },
+        persona:[data.persona],
+        personaGroup:data.group
     });
   },
   getData: function(req, res) {

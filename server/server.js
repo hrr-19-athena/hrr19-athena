@@ -60,6 +60,12 @@ app.get('/api/clientcred', function(req, res) {
 //personaController - where the magic happens
 // app.get('/api/user/analysis', Persona.personaData);
 
+//Creates a User
+// var req={};
+// req.body = {};
+// req.body.user='HackReactor';
+// userController.addUser(req);
+
 app.get('/api/user/analysis', Persona.personaData);
 
   //when profile page loads for user gets finished results for current

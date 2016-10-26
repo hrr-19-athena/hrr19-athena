@@ -13,7 +13,8 @@ var userSchema = mongoose.Schema({
     watson: {
         results: [String]
     },
-    persona:[String]
+    persona:Object,
+    personaGroup:String
     // persona: {
     //     group: String,
     //     personalityAnalysis: String //BIG 5 only for now
