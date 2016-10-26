@@ -68,6 +68,8 @@ app.get('/api/clientcred', function(req, res) {
 
 app.get('/api/user/analysis', Persona.personaData);
 
+app.get('/api/user/groups', userController.getUsersInGroup);
+
   //when profile page loads for user gets finished results for current
 
 app.get('*', function (request, response){
