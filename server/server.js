@@ -21,8 +21,7 @@ db.on('open', function(){
   console.log('opened');
 });
 
-//------------- EXPRESS SERVER ---------------------
-
+//------------- EXPRESS SERVER ----------------------
 var app = express();
 
 app.set('port', (process.env.PORT || 3000));
@@ -46,17 +45,15 @@ app.get('/api/clientcred', function(req, res) {
 });
 
 
-//-------------- DATABASE ROUTES -------------
-app.post('/api/users/signin', function(req, res) {
-  //list one user
-});
+//-------------- DATABASE ROUTES --------------------
+app.post('/api/users/signin', userController.listOneUser);
 app.post('/api/users/signup', userController.addUser);
 
 app.get('/api/findAllUsers', userController.listAllUsers);
 app.get('/api/findOneUser', userController.find);
 
 //personaController - where the magic happens
-app.get('/profileAnalysis', Persona.personaData);
+app.get('/api/user/analysis', Persona.personaData);
   //when profile page loads for user gets finished results for current
 
 

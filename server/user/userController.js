@@ -39,10 +39,10 @@ module.exports = {
     });
   },
   getData: function(req, res) {
-    var user = req.body.user;
+    var user = req.body.userId;
     findUser({userId: user})
       .then(function(user) {
-        res.send(user.persona);
+        return user.persona;
       })
       .fail(function(error) {
         next(error);
