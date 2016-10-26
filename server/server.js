@@ -31,9 +31,9 @@ app.use(bodyParser.json());
 
 app.use(express.static(__dirname+'/../client'));
 
-app.get('*', function (request, response){
-  response.sendFile(path.resolve(__dirname+'/../client/index.html'))
-})
+// app.get('*', function (request, response){
+//   response.sendFile(path.resolve(__dirname+'/../client/index.html'))
+// })
 
 
 app.listen(app.get('port'), function() {
@@ -59,9 +59,13 @@ app.get('/api/clientcred', function(req, res) {
 // app.get('/api/findAllUsers', userController.listAllUsers);
 // app.get('/api/findOneUser', userController.find);
 
-// //personaController - where the magic happens
+
+//personaController - where the magic happens
 // app.get('/api/user/analysis', Persona.personaData);
-//   //when profile page loads for user gets finished results for current
+
+app.get('/api/user/analysis', Persona.personaData);
+
+  //when profile page loads for user gets finished results for current
 
 
 
