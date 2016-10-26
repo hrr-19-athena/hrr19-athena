@@ -13,7 +13,7 @@ const options = {
     title: "Persona"
   },
   theme: {
-    primaryColor: 'pink'
+    primaryColor: 'purple'
   },
   container: 'login-widget-container',
   auth: {

@@ -8,7 +8,6 @@ let AUTH0_DOMAIN='camelliatree.auth0.com';
 export default class Auth extends Component {
   constructor(props) {
     super(props)
-
     const lock = new Auth0Lock(AUTH0_CLIENT_ID, AUTH0_DOMAIN,{})
     const url = window.location.hash
     const start = url.indexOf('&id_token')+10;
@@ -17,6 +16,7 @@ export default class Auth extends Component {
     const that=this;
     this.handleLogoutClick = this.handleLogoutClick.bind(this);
     this.handleGetAnalysisClick = this.handleGetAnalysisClick.bind(this);
+    this.checkAuthentication = this.checkAuthentication.bind(this);
 
     lock.getProfile(token, function(error, profile) {
         if (error) {
@@ -26,13 +26,19 @@ export default class Auth extends Component {
         if(profile) {
           localStorage.setItem('id_token', token);
           localStorage.setItem('profile', JSON.stringify(profile));
-          that.checkAuthentication();
+          // that.checkAuthentication();
+          that.state = {
+            isAuthenticated: true,
+            profile: profile,
+            analysisResult: {}
+          }
         }
     })
 
   }
 
   checkAuthentication() {
+    console.log('token:',localStorage.getItem('id_token'))
     if(localStorage.getItem('id_token')) {
       this.setState({
         isAuthenticated: true,
@@ -40,11 +46,6 @@ export default class Auth extends Component {
       })
     }
   }
-
-  componentWillMount() {
-    this.checkAuthentication()
-  }
-
 
   handleGetAnalysisClick() {
     this.props.loadAnalysis(this.state.profile.identities.user_id)
@@ -57,20 +58,37 @@ export default class Auth extends Component {
     this.props.logout()
   }
 
+  renderAnalysis() {
+    if(this.props.analysisResult) {
+      return (
+        <div>{this.props.analysisResult.result}</div>
+      )
+    } else {
+      return (
+        <div></div>
+      )
+    }
+  }
+
   render() {
-    const { onLoginClick, onLogoutClick, isAuthenticated, profile } = this.props
+
+    const {isAuthenticated, profile, analysisResult } = this.props
+
 
     return (
       <div style={{ marginTop: '10px' }}>
         { !isAuthenticated ? (
           <div></div>
         ) : (
+          <div>
           <ul className="list-inline">
             <li><img src={profile.picture} height="40px" /></li>
             <li><span>Hello, {profile.nickname}!</span></li>
             <li><button className="btn btn-primary" onClick={this.handleLogoutClick}>Logout</button></li>
             <li><button className="btn btn-success" onClick={this.handleGetAnalysisClick}>Analyze your personality</button></li>
           </ul>
+          { this.renderAnalysis() }
+          </div>
         )}
       </div>
     )
