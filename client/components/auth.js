@@ -9,7 +9,7 @@ export default class Auth extends Component {
     const start = url.indexOf('&id_token')+10;
     const end=url.indexOf('&token_type');
     const token=url.substring(start,end);
-    const that = this;
+
     this.handleLogoutClick = this.handleLogoutClick.bind(this);
     this.handleGetAnalysisClick = this.handleGetAnalysisClick.bind(this);
     lock.getProfile(token, function(error, profile) {
@@ -36,8 +36,8 @@ export default class Auth extends Component {
   }
 
 
-  handleGetAnalysisClick(id) {
-    this.props.loadAnalysis(id)
+  handleGetAnalysisClick() {
+    this.props.loadAnalysis(this.state.profile.identities.user_id)
   }
 
 
@@ -57,7 +57,8 @@ export default class Auth extends Component {
           <ul className="list-inline">
             <li><img src={profile.picture} height="40px" /></li>
             <li><span>Hello, {profile.nickname}!</span></li>
-            <li><button className="btn btn-primary" onClick={onLogoutClick}>Logout</button></li>
+            <li><button className="btn btn-primary" onClick={this.handleLogoutClick}>Logout</button></li>
+            <li><button className="btn btn-success" onClick={this.handleGetAnalysisClick}>Analyze your personality</button></li>
           </ul>
         )}
       </div>
