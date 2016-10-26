@@ -58,24 +58,6 @@ app.get('/api/user/analysis', Persona.personaData);
 
 
 
-//WHATS GOING ON:
-//REQ from front end
-//app.post(/micahlesPersonalRoute, function(req, res){
-  //assume req.body.id, req.body.token
-  //use id to do a database lookup
-    //2 scenarios:
-      //1: USER NOT IN DATABSE
-          //MICHAEL intiate get analysis(pass through twitter, pass through watson, this is lots of work we need to divy this)
-              //parts of get analysis
-                  //1. get twitter feed using userId, massage data, (later save to db $$$$$$)
-                  //2. feed the twitter data into watson, save watson data to db (just the 5 personalities portion)
-                  //3. send data to front end
-              //how to group people -- later, group undefined
-      //2: USER IS IN DATABASE
-          //MICHAEL pull watson user results from database, send to front end
-
-
-
 //TEMPORARY WATSON FOR FAKE HARDCODED DATA -Vi
 // watson.personality_insights.profile(watson.params, function(error, response) {
 //   if(error) {
