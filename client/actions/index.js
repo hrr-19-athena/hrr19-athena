@@ -13,9 +13,19 @@ const options = {
     title: "Persona"
   },
   theme: {
-    primaryColor: 'pink'
+    primaryColor: 'purple'
   },
-  container: 'login-widget-container'
+  container: 'login-widget-container',
+  auth: {
+    redirect: true,
+    redirectUrl: window.location.origin + '/user',
+    responseType: 'token',
+    params: {
+      state: JSON.stringify({pathname: window.location.pathname})
+    }
+  },
+  callbackURL: window.location.origin + '/user'
+
 };
 
 function loginSuccess(profile) {
@@ -76,8 +86,9 @@ function fetchAnalysis(id) {
   return {
     [CALL_API]: {
       types: [ ANALYSIS_REQUEST, ANALYSIS_SUCCESS, ANALYSIS_FAILURE ],
-      endpoint: `analysis/${id}`,
-      authenticatedRequest: true
+      endpoint: 'api/user/analysis',
+      authenticatedRequest: true,
+      id: id
     }
   }
 }

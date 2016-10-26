@@ -2,9 +2,10 @@ var express = require('express');
 //var morgan = require('morgan');
 
 var bodyParser = require('body-parser');
+var path = require('path');
 // var jwt = require('express-jwt');
 var extend = require('util')._extend;
-var Twitter = require('twitter-node-client').Twitter;
+// var Twitter = require('twitter-node-client').Twitter;
 var watson = require('./watson/watsonController.js');
 var Persona = require('./persona/personaController.js');
 var userController = require('./user/userController.js');
@@ -28,11 +29,17 @@ app.set('port', (process.env.PORT || 3000));
 
 app.use(bodyParser.json());
 
-app.use(express.static('__dirname/../client'));
+app.use(express.static(__dirname+'/../client'));
+
+app.get('*', function (request, response){
+  response.sendFile(path.resolve(__dirname+'/../client/index.html'))
+})
+
 
 app.listen(app.get('port'), function() {
   console.log('Listening on port', app.get('port'));
 });
+
 
 
 //------------ AUTH0 api call -----------------------
@@ -55,6 +62,7 @@ app.get('/api/findOneUser', userController.find);
 //personaController - where the magic happens
 app.get('/api/user/analysis', Persona.personaData);
   //when profile page loads for user gets finished results for current
+
 
 
 

@@ -1,9 +1,8 @@
 import React, { Component, PropTypes } from 'react'
-import { connect } from 'react-redux'
-import { loadAnalysis, login, logout } from '../actions'
-
-import Home from '../components/home'
 import Auth from '../components/auth'
+import Login from '../components/login'
+const logo = require('../style/assets/horizontallogo.png')
+
 
 class App extends Component {
   constructor(props) {
@@ -26,25 +25,28 @@ class App extends Component {
   }
 
   render() {
-    const { analysisResult, error, isAuthenticated, profile } = this.props
+
+    const style = {
+      margin: '0px',
+      padding: '0px',
+      border: '0px'
+    }
+    const imgStyle = {
+      height: '85px'
+    }
     return (
-      <div>
-        <div className="navbar navbar-default">
-          <div className="container-fluid">
-            <h1><a className="navbar-brand">Persona</a></h1>
+      <div style={ style }>
+        <div className="navbar navbar-default" style={{ backgroundColor: '#CE93D8'}}>
+          <div className="">
+            <a className="navbar-brand">
+              <img src={ logo } style={ imgStyle }/>
+            </a>
           </div>
         </div>
-        <div className='row'>
-          <div
-            id='login-widget-container'
-            className='offset-md-6'></div>
-        </div>
-        <div className="container-fluid">
-          <Home
-              result={analysisResult}
-              error={error}
-              onClick={this.handleGetAnalysisClick}
-              isAuthenticated={isAuthenticated}/>
+
+        <div className="">
+          {this.props.children}
+
         </div>
       </div>
     )
@@ -70,9 +72,3 @@ export default connect(mapStateToProps, {
 })(App)
 
 
-// <Auth
-//               isAuthenticated={isAuthenticated}
-//               profile={profile}
-//               onLoginClick={this.handleLoginClick}
-//               onLogoutClick={this.handleLogoutClick}
-//             />

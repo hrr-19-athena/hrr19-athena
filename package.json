@@ -39,6 +39,7 @@
     "jwt-decode": "^2.1.0",
     "lodash": "^3.10.1",
     "mongoose": "^4.6.4",
+    "nodemon": "^1.11.0",
     "q": "^1.4.1",
     "react": "^0.14.3",
     "react-dom": "^0.14.3",
@@ -49,6 +50,7 @@
     "redux-thunk": "^2.1.0",
     "request": "^2.75.0",
     "twitter-node-client": "0.0.6",
+    "url-loader": "^0.5.7",
     "watson-developer-cloud": "^2.6.2",
     "webpack": "^1.13.2"
   },

@@ -1,7 +1,7 @@
 
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { browserHistory } from 'react-router'
+import { browserHistory, Router } from 'react-router'
 import { syncHistoryWithStore } from 'react-router-redux'
 import thunkMiddleware from 'redux-thunk'
 import { Router } from 'react-router'
@@ -22,8 +22,3 @@ ReactDOM.render(
   </Provider>
   , document.querySelector('.container'));
 
-
-  // <Provider store={createStoreWithMiddleware(reducers)}>
-  //   <App />
-
-  // </Provider>

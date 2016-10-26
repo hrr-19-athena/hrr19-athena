@@ -2,15 +2,19 @@ import Axios from 'axios';
 
 export const API_ROOT = 'http://localhost:3000/api/'
 
-function callApi(endpoint, authenticatedRequest) {
+function callApi(endpoint, authenticatedRequest, id) {
 
   let token = localStorage.getItem('id_token') || null
+
   let config = {}
 
   if(authenticatedRequest) {
     if(token) {
       config = {
-        headers: { 'Authorization': `Bearer ${token}` }
+        headers: { 'Authorization': `Bearer ${token}` },
+        params: {
+          id: id
+        }
       }
     } else {
       throw new Error("No token saved!")
@@ -18,15 +22,13 @@ function callApi(endpoint, authenticatedRequest) {
   }
 
   // return Axios(API_ROOT + endpoint, config)
-  return Axios(endpoint,config)
-    .then(response =>
-      response.json()
-      .then(resource => ({ resource, response }))
-    ).then(({ resource, response }) => {
-      if (!response.ok) {
-        return Promise.reject(resource)
-      }
-      return resource
+  return Axios.get(endpoint,config)
+    .then(function (response) {
+      console.log('response',response);
+      return response
+    })
+    .catch(function(err) {
+      console.log(err)
     })
 }
 
