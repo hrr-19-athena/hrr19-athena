@@ -8,7 +8,7 @@ var createUser = Q.nbind(UserModel.create, UserModel);
 var findAll = Q.nbind(UserModel.find, UserModel);
 var _ = require('underscore');
 
-var objectToJson = require("object-to-json");
+//var objectToJson = require("object-to-json");
 // var jsonPerson = objectToJSON(person);
 //bluemix is for if we want to generate keys dynamically, we are not currently - vi
 // var bluemix = require('../node_modules/bluemix/lib/bluemix.js');
@@ -45,9 +45,11 @@ module.exports.handleWatsonPersona = function(twitterFeed, userId, res){
   id = userId || 'HackReactor';
   var regex = /[a-zA-Z0-9^/:" "{},]/g;
   var results = twitterFeed.match(regex);
-  console.log(results.join(''));
+  var contentArray = [results.join('')];
+  console.log('Twitter Content Loading into Watson')
+  //console.log('ContentArray: ', contentArray);
   var params = {
-    content_items: results,
+    content_items: contentArray,
     consumption_preferences: true,
     raw_scores: true,
     headers: {
