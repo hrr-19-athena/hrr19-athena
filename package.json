@@ -40,6 +40,7 @@
     "lodash": "^3.10.1",
     "mongoose": "^4.6.4",
     "nodemon": "^1.11.0",
+    "object-to-json": "0.0.5",
     "q": "^1.4.1",
     "react": "^0.14.3",
     "react-dom": "^0.14.3",

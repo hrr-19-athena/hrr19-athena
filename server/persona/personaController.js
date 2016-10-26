@@ -12,16 +12,15 @@ module.exports = {
     //check if persona data exists
     //need to handle flow if data exists send back data if not continue w/ function
     var userId = req.body.userId;
+    // var userId = 'HackReactor';
     //var screenName = res.body.id;
     //is this a default number of tweets?
-    var count = 10;
+    var count = 100;
 
     twitterCtrl.getUserPosts(userId, count, function(posts){
-      console.log(posts);
-            // watsonCtrl.handleWatsonPersona(posts, userId, function(data){
-            //   res.send(data);
-            // });
-          });
+      // console.log(posts);
+      // res.send(posts);
+            watsonCtrl.handleWatsonPersona(posts, userId, res);
 
     // findData({userId: userId})
     //   .then(function(user) {
@@ -35,6 +34,7 @@ module.exports = {
     //         // watsonCtrl.handleWatsonPersona(posts, userId, function(data){
     //         //   res.send(data);
     //         // });
+    });
   }
 
 
@@ -52,12 +52,13 @@ module.exports = {
     //upon completion of twitter retrieval pass data to Watson function
 }
 
-var req = {
-  body : {
-    userId : 'HackReactor'
-  }
-}
-module.exports.personaData(req);
+// var req = {
+//   body : {
+//     userId : 'HackReactor'
+//   }
+// }
+
+// module.exports.personaData(req);
 //calls twitter function to get data
 //use promises so when twitter data has completed
 

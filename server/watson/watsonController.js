@@ -6,6 +6,10 @@ var Q = require('q');
 var findUser = Q.nbind(UserModel.findOne, UserModel);
 var createUser = Q.nbind(UserModel.create, UserModel);
 var findAll = Q.nbind(UserModel.find, UserModel);
+var _ = require('underscore');
+
+var objectToJson = require("object-to-json");
+// var jsonPerson = objectToJSON(person);
 //bluemix is for if we want to generate keys dynamically, we are not currently - vi
 // var bluemix = require('../node_modules/bluemix/lib/bluemix.js');
 
@@ -27,35 +31,53 @@ module.exports.personality_insights = new PersonalityInsightsV3({
 });
 
 //TEMPORARY WATSON FOR FAKE HARD-CODED DATA - Vi
-module.exports.params = {
-  content_items: require('../profile.json').contentItems,
-  consumption_preferences: true,
-  raw_scores: true,
-  headers: {
-    'accept-language': 'en',
-    'accept': 'application/json'
-  }
-};
+// module.exports.params = {
+//   content_items: require('../profile.json').contentItems,
+//   consumption_preferences: true,
+//   raw_scores: true,
+//   headers: {
+//     'accept-language': 'en',
+//     'accept': 'application/json'
+//   }
+// };
 
 module.exports.handleWatsonPersona = function(twitterFeed, userId, res){
-  var id = userId;
-  module.exports.personality_insights.profile(twitterFeed, function(err, profile) {
+  id = userId || 'HackReactor';
+  var regex = /[a-zA-Z0-9^/:" "{},]/g;
+  var results = twitterFeed.match(regex);
+  console.log(results.join(''));
+  var params = {
+    content_items: results,
+    consumption_preferences: true,
+    raw_scores: true,
+    headers: {
+      'accept-language': 'en',
+      'accept': 'application/json'
+    }
+  };
+
+  // console.log('%%%%%%%%%%%%%',params);
+  // console.log('------------', data.content_items);
+  module.exports.personality_insights.profile(params, function(err, profile) {
     if (err)
-      return next(err);
+      console.log(err);
     else
+      res.json(profile.personality);
       module.exports.massageAndSave(profile, id, res);
   });
 };
 
+
 module.exports.massageAndSave = function(response, id, res){
-  var data = JSON.stringify(response.personality);
-  console.log(data);
-  findUser({userId: id})
+  var data = response.personality;
+  findUser({userId: ''})
     .then(function(user){
       user.persona = data;
       user.save();
     }).then(function(u){
-      res.json(data);
+      console.log(data);
+      console.log('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%');
+      res.json(profile.personality);
     });
     // .find()
     // .where('userId').equals(id)
