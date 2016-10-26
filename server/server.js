@@ -5,14 +5,16 @@ var bodyParser = require('body-parser');
 var path = require('path');
 // var jwt = require('express-jwt');
 var extend = require('util')._extend;
-// var Twitter = require('twitter-node-client').Twitter;
-var watson = require('./watson/watsonController.js');
 var Persona = require('./persona/personaController.js');
 var userController = require('./user/userController.js');
 
-//DATABASE
+//-------------- DATABASE -------------------------
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/persona');
+
+var dbURI = process.env.MONGODB_URI || 'mongodb://localhost/persona';
+
+mongoose.connect(dbURI);
+
 var db = mongoose.connection;
 
 db.on('error', function(err) {
@@ -47,7 +49,6 @@ app.get('/api/clientcred', function(req, res) {
   res.send(Auth0Cred);
 });
 
-
 //-------------- DATABASE ROUTES --------------------
 // app.post('/api/users/signin', userController.listOneUser);
 // app.post('/api/users/signup', userController.addUser);
@@ -66,14 +67,4 @@ app.get('/api/user/analysis', Persona.personaData);
 app.get('*', function (request, response){
   response.sendFile(path.resolve(__dirname+'/../client/index.html'))
 })
-
-
-//TEMPORARY WATSON FOR FAKE HARDCODED DATA -Vi
-// watson.personality_insights.profile(watson.params, function(error, response) {
-//   if(error) {
-//     console.log('error: ', error);
-//   } else {
-//     console.log(JSON.stringify(response, null, 2));
-//   }
-// });
 
