@@ -38,6 +38,6 @@ module.exports = {
         }
     });
   }
-} //end module.exports
+}; //end module.exports
 
 
