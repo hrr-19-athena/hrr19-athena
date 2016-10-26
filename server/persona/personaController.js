@@ -11,10 +11,6 @@ module.exports = {
   personaData: function(req, res) {
     //check if persona data exists
     //need to handle flow if data exists send back data if not continue w/ function
-<<<<<<< HEAD
-    console.log('request:',req.body,req.query);
-=======
->>>>>>> match front end userid
     var userId = req.query.id;
     // var userId = 'HackReactor';
     //var screenName = res.body.id;
