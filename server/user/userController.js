@@ -37,6 +37,16 @@ module.exports = {
             results: []
         }
     });
+  },
+  getData: function(req, res) {
+    var user = req.body.userId;
+    findUser({userId: user})
+      .then(function(user) {
+        return user.persona;
+      })
+      .fail(function(error) {
+        next(error);
+      });
   }
 }; //end module.exports
 
