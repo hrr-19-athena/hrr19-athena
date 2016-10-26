@@ -5,7 +5,7 @@ import Auth0Lock from 'auth0-lock';
 let AUTH0_CLIENT_ID='iIkWEtI63PrpAYxSrOZJcO3Y7o3yIiuw';
 let AUTH0_DOMAIN='camelliatree.auth0.com';
 
-export default class Auth extends Component {
+class Auth extends Component {
   constructor(props) {
     super(props)
     const lock = new Auth0Lock(AUTH0_CLIENT_ID, AUTH0_DOMAIN,{})
@@ -78,7 +78,7 @@ export default class Auth extends Component {
     return (
       <div style={{ marginTop: '10px' }}>
         { !isAuthenticated ? (
-          <div></div>
+          <div>You need to sign in first</div>
         ) : (
           <div>
           <ul className="list-inline">
@@ -94,3 +94,21 @@ export default class Auth extends Component {
     )
   }
 }
+
+function mapStateToProps(state) {
+  const { analysis, auth } = state
+  const { analysisResult,error } = analysis
+  const { isAuthenticated, profile } = auth
+  return {
+    analysisResult,
+    error,
+    isAuthenticated,
+    profile
+  }
+}
+
+export default connect(mapStateToProps, {
+  loadAnalysis,
+  login,
+  logout
+})(Auth)
