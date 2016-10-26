@@ -31,10 +31,6 @@ app.use(bodyParser.json());
 
 app.use(express.static(__dirname+'/../client'));
 
-// app.get('*', function (request, response){
-//   response.sendFile(path.resolve(__dirname+'/../client/index.html'))
-// })
-
 
 app.listen(app.get('port'), function() {
   console.log('Listening on port', app.get('port'));
@@ -67,7 +63,9 @@ app.get('/api/user/analysis', Persona.personaData);
 
   //when profile page loads for user gets finished results for current
 
-
+app.get('*', function (request, response){
+  response.sendFile(path.resolve(__dirname+'/../client/index.html'))
+})
 
 
 //TEMPORARY WATSON FOR FAKE HARDCODED DATA -Vi
