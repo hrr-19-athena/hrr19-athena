@@ -1,5 +1,5 @@
 var PersonalityInsightsV3 = require('watson-developer-cloud/personality-insights/v3');
-var keys = require('../api-services.js');
+//var keys = require('../api-services.js');
 var UserModel = require('../user/userModel.js');
 var Q = require('q');
 // Promisify mongoose methods with the `q` promise library
