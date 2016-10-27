@@ -7,6 +7,7 @@ var path = require('path');
 var extend = require('util')._extend;
 var Persona = require('./persona/personaController.js');
 var userController = require('./user/userController.js');
+require('dotenv').config();
 
 //-------------- DATABASE -------------------------
 var mongoose = require('mongoose');
@@ -46,6 +47,7 @@ app.get('/api/clientcred', function(req, res) {
     AUTH0_CLIENT_ID : process.env.AUTH0_CLIENT_ID,
     AUTH0_DOMAIN : process.env.AUTH0_DOMAIN
   }
+  console.log('Auth0Cred:',Auth0Cred)
   res.send(Auth0Cred);
 });
 

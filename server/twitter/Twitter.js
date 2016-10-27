@@ -4,6 +4,7 @@
 
 var OAuth = require('oauth').OAuth;
 var qs = require('qs');
+require('dotenv').config();
 // var config = require('../../../data/twitter_config');
 
 var config = {

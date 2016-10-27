@@ -4,8 +4,9 @@ import Axios from 'axios'
 
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
 export const LOGIN_ERROR = 'LOGIN_ERROR'
-let AUTH0_CLIENT_ID=''
-let AUTH0_DOMAIN=''
+var AUTH0_CLIENT_ID = ''
+var AUTH0_DOMAIN = ''
+var lock = ''
 
 const options = {
   languageDictionary: {
@@ -44,22 +45,41 @@ function loginError(err) {
 }
 
 export function login() {
-  Axios('/api/clientcred')
-    .then(response =>{
-        AUTH0_CLIENT_ID=response.AUTH0_CLIENT_ID
-        AUTH0_DOMAIN=response.AUTH0_DOMAIN
-      }
-    )
-  const lock = new Auth0Lock(AUTH0_CLIENT_ID, AUTH0_DOMAIN,options)
-  return dispatch => {
-    lock.show((err, profile, token) => {
-      if(err) {
-        return dispatch(loginError(err))
-      }
-      localStorage.setItem('profile', JSON.stringify(profile))
-      localStorage.setItem('id_token', token)
-      return dispatch(loginSuccess(profile))
-    })
+  return (dispatch) => {
+    Axios('/api/clientcred')
+      .then(function(response) {
+          AUTH0_CLIENT_ID=response.data.AUTH0_CLIENT_ID
+          AUTH0_DOMAIN=response.data.AUTH0_DOMAIN
+          lock = new Auth0Lock(AUTH0_CLIENT_ID, AUTH0_DOMAIN,options)
+          lock.show()
+        })
+  }
+}
+
+export function setToken() {
+  return function(dispatch) {
+      const url = window.location.hash
+      console.log('url:',url)
+      const start = url.indexOf('&id_token')+10
+      const end=url.indexOf('&token_type')
+      const token=url.substring(start,end)
+      let profileStored = ''
+      Axios('/api/clientcred')
+      .then(function(response) {
+          AUTH0_CLIENT_ID=response.data.AUTH0_CLIENT_ID
+          AUTH0_DOMAIN=response.data.AUTH0_DOMAIN
+          lock = new Auth0Lock(AUTH0_CLIENT_ID, AUTH0_DOMAIN,{})
+          lock.getProfile(token, function(error, profile) {
+              if (error) {
+                console.log(error);
+              }
+              console.log('profile:',profile)
+              profileStored = profile
+              localStorage.setItem('id_token', token);
+              localStorage.setItem('profile', JSON.stringify(profile))
+              return dispatch(loginSuccess(profile))
+          })
+        })
   }
 }
 

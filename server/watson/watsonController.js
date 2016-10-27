@@ -9,6 +9,7 @@ var findAll = Q.nbind(UserModel.find, UserModel);
 var userController = require('../user/userController.js');
 
 var _ = require('underscore');
+require('dotenv').config();
 
 //var objectToJson = require("object-to-json");
 // var jsonPerson = objectToJSON(person);
