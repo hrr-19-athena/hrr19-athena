@@ -85,23 +85,29 @@ module.exports.findSimilar = function(profile) {
   }
   console.log('This person\'s trait summary is ', curTS);
   //find all people in database,
-    //create trait summary for each
  Q(UserModel.find({}).exec())
     .then(function(users) {
       // console.log('all users in db right now are ', users);
-      console.log('users length is ', users.length);
+      // console.log('users length is ', users.length);
+    //create trait summary for each user in database
       for (var j = 0; j<users.length; j++) {
         var userTS = [];
         var curUser = users[j].persona;
-        console.log('each user is ', curUser);
+        // console.log('each user is ', curUser);
         for(var k = 0; k<curUser.length; k++) {
           userTS.push(0.5 - curUser[k].percentile);
         }
         console.log('individual userTS is ', userTS);
-      }
-    });
     //calculate gap for each
       //if gap < 5, add person to group
+      var gap = 0;
+      for(var l = 0; l<userTS.length; l++) {
+        gap += (curTS[l] - userTS[l]);
+      }
+      console.log('gap between this cur user and other user is ', gap);
+
+      }
+    });
   //return group
 };
 
