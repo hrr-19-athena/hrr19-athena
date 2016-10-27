@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react'
+import { Link } from 'react-router'
 import Auth from '../components/auth'
 import Login from '../components/login'
 const logo = require('../style/assets/horizontallogo.png')
@@ -24,9 +25,9 @@ export default class App extends Component {
       <div style={ style }>
         <div className="navbar navbar-default" style={{ backgroundColor: '#CE93D8'}}>
           <div className="">
-            <a className="navbar-brand">
+            <Link to='/' className="navbar-brand">
               <img src={ logo } style={ imgStyle }/>
-            </a>
+            </Link>
           </div>
         </div>
 
