@@ -4,7 +4,7 @@ var userCtrl = require('../user/userController');
 var Q = require('q');
 
 var User = require('../user/userModel.js');
-var findData = Q.nbind(User.findOne, User);
+// var findUser = Q.nbind(User.findOne, User);
 
 //check if user saved in db (check for persona data)
 module.exports = {
@@ -15,27 +15,34 @@ module.exports = {
     // var userId = 'HackReactor';
     //var screenName = res.body.id;
     //is this a default number of tweets?
+    console.log('person we are looking for is ', userId);
     var count = 100;
 
-    twitterCtrl.getUserPosts(userId, count, function(posts){
+    Q(User.findOne({userId: userId}).exec())
+      .then(function(user) {
+        // console.log('what we found was ', user);
+        if(user) {
+          var data = {
+            personalityScores: user,
+            group: user.personaGroup
+          };
+          // console.log(user);
+          res.send(data);
+        }
+        else if(!user) {
+          //get twitter data & send to watson
+          twitterCtrl.getUserPosts(userId, count, function(posts){
+            // console.log(posts);
+            watsonCtrl.handleWatsonPersona(posts, userId, res);
+            //   res.send(data);
+          });
+    // twitterCtrl.getUserPosts(userId, count, function(posts){
       // console.log(posts);
       // res.send(posts);
-            watsonCtrl.handleWatsonPersona(posts, userId, res);
+            // watsonCtrl.handleWatsonPersona(posts, userId, res);
 
-    // findData({userId: userId})
-    //   .then(function(user) {
-    //     if(user.persona) {
-    //       res.send(user.persona);
-    //     }
-    //     else if(!user.persona) {
-    //       //get twitter data & send to watson
-    //       twitterCtrl.getUserPosts(screenName, count, function(posts){
-    //         console.log(posts);
-    //         // watsonCtrl.handleWatsonPersona(posts, userId, function(data){
-    //         //   res.send(data);
-    //         // });
-    });
-  }
+    }
+  });
 
 
       //   }
@@ -50,7 +57,8 @@ module.exports = {
 
 
     //upon completion of twitter retrieval pass data to Watson function
-}
+ }
+};
 
 // var req = {
 //   body : {

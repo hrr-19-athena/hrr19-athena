@@ -36,7 +36,7 @@ module.exports = {
         watson: {
             results: []
         },
-        persona:[data.persona],
+        persona:data.persona,
         personaGroup:data.group
     });
   },
