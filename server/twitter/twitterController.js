@@ -1,4 +1,4 @@
-var Twitter = require('../twitter-api/Twitter.js');
+var Twitter = require('Twitter.js').Twitter;
 
 // need to refactor and use
 // var config = {

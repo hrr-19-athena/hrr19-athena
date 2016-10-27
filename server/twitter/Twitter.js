@@ -7,10 +7,11 @@ var qs = require('qs');
 // var config = require('../../../data/twitter_config');
 
 var config = {
-        "consumerKey":'8PTXQifhJSNSuUA2k3B4wn1kS',
-        'consumerSecret': 'mqLZXUYhg8LHObpGWqR0Ie1OzYWjBf1dDEBVILraojv8jbj6QE',
-        'accessToken':'790705006966022144-9RLLZCxykyjHYfBYx8zcvP77qZe25V2',
-        'accessTokenSecret': 'v4eU8BDJPzaq4hc3QJSdqxlLSvxpqqe7e6g2ThxKgHZuI',
+
+        "consumerKey": process.env.TCONS_KEY,
+        'consumerSecret': process.env.TCONS_SECRET,
+        'accessToken': process.env.TACC_TOKEN,
+        'accessTokenSecret': process.env.TACC_TSECRET,
           'callBackUrl': 'https://hrr19-athena.herokuapp.com/api/twitter'
         };
 
