@@ -76,8 +76,9 @@ module.exports.findSimilar = function(profile) {
   //var group
   // console.log('profile.persona is ', profile.persona);
   // console.log('profile.persona[0].percentile is ', profile.persona[0].percentile);
+  var curUserId = profile.userId;
   var profile = profile.persona;
-  var group = [];
+  var similarGroup = [];
   //create trait summary for Cur
   var curTS = [];
   for (var i = 0; i< profile.length; i++) {
@@ -85,7 +86,7 @@ module.exports.findSimilar = function(profile) {
   }
   console.log('This person\'s trait summary is ', curTS);
   //find all people in database,
- Q(UserModel.find({}).exec())
+ return Q(UserModel.find({}).exec())
     .then(function(users) {
       // console.log('all users in db right now are ', users);
       // console.log('users length is ', users.length);
@@ -100,20 +101,29 @@ module.exports.findSimilar = function(profile) {
         console.log('individual userTS is ', userTS);
     //calculate gap for each
       //if gap < 5, add person to group
-      var gap = 0;
-      for(var l = 0; l<userTS.length; l++) {
-        gap += (curTS[l] - userTS[l]);
-      }
-      console.log('gap between this cur user and other user is ', gap);
+        var gap = 0;
+        for(var l = 0; l<userTS.length; l++) {
+          gap += (curTS[l] - userTS[l]);
+        }
+        console.log('gap between this cur user and other user is ', gap);
+        console.log('other user', users[j].userId);
+        console.log('this user', curUserId);
+        console.log('math abs of gap ', Math.abs(gap));
 
+        if(Math.abs(gap) < 0.03 && users[j].userId !== curUserId){
+          similarGroup.push(users[j]);
+          console.log(similarGroup);
+        }
       }
-    });
   //return group
+    console.log('similarGroup from watsonController ', similarGroup);
+    return similarGroup;
+    });
 };
 
 module.exports.massageAndSave = function(profile, query, res){
   console.log("GENERATING NEW ANALYSIS!!!!");
-
+  var similarGroup = module.exports.findSimilarGroup(profile);
   // OLD FIND GROUP - DOMINANT TRAIT
   var findGroup = function(profile){
     var highest = ["", 0];
@@ -143,7 +153,8 @@ module.exports.massageAndSave = function(profile, query, res){
     personalityScores: {
       persona: profile.personality,
     },
-    group: group
+    similarGroup: similarGroup,
+    dominantGroup: group
   };
   res.json(sendBack);
   // var data = profile.personality;
