@@ -13,6 +13,8 @@ var mongoose = require('mongoose');
 
 var dbURI = process.env.MONGODB_URI || 'mongodb://localhost/persona';
 
+console.log(dbURI);
+
 mongoose.connect(dbURI);
 
 var db = mongoose.connection;
