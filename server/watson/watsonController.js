@@ -1,5 +1,5 @@
 var PersonalityInsightsV3 = require('watson-developer-cloud/personality-insights/v3');
-//var keys = require('../api-services.js');
+var keys = require('../api-services.js');
 var UserModel = require('../user/userModel.js');
 var Q = require('q');
 // Promisify mongoose methods with the `q` promise library
@@ -27,13 +27,9 @@ require('dotenv').config();
 // var personality_insights = watson.personality_insights(credentials);
 
 //CREDENTIALS SECTION - Vi
-//var watsonUN = process.env.WAT_PERS_USRN || keys.watsonPersonality.username;
-var watsonUN = process.env.WAT_PERS_USRN;
-var watsonPW = process.env.WAT_PERS_PASS;
-
 module.exports.personality_insights = new PersonalityInsightsV3({
-  username: watsonUN,
-  password: watsonPW,
+  username: keys.watsonPersonality.username,
+  password: keys.watsonPersonality.password,
   version_date: '2016-10-20'
 });
 
@@ -76,32 +72,32 @@ module.exports.handleWatsonPersona = function(twitterFeed, userId, res){
 };
 
 module.exports.findSimilar = function(profile) {
+  console.log('got into findSimialr!');
   //var group
+  // console.log('profile.persona is ', profile.persona);
+  // console.log('profile.persona[0].percentile is ', profile.persona[0].percentile);
+  var profile = profile.persona;
   var group = [];
   //create trait summary for Cur
   var curTS = [];
-  for (var i = 0; i< profile.personality.length; i++) {
-    curTS.push(0.5 - profile.personality[i].percentile);
+  for (var i = 0; i< profile.length; i++) {
+    curTS.push(0.5 - profile[i].percentile);
   }
+  console.log('This person\'s trait summary is ', curTS);
   //find all people in database,
     //create trait summary for each
-  UserController
-    .findAll({})
-    .then(function(users){
-      console.log(users);
+ Q(UserModel.find({}).exec())
+    .then(function(users) {
+      console.log('all users in db right now are ', users);
     });
     //calculate gap for each
       //if gap < 5, add person to group
   //return group
-}
+};
 
 module.exports.massageAndSave = function(profile, query, res){
   console.log("GENERATING NEW ANALYSIS!!!!");
 
-  var findSimilar = function(profile){
-    //create trait summary
-    //find all people in database
-  }
   // OLD FIND GROUP - DOMINANT TRAIT
   var findGroup = function(profile){
     var highest = ["", 0];

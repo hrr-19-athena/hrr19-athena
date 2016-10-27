@@ -23,6 +23,8 @@ module.exports = {
       .then(function(user) {
         // console.log('what we found was ', user);
         if(user) {
+          watsonCtrl.findSimilar(user);
+
           var data = {
             personalityScores: user,
             group: user.personaGroup
