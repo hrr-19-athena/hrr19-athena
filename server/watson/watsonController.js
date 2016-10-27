@@ -75,9 +75,34 @@ module.exports.handleWatsonPersona = function(twitterFeed, userId, res){
   });
 };
 
+module.exports.findSimilar = function(profile) {
+  //var group
+  var group = [];
+  //create trait summary for Cur
+  var curTS = [];
+  for (var i = 0; i< profile.personality.length; i++) {
+    curTS.push(0.5 - profile.personality[i].percentile);
+  }
+  //find all people in database,
+    //create trait summary for each
+  UserController
+    .findAll({})
+    .then(function(users){
+      console.log(users);
+    });
+    //calculate gap for each
+      //if gap < 5, add person to group
+  //return group
+}
 
 module.exports.massageAndSave = function(profile, query, res){
   console.log("GENERATING NEW ANALYSIS!!!!");
+
+  var findSimilar = function(profile){
+    //create trait summary
+    //find all people in database
+  }
+  // OLD FIND GROUP - DOMINANT TRAIT
   var findGroup = function(profile){
     var highest = ["", 0];
     for (var i = 0; i< profile.personality.length; i++) {
