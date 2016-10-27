@@ -4,7 +4,11 @@ var userSchema = mongoose.Schema({
     userId: String,
     twitter: {
         posts: [String],
-        commonFriends: [String]
+        commonFriends: [String],
+        name: String,
+        location: String,
+        screen_name: String,
+        img: String
         // group: Compasseionate, 5 groups with dominatnt trait
     },
     facebook: {
