@@ -28,7 +28,6 @@ var _ = require('underscore');
 //CREDENTIALS SECTION - Vi
 //var watsonUN = process.env.WAT_PERS_USRN || keys.watsonPersonality.username;
 var watsonUN = process.env.WAT_PERS_USRN;
-console.log(watsonUN);
 var watsonPW = process.env.WAT_PERS_PASS;
 
 module.exports.personality_insights = new PersonalityInsightsV3({
