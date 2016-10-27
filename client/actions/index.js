@@ -4,8 +4,8 @@ import Axios from 'axios';
 
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_ERROR = 'LOGIN_ERROR';
-let AUTH0_CLIENT_ID='iIkWEtI63PrpAYxSrOZJcO3Y7o3yIiuw';
-let AUTH0_DOMAIN='camelliatree.auth0.com';
+//let AUTH0_CLIENT_ID='iIkWEtI63PrpAYxSrOZJcO3Y7o3yIiuw';
+//let AUTH0_DOMAIN='camelliatree.auth0.com';
 
 const options = {
   languageDictionary: {
@@ -44,12 +44,12 @@ function loginError(err) {
 }
 
 export function login() {
-  // Axios('/api/clientcred')
-  //   .then(response =>{
-  //       AUTH0_CLIENT_ID=response.AUTH0_CLIENT_ID;
-  //       AUTH0_DOMAIN=response.AUTH0_DOMAIN;
-  //     }
-  //   );
+  Axios('/api/clientcred')
+    .then(response =>{
+        AUTH0_CLIENT_ID=response.AUTH0_CLIENT_ID;
+        AUTH0_DOMAIN=response.AUTH0_DOMAIN;
+      }
+    );
   const lock = new Auth0Lock(AUTH0_CLIENT_ID, AUTH0_DOMAIN,options)
   return dispatch => {
     lock.show((err, profile, token) => {

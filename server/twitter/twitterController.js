@@ -1,15 +1,5 @@
 var Twitter = require('./Twitter.js').Twitter;
 
-// need to refactor and use
-// var config = {
-//   'consumerKey': keys.twitter.key,
-//   'consumerSecret': keys.twitter.secret,
-//   'accessToken': keys.twitter.token,
-//   'accessTokenSecret': keys.twitter.tokenSecret,
-//   'callBackUrl': 'https://hrr19-athena.herokuapp.com/api/twitter'
-// };
-
-
 var twitter = new Twitter();
 
 module.exports = {
