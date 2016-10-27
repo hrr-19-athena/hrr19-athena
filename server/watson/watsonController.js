@@ -48,7 +48,7 @@ module.exports.handleWatsonPersona = function(twitterFeed, userId, res){
   var regex = /[a-zA-Z0-9^/:" "{},]/g;
   var results = twitterFeed.match(regex);
   var contentArray = [results.join('')];
-  console.log('Twitter Content Loading into Watson')
+  // console.log('Twitter Content Loading into Watson')
   //console.log('ContentArray: ', contentArray);
   // console.log(results.join(''));
   var params = {
@@ -60,9 +60,7 @@ module.exports.handleWatsonPersona = function(twitterFeed, userId, res){
       'accept': 'application/json'
     }
   };
-
-  // console.log('%%%%%%%%%%%%%',params);
-  // console.log('------------', data.content_items);
+;
   module.exports.personality_insights.profile(params, function(err, profile) {
     if (err)
       console.log(err);
@@ -74,6 +72,7 @@ module.exports.handleWatsonPersona = function(twitterFeed, userId, res){
 
 
 module.exports.massageAndSave = function(profile, id, res){
+  console.log("GENERATING NEW ANALYSIS!!!!");
   var findGroup = function(profile){
     var highest = ["", 0];
     for (var i = 0; i< profile.personality.length; i++) {
@@ -95,7 +94,9 @@ module.exports.massageAndSave = function(profile, id, res){
   userController.addUser(data);
 
   var sendBack = {
-    personalityScores: profile.personality,
+    personalityScores: {
+      persona: profile.personality,
+    },
     group: group
   };
   res.json(sendBack);
