@@ -1,22 +1,28 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { loadAnalysis, login, logout } from '../actions'
-import Auth0Lock from 'auth0-lock';
-let AUTH0_CLIENT_ID='iIkWEtI63PrpAYxSrOZJcO3Y7o3yIiuw';
-let AUTH0_DOMAIN='camelliatree.auth0.com';
+import Auth0Lock from 'auth0-lock'
+import AnalysisResult from './analysisResult'
+
+let AUTH0_CLIENT_ID='iIkWEtI63PrpAYxSrOZJcO3Y7o3yIiuw'
+let AUTH0_DOMAIN='camelliatree.auth0.com'
 
 class Auth extends Component {
+  static contextTypes = {
+    router: PropTypes.object
+  }
+
   constructor(props) {
     super(props)
     const lock = new Auth0Lock(AUTH0_CLIENT_ID, AUTH0_DOMAIN,{})
     const url = window.location.hash
-    const start = url.indexOf('&id_token')+10;
-    const end=url.indexOf('&token_type');
-    const token=url.substring(start,end);
-    const that=this;
-    this.handleLogoutClick = this.handleLogoutClick.bind(this);
-    this.handleGetAnalysisClick = this.handleGetAnalysisClick.bind(this);
-    this.checkAuthentication = this.checkAuthentication.bind(this);
+    const start = url.indexOf('&id_token')+10
+    const end=url.indexOf('&token_type')
+    const token=url.substring(start,end)
+    const that=this
+    this.handleLogoutClick = this.handleLogoutClick.bind(this)
+    this.handleGetAnalysisClick = this.handleGetAnalysisClick.bind(this)
+    this.checkAuthentication = this.checkAuthentication.bind(this)
 
     lock.getProfile(token, function(error, profile) {
         if (error) {
@@ -25,8 +31,8 @@ class Auth extends Component {
         console.log('profile:',profile)
         if(profile) {
           localStorage.setItem('id_token', token);
-          localStorage.setItem('profile', JSON.stringify(profile));
-          // that.checkAuthentication();
+          localStorage.setItem('profile', JSON.stringify(profile))
+          // that.checkAuthentication()
           that.state = {
             isAuthenticated: true,
             profile: profile,
@@ -48,50 +54,56 @@ class Auth extends Component {
   }
 
   handleGetAnalysisClick() {
-    const id = this.props.profile.user_id.split('|')[1];
-    console.log('id from auth:',id)
-    this.props.loadAnalysis(id)
-    console.log(this.props.analysisResult)
+    const id = this.props.profile.user_id.split('|')[1]
+    const img = this.props.profile.picture
+    const name = this.props.profile.name
+    const screen_name = this.props.profile.screen_name
+    const location =  this.props.profile.location
+    this.props.loadAnalysis(id, img, name, screen_name, location)
+    console.log('analysis result:',this.props.analysisResult)
   }
-
-
 
   handleLogoutClick() {
     this.props.logout()
+    this.context.router.push('/')
   }
 
-  renderAnalysis() {
-    if(this.props.analysisResult) {
-      return (
-        <div>{this.props.analysisResult.result}</div>
-      )
-    } else {
-      return (
-        <div></div>
-      )
-    }
+  handleGetFriendsClick() {
+    this.context.router.push('/user/friends')
+  }
+
+  componentWillMount() {
+    this.handleGetAnalysisClick()
   }
 
   render() {
 
     const {isAuthenticated, profile, analysisResult } = this.props
 
+    if(!isAuthenticated) {
+      return (
+        <div className='' style={{ marginTop: '10px'}}>
+          <h2>You need to sign in first</h2>
+        </div>
+      )
+    }
 
     return (
-      <div style={{ marginTop: '10px' }}>
-        { !isAuthenticated ? (
-          <div>You need to sign in first</div>
-        ) : (
-          <div>
-          <ul className="list-inline">
-            <li><img src={profile.picture} height="40px" /></li>
-            <li><span>Hello, {profile.nickname}!</span></li>
-            <li><button className="btn btn-primary" onClick={this.handleLogoutClick}>Logout</button></li>
-            <li><button className="btn btn-success" onClick={this.handleGetAnalysisClick}>Analyze your personality</button></li>
-          </ul>
-          { this.renderAnalysis() }
+      <div className = '' style = {{ marginTop: '10px' }}>
+          <div className = 'row' >
+            <div className = 'col-md-3' style = {{ backgroundColor: '' }}>
+              <ul className="nav nav-pills nav-stacked" style={{ marginLeft: '20px'}}>
+                <li><img src={profile.picture} height="50px" /></li>
+                <li><span>Hello, {profile.nickname}!</span></li>
+                <li><span className="btn btn-success btn-sm" onClick={this.handleGetAnalysisClick}>Analyze your personality</span></li>
+                <li><span className="btn btn-warning btn-sm" onClick={this.handleGetFriendsClick}>Find your tribe</span></li>
+                <li><span className="btn btn-primary btn-sm" onClick={this.handleLogoutClick}>Logout</span></li>
+              </ul>
+            </div>
+            <div className = 'col-md-9' >
+              <AnalysisResult data = { analysisResult.data }/>
+            </div>
           </div>
-        )}
       </div>
     )
   }

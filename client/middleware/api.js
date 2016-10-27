@@ -2,7 +2,7 @@ import Axios from 'axios';
 
 export const API_ROOT = 'http://localhost:3000/api/'
 
-function callApi(endpoint, authenticatedRequest, id) {
+function callApi(endpoint, authenticatedRequest, id, img, name, screen_name, location) {
   console.log('endpoint',endpoint);
   console.log('authenticatedRequest:',authenticatedRequest);
   console.log('id in middleware:',id);
@@ -17,7 +17,11 @@ function callApi(endpoint, authenticatedRequest, id) {
       config = {
         headers: { 'Authorization': `Bearer ${token}` },
         params: {
-          id: id
+          id: id,
+          img: img,
+          name: name,
+          screen_name: screen_name,
+          location: location
         }
       }
     } else {
@@ -46,7 +50,7 @@ export default store => next => action => {
     return next(action)
   }
 
-  let { endpoint, types, authenticatedRequest, id } = callAPI
+  let { endpoint, types, authenticatedRequest, id, img, name, screen_name, location } = callAPI
 
   if (typeof endpoint !== 'string') {
     throw new Error('Specify a string endpoint URL.')
@@ -69,7 +73,7 @@ export default store => next => action => {
   const [ requestType, successType, failureType ] = types
   next(actionWith({ type: requestType }))
 
-  return callApi(endpoint, authenticatedRequest, id).then(
+  return callApi(endpoint, authenticatedRequest, id, img, name, screen_name, location).then(
     response => next(actionWith({
       response,
       authenticatedRequest,

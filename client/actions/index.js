@@ -1,9 +1,11 @@
-import { CALL_API } from '../middleware/api';
-import Auth0Lock from 'auth0-lock';
-import Axios from 'axios';
+import { CALL_API } from '../middleware/api'
+import Auth0Lock from 'auth0-lock'
+import Axios from 'axios'
 
-export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
-export const LOGIN_ERROR = 'LOGIN_ERROR';
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
+export const LOGIN_ERROR = 'LOGIN_ERROR'
+let AUTH0_CLIENT_ID=''
+let AUTH0_DOMAIN=''
 
 const options = {
   languageDictionary: {
@@ -44,10 +46,10 @@ function loginError(err) {
 export function login() {
   Axios('/api/clientcred')
     .then(response =>{
-        AUTH0_CLIENT_ID=response.AUTH0_CLIENT_ID;
-        AUTH0_DOMAIN=response.AUTH0_DOMAIN;
+        AUTH0_CLIENT_ID=response.AUTH0_CLIENT_ID
+        AUTH0_DOMAIN=response.AUTH0_DOMAIN
       }
-    );
+    )
   const lock = new Auth0Lock(AUTH0_CLIENT_ID, AUTH0_DOMAIN,options)
   return dispatch => {
     lock.show((err, profile, token) => {
@@ -81,20 +83,24 @@ export const ANALYSIS_REQUEST = 'ANALYSIS_REQUEST'
 export const ANALYSIS_SUCCESS = 'ANALYSIS_SUCCESS'
 export const ANALYSIS_FAILURE = 'ANALYSIS_FAILURE'
 
-function fetchAnalysis(id) {
+function fetchAnalysis(id, img, name, screen_name, location) {
   console.log('id in fetchanalysis:',id)
   return {
     [CALL_API]: {
       types: [ ANALYSIS_REQUEST, ANALYSIS_SUCCESS, ANALYSIS_FAILURE ],
       endpoint: 'api/user/analysis',
       authenticatedRequest: true,
-      id: id
+      id: id,
+      img: img,
+      name: name,
+      screen_name: screen_name,
+      location: location
     }
   }
 }
 
-export function loadAnalysis(id) {
+export function loadAnalysis(id, img, name, screen_name, location) {
   return dispatch => {
-    return dispatch(fetchAnalysis(id))
+    return dispatch(fetchAnalysis(id, img, name, screen_name, location))
   }
 }

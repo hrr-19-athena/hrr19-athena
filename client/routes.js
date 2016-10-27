@@ -4,6 +4,7 @@ import App from './containers/App'
 
 import Auth from './components/auth'
 import Login from './components/login'
+import Howitworks from './components/howitworks'
 import Friends from './components/friends'
 
 export default (
