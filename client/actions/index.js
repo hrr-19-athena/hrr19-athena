@@ -4,8 +4,6 @@ import Axios from 'axios';
 
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_ERROR = 'LOGIN_ERROR';
-//let AUTH0_CLIENT_ID='iIkWEtI63PrpAYxSrOZJcO3Y7o3yIiuw';
-//let AUTH0_DOMAIN='camelliatree.auth0.com';
 
 const options = {
   languageDictionary: {
