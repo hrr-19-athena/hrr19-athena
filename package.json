@@ -43,6 +43,7 @@
     "object-to-json": "0.0.5",
     "q": "^1.4.1",
     "react": "^0.14.3",
+    "react-d3-basic": "^1.6.11",
     "react-dom": "^0.14.3",
     "react-redux": "^4.0.0",
     "react-router": "^2.0.1",
