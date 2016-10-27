@@ -28,7 +28,11 @@ module.exports = {
        userId: data.id,
         twitter: {
             posts: [],
-            commonFriends: []
+            commonFriends: [],
+            name: data.name,
+            location: data.location,
+            screen_name: data.screen_name,
+            img: data.img
         },
         facebook: {
             posts: []

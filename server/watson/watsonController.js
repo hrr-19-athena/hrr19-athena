@@ -75,7 +75,7 @@ module.exports.handleWatsonPersona = function(twitterFeed, userId, res){
 };
 
 
-module.exports.massageAndSave = function(profile, id, res){
+module.exports.massageAndSave = function(profile, query, res){
   console.log("GENERATING NEW ANALYSIS!!!!");
   var findGroup = function(profile){
     var highest = ["", 0];
@@ -90,10 +90,14 @@ module.exports.massageAndSave = function(profile, id, res){
   var group = findGroup(profile);
 
   var data = {
-    id: id,
+    id: query.id,
     persona: profile.personality,
-    group: group
-  };
+    group: group,
+    name: query.name,
+    location: query.location,
+    screen_name: query.screen_name,
+    img: query.img
+  }
   // req.body.user='HackReactor';
   userController.addUser(data);
 

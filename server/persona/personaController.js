@@ -12,6 +12,7 @@ module.exports = {
     //check if persona data exists
     //need to handle flow if data exists send back data if not continue w/ function
     var userId = req.query.id;
+    var query = req.query;
     // var userId = 'HackReactor';
     //var screenName = res.body.id;
     //is this a default number of tweets?
@@ -33,7 +34,7 @@ module.exports = {
           //get twitter data & send to watson
           twitterCtrl.getUserPosts(userId, count, function(posts){
             // console.log(posts);
-            watsonCtrl.handleWatsonPersona(posts, userId, res);
+            watsonCtrl.handleWatsonPersona(posts, query, res);
             //   res.send(data);
           });
     // twitterCtrl.getUserPosts(userId, count, function(posts){
