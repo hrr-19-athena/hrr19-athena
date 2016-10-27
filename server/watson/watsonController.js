@@ -71,25 +71,24 @@ module.exports.handleWatsonPersona = function(twitterFeed, userId, res){
   });
 };
 
-module.exports.findSimilar = function(profile) {
+module.exports.findSimilar = function(profile, id) {
   console.log('got into findSimialr!');
   //var group
-  // console.log('profile.persona is ', profile.persona);
+  console.log('profile is ', profile);
+  console.log('profile.persona is ', profile.persona);
   // console.log('profile.persona[0].percentile is ', profile.persona[0].percentile);
-  var curUserId = profile.userId;
-  var profile = profile.persona;
+  var curUserId = profile.userId || id;
+  var profile = profile.persona || profile.personality;
   var similarGroup = [];
   //create trait summary for Cur
   var curTS = [];
   for (var i = 0; i< profile.length; i++) {
     curTS.push(0.5 - profile[i].percentile);
   }
-  console.log('This person\'s trait summary is ', curTS);
+  // console.log('This person\'s trait summary is ', curTS);
   //find all people in database,
  return Q(UserModel.find({}).exec())
     .then(function(users) {
-      // console.log('all users in db right now are ', users);
-      // console.log('users length is ', users.length);
     //create trait summary for each user in database
       for (var j = 0; j<users.length; j++) {
         var userTS = [];
@@ -98,33 +97,26 @@ module.exports.findSimilar = function(profile) {
         for(var k = 0; k<curUser.length; k++) {
           userTS.push(0.5 - curUser[k].percentile);
         }
-        console.log('individual userTS is ', userTS);
+        // console.log('individual userTS is ', userTS);
     //calculate gap for each
       //if gap < 5, add person to group
         var gap = 0;
         for(var l = 0; l<userTS.length; l++) {
           gap += (curTS[l] - userTS[l]);
         }
-        console.log('gap between this cur user and other user is ', gap);
-        console.log('other user', users[j].userId);
-        console.log('this user', curUserId);
-        console.log('math abs of gap ', Math.abs(gap));
-
         if(Math.abs(gap) < 0.03 && users[j].userId !== curUserId){
           similarGroup.push(users[j]);
-          console.log(similarGroup);
+          // console.log(similarGroup);
         }
       }
   //return group
-    console.log('similarGroup from watsonController ', similarGroup);
+    // console.log('similarGroup from watsonController ', similarGroup);
     return similarGroup;
     });
 };
 
 module.exports.massageAndSave = function(profile, query, res){
   console.log("GENERATING NEW ANALYSIS!!!!");
-  var similarGroup = module.exports.findSimilarGroup(profile);
-  // OLD FIND GROUP - DOMINANT TRAIT
   var findGroup = function(profile){
     var highest = ["", 0];
     for (var i = 0; i< profile.personality.length; i++) {
@@ -136,6 +128,15 @@ module.exports.massageAndSave = function(profile, query, res){
     return highest[0];
   };
   var group = findGroup(profile);
+  module.exports.findSimilar(profile, id)
+    .then(function(similarGroup){
+      var data = {
+        id: id,
+        persona: profile.personality,
+        group: group
+      };
+      // req.body.user='HackReactor';
+      userController.addUser(data);
 
   var data = {
     id: query.id,

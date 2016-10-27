@@ -31,7 +31,7 @@ module.exports = {
             var data = {
               personalityScores: user,
               similarGroup: similarGroup,
-              dominantGroup: user.personaGroup
+              dominantTrait: user.personaGroup
             };
             // console.log(user);
             res.send(data);
