@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { loadAnalysis, logout, setToken } from '../actions'
 import Auth0Lock from 'auth0-lock'
-import AnalysisResult from './analysisResult'
+import AnalysisView from './analysisView'
 
 let AUTH0_CLIENT_ID='iIkWEtI63PrpAYxSrOZJcO3Y7o3yIiuw'
 let AUTH0_DOMAIN='camelliatree.auth0.com'

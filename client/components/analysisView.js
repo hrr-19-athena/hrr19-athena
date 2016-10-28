@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import Chart from './chart'
 import { connect } from 'react-redux'
 
-class AnalysisResult extends Component {
+class AnalysisView extends Component {
   constructor(props) {
     super(props)
   }
@@ -51,4 +51,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, null)(AnalysisResult)
+export default connect(mapStateToProps, null)(AnalysisView)
