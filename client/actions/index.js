@@ -129,6 +129,7 @@ export const FRIENDS_SUCCESS = 'FRIENDS_SUCCESS'
 export const FRIENDS_FAILURE = 'FRIENDS_FAILURE'
 
 function fetchFriends(id) {
+  console.log('fetchFriends called')
   const params = {
       id: id
   }
@@ -143,6 +144,7 @@ function fetchFriends(id) {
 }
 
 export function loadFriends(id) {
+  console.log('loadFriends called')
   return dispatch => {
     return dispatch(fetchFriends(id))
   }

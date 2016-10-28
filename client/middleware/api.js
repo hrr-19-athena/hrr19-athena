@@ -3,7 +3,7 @@ import Axios from 'axios';
 export const API_ROOT = 'http://localhost:5000/'
 
 function callApi(endpoint, authenticatedRequest, params) {
-  console.log(arguments);
+  console.log('params:', params)
 
   let token = localStorage.getItem('id_token') || null
 

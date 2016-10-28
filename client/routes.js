@@ -11,9 +11,10 @@ import AnalysisView from './components/analysisView'
 export default (
   <Route path = "/" component = { App }>
     <IndexRoute component = { Login }/>
-    <Route path = "/user" component = { Auth } />
+    <Route path = "/user" component = { Auth } >
       <Route path = '/user/analysis' component = { AnalysisView } />
       <Route path = '/user/friends' components = { Friends } />
+    </Route>
   </Route>
 )
 
