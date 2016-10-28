@@ -23,12 +23,19 @@ module.exports = {
       .then(function(user) {
         // console.log('what we found was ', user);
         if(user) {
-          var data = {
-            personalityScores: user,
-            group: user.personaGroup
-          };
-          // console.log(user);
-          res.send(data);
+          var similarGroup = {};
+          watsonCtrl.findSimilar(user)
+            .then(function(returnedGroup){
+              similarGroup = returnedGroup;
+              console.log('similarGroup is ',similarGroup);
+            var data = {
+              personalityScores: user,
+              similarGroup: similarGroup,
+              dominantTrait: user.personaGroup
+            };
+            // console.log(user);
+            res.send(data);
+            });
         }
         else if(!user) {
           //get twitter data & send to watson

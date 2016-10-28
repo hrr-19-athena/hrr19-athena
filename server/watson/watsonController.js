@@ -1,5 +1,5 @@
 var PersonalityInsightsV3 = require('watson-developer-cloud/personality-insights/v3');
-//var keys = require('../api-services.js');
+var keys = require('../api-services.js');
 var UserModel = require('../user/userModel.js');
 var Q = require('q');
 // Promisify mongoose methods with the `q` promise library
@@ -27,13 +27,9 @@ require('dotenv').config();
 // var personality_insights = watson.personality_insights(credentials);
 
 //CREDENTIALS SECTION - Vi
-//var watsonUN = process.env.WAT_PERS_USRN || keys.watsonPersonality.username;
-var watsonUN = process.env.WAT_PERS_USRN;
-var watsonPW = process.env.WAT_PERS_PASS;
-
 module.exports.personality_insights = new PersonalityInsightsV3({
-  username: watsonUN,
-  password: watsonPW,
+  username: keys.watsonPersonality.username,
+  password: keys.watsonPersonality.password,
   version_date: '2016-10-20'
 });
 
@@ -75,6 +71,50 @@ module.exports.handleWatsonPersona = function(twitterFeed, userId, res){
   });
 };
 
+module.exports.findSimilar = function(profile, id) {
+  console.log('got into findSimialr!');
+  //var group
+  // console.log('profile is ', profile);
+  // console.log('profile.persona is ', profile.persona);
+  // console.log('profile.persona[0].percentile is ', profile.persona[0].percentile);
+  var curUserId = profile.userId || id;
+  var profile = profile.persona || profile.personality;
+  var similarGroup = [];
+  //create trait summary for Cur
+  var curTS = [];
+  for (var i = 0; i< profile.length; i++) {
+    curTS.push(0.5 - profile[i].percentile);
+  }
+  // console.log('This person\'s trait summary is ', curTS);
+  //find all people in database,
+ return Q(UserModel.find({}).exec())
+    .then(function(users) {
+    //create trait summary for each user in database
+      for (var j = 0; j<users.length; j++) {
+        var userTS = [];
+        var curUser = users[j].persona;
+        // console.log('each user is ', curUser);
+        for(var k = 0; k<curUser.length; k++) {
+          userTS.push(0.5 - curUser[k].percentile);
+        }
+        // console.log('individual userTS is ', userTS);
+    //calculate gap for each
+      //if gap < 5, add person to group
+        var gap = 0;
+        for(var l = 0; l<userTS.length; l++) {
+          gap += (curTS[l] - userTS[l]);
+        }
+        console.log('gap is ', gap);
+        if(Math.abs(gap) < 0.5 && users[j].userId !== curUserId){
+          similarGroup.push(users[j]);
+          // console.log(similarGroup);
+        }
+      }
+  //return group
+    // console.log('similarGroup from watsonController ', similarGroup);
+    return similarGroup;
+    });
+};
 
 module.exports.massageAndSave = function(profile, query, res){
   console.log("GENERATING NEW ANALYSIS!!!!");
@@ -89,26 +129,30 @@ module.exports.massageAndSave = function(profile, query, res){
     return highest[0];
   };
   var group = findGroup(profile);
+  module.exports.findSimilar(profile, id)
+    .then(function(similarGroup){
+      var data = {
+        id: query.id,
+        persona: profile.personality,
+        group: group,
+        name:query.name,
+        location:query.location,
+        screen_name:query.screen_name,
+        img:query.img
+      };
+      // req.body.user='HackReactor';
+      userController.addUser(data);
 
-  var data = {
-    id: query.id,
-    persona: profile.personality,
-    group: group,
-    name: query.name,
-    location: query.location,
-    screen_name: query.screen_name,
-    img: query.img
-  }
-  // req.body.user='HackReactor';
-  userController.addUser(data);
+      var sendBack = {
+        personalityScores: {
+          persona: profile.personality,
+        },
+        similarGroup: similarGroup,
+        dominantTrait: group
+      };
+      res.json(sendBack);
+    });
 
-  var sendBack = {
-    personalityScores: {
-      persona: profile.personality,
-    },
-    group: group
-  };
-  res.json(sendBack);
   // var data = profile.personality;
   // findUser({userId: id})
   //   .then(function(user){
