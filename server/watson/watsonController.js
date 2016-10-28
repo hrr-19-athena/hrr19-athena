@@ -129,6 +129,7 @@ module.exports.massageAndSave = function(profile, query, res){
     return highest[0];
   };
   var group = findGroup(profile);
+
   module.exports.findSimilar(profile, id)
     .then(function(similarGroup){
       var data = {
@@ -141,6 +142,7 @@ module.exports.massageAndSave = function(profile, query, res){
         img:query.img,
         description: query.description
       };
+      // console.log('group from data is ', group);
       // req.body.user='HackReactor';
       userController.addUser(data);
 
@@ -153,29 +155,6 @@ module.exports.massageAndSave = function(profile, query, res){
       };
       res.json(sendBack);
     });
-
-  // var data = profile.personality;
-  // findUser({userId: id})
-  //   .then(function(user){
-  //     console.log("GOT TO HERE ", id);
-  //     user.persona = data;
-  //   })
-  //   // .save()
-  //   .then(function(u){
-  //     console.log('FOUND THIS PERSON');
-  //     // console.log('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%');
-  //     res.json(profile.personality);
-  //   });
-    // .find()
-    // .where('userId').equals(id)
-    // .then(function(user){
-    //   console.log('found this user ', user);
-    //   console.log('data in here is ', data);
-    //   console.log(user.persona);
-    //   user.persona = data;
-    //   console.log(user);
-    //   user.save();
-    // });
 };
 
 //FOR WATSON LATER ON WITH REAL DATA -Vi

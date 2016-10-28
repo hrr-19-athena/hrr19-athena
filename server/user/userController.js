@@ -59,11 +59,7 @@ module.exports = {
     var group = req.query.group;
     findAll({personaGroup: group})
       .then(function(users) {
-        var ids = [];
-        users.forEach(function(each){
-          ids.push(each.userId);
-        });
-        res.send(ids);
+        res.send(users);
       });
   }
 }; //end module.exports

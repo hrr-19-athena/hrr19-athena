@@ -19,7 +19,7 @@ var userSchema = mongoose.Schema({
         results: [String]
     },
     persona:Object,
-    personaDominantTrait:String
+    personaGroup:String
     // persona: {
     //     group: String,
     //     personalityAnalysis: String //BIG 5 only for now
