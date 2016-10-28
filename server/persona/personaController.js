@@ -16,7 +16,7 @@ module.exports = {
     // var userId = 'HackReactor';
     //var screenName = res.body.id;
     //is this a default number of tweets?
-    console.log('person we are looking for is ', userId);
+    // console.log('person we are looking for is ', userId);
     var count = 100;
 
     Q(User.findOne({userId: userId}).exec())
@@ -27,7 +27,7 @@ module.exports = {
           watsonCtrl.findSimilar(user)
             .then(function(returnedGroup){
               similarGroup = returnedGroup;
-              console.log('similarGroup is ',similarGroup);
+              // console.log('similarGroup is ',similarGroup);
             var data = {
               personalityScores: user,
               similarGroup: similarGroup,
@@ -48,24 +48,26 @@ module.exports = {
       // console.log(posts);
       // res.send(posts);
             // watsonCtrl.handleWatsonPersona(posts, userId, res);
-
     }
   });
 
-
-      //   }
-      // })
-      // .then(function(user) {
-      //   res.send(user.persona);
-      // })
-      // .fail(function(error) {
-      //   next(error);
-      // });
-
-
-
-    //upon completion of twitter retrieval pass data to Watson function
+ },
+ getSimilar: function(req, res) {
+  var userId = req.query.id;
+  // console.log('userId is ', userId);
+  Q(User.findOne({userId:userId}).exec())
+    .then(function(user) {
+      console.log('found this user!');
+      if (user) {
+        watsonCtrl.findSimilar(user)
+            .then(function(returnedGroup){
+              // console.log('similarGroup is ',similarGroup);
+              res.send(returnedGroup);
+            });
+      }
+    });
  }
+
 };
 
 // var req = {

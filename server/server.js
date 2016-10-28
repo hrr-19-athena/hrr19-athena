@@ -70,7 +70,9 @@ app.get('/api/clientcred', function(req, res) {
 
 app.get('/api/user/analysis', Persona.personaData);
 
-app.get('/api/user/groups', userController.getUsersInGroup);
+app.get('/api/user/dominantTraitGroup', userController.getUsersInGroup);
+
+app.get('/api/user/similarGroup', Persona.getSimilar);
 
   //when profile page loads for user gets finished results for current
 
