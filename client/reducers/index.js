@@ -54,33 +54,61 @@ function analysis(state = {
   isFetching: false,
   analysisResult: {},
   error: ''
-}, action) {
-  switch (action.type) {
-    case ActionTypes.ANALYSIS_REQUEST:
-      return Object.assign({}, state, {
-        isFetching: true
-      })
-    case ActionTypes.ANALYSIS_SUCCESS:
-      return Object.assign({}, state, {
-        isFetching: false,
-        analysisResult: action.response,
-        error: ''
-      })
-    case ActionTypes.ANALYSIS_FAILURE:
-      return Object.assign({}, state, {
-        isFetching: false,
-        analysisResult: {},
-        error: action.error
-      })
-    default:
-      return state
-  }
+  }, action) {
+    switch (action.type) {
+      case ActionTypes.ANALYSIS_REQUEST:
+        return Object.assign({}, state, {
+          isFetching: true
+        })
+      case ActionTypes.ANALYSIS_SUCCESS:
+        return Object.assign({}, state, {
+          isFetching: false,
+          analysisResult: action.response,
+          error: ''
+        })
+      case ActionTypes.ANALYSIS_FAILURE:
+        return Object.assign({}, state, {
+          isFetching: false,
+          analysisResult: {},
+          error: action.error
+        })
+      default:
+        return state
+    }
+}
+
+function friends(state = {
+  isFetching: false,
+  friendsList: [],
+  error: ''
+  }, action) {
+    switch (action.type) {
+      case ActionTypes.FRIENDS_REQUEST:
+        return Object.assign({}, state, {
+          isFetching: true
+        })
+      case ActionTypes.FRIENDS_SUCCESS:
+        return Object.assign({}, state, {
+          isFetching: false,
+          friendsList: action.response,
+          error: ''
+        })
+      case ActionTypes.FRIENDS_FAILURE:
+        return Object.assign({}, state, {
+          isFetching: false,
+          friendsList: [],
+          error: action.error
+        })
+      default:
+        return state
+    }
 }
 
 const rootReducer = combineReducers({
   routing,
   auth,
-  analysis
+  analysis,
+  friends
 })
 
 export default rootReducer

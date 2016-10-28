@@ -2,10 +2,7 @@ import Axios from 'axios';
 
 export const API_ROOT = 'http://localhost:3000/api/'
 
-function callApi(endpoint, authenticatedRequest, id, img, name, screen_name, location) {
-  console.log('endpoint',endpoint);
-  console.log('authenticatedRequest:',authenticatedRequest);
-  console.log('id in middleware:',id);
+function callApi(endpoint, authenticatedRequest, params) {
   console.log(arguments);
 
   let token = localStorage.getItem('id_token') || null
@@ -16,13 +13,7 @@ function callApi(endpoint, authenticatedRequest, id, img, name, screen_name, loc
     if(token) {
       config = {
         headers: { 'Authorization': `Bearer ${token}` },
-        params: {
-          id: id,
-          img: img,
-          name: name,
-          screen_name: screen_name,
-          location: location
-        }
+        params: params
       }
     } else {
       throw new Error("No token saved!")
@@ -50,7 +41,7 @@ export default store => next => action => {
     return next(action)
   }
 
-  let { endpoint, types, authenticatedRequest, id, img, name, screen_name, location } = callAPI
+  let { endpoint, types, authenticatedRequest, params } = callAPI
 
   if (typeof endpoint !== 'string') {
     throw new Error('Specify a string endpoint URL.')
@@ -73,7 +64,7 @@ export default store => next => action => {
   const [ requestType, successType, failureType ] = types
   next(actionWith({ type: requestType }))
 
-  return callApi(endpoint, authenticatedRequest, id, img, name, screen_name, location).then(
+  return callApi(endpoint, authenticatedRequest, params).then(
     response => next(actionWith({
       response,
       authenticatedRequest,
