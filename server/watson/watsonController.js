@@ -129,6 +129,7 @@ module.exports.massageAndSave = function(profile, query, res){
     return highest[0];
   };
   var group = findGroup(profile);
+
   module.exports.findSimilar(profile, id)
     .then(function(similarGroup){
       var data = {
@@ -141,6 +142,7 @@ module.exports.massageAndSave = function(profile, query, res){
         img:query.img,
         description: query.description
       };
+      // console.log('group from data is ', group);
       // req.body.user='HackReactor';
       userController.addUser(data);
 
