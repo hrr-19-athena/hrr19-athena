@@ -7,6 +7,7 @@ var path = require('path');
 var extend = require('util')._extend;
 var Persona = require('./persona/personaController.js');
 var userController = require('./user/userController.js');
+var genUsers = require('./populate/populateController.js');
 require('dotenv').config();
 
 //-------------- DATABASE -------------------------
@@ -68,11 +69,21 @@ app.get('/api/clientcred', function(req, res) {
 // req.body.user='HackReactor';
 // userController.addUser(req);
 
+// var count = 0;
+// var maxPopulation = 5;
+// var postsPerUser = 100;
+// var seedProfiles = ['@HackReactor'];
+
+// genUsers.populate(seedProfiles, postsPerUser, maxPopulation);
+
+
 app.get('/api/user/analysis', Persona.personaData);
 
 app.get('/api/user/dominantTraitGroup', userController.getUsersInGroup);
 
 app.get('/api/user/similarGroup', Persona.getSimilar);
+
+app.get('/api/user/populate', genUsers.populate);
 
   //when profile page loads for user gets finished results for current
 

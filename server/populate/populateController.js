@@ -1,4 +1,6 @@
-var Twitter = require('twitter-node-client').Twitter;
+var Persona = require('../persona/personaController.js');
+var Twitter = require('../twitter/Twitter.js').Twitter;
+//var Twitter = require('twitter-node-client').Twitter;
 
 // start twitter
 var twitter = new Twitter();
@@ -21,15 +23,20 @@ module.exports = {
         id: "",
         language: "",
         screen_name: "",
-        //place: ""
+        location: "",
+        img: "",
+        name: ""
       };
       userTweet.content = post.text;
       userTweet.contenttype = 'text/plain';
       //userTweet.created = post.created_at;
-      userTweet.id = String(post.id);
+      userTweet.id = String(post.user.id);
       userTweet.language = post.lang;
       userTweet.screen_name = post.user.screen_name;
-      //userTweet.place = post.place;
+      userTweet.location = post.user.location;
+      userTweet.img = post.user.profile_image_url;
+      userTweet.name = post.user.name;
+
       twitterPosts.push(userTweet);
       });
       //console.log(twitterPosts);
@@ -55,23 +62,49 @@ var gatherProfiles = function(seedProfile, postsPerUser, maxPopulation){
     console.log('Twitter Friends', twitterNameResults);
 
     //write to db
-    twitterNameResults.forEach(function(twitterName){
+    twitterNameResults.forEach(function(twitterName,index){
       queue.push(twitterName);
-      // make get request
+      if(index <= maxPopulation){
+        module.exports.getUserPosts(twitterName,1, function(posts){
+          var id = JSON.parse(posts)[0].id;
+          var name = JSON.parse(posts)[0].name;
+          var location = JSON.parse(posts)[0].location;
+          var screen_name = JSON.parse(posts)[0].screen_name;
+          var img = JSON.parse(posts)[0].img;
+          var req ={
+            query: {
+              id: id,
+              name: name,
+              location: location,
+              screen_name: screen_name,
+              img: img
+            }
+          };
+          //console.log(req);
+          Persona.personaData(req);
+        });
+      }
+
+
     });
 
   });
 }
 
-var populate = function(seedProfiles, postsPerUser, maxPopulation){
+module.exports.populate = function(seedProfiles, postsPerUser, maxPopulation){
+  var count = 0;
+  var maxPopulation = 10;
+  var postsPerUser = 100;
+  var seedProfiles = ['@HackReactor'];
+
   seedProfiles.forEach(function(seedProfile){
     gatherProfiles(seedProfile, postsPerUser, maxPopulation);
   });
 }
 
-var count = 0;
-var maxPopulation = 5;
-var postsPerUser = 100;
-var seedProfiles = ['@HackReactor'];
+// var count = 0;
+// var maxPopulation = 10;
+// var postsPerUser = 1;
+// var seedProfiles = ['@HackReactor'];
 
-populate(seedProfiles, postsPerUser, maxPopulation);
+//module.exports.populate(seedProfiles, postsPerUser, maxPopulation);
