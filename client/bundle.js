@@ -27505,9 +27505,12 @@
 	  _reactRouter.Route,
 	  { path: '/', component: _App2.default },
 	  _react2.default.createElement(_reactRouter.IndexRoute, { component: _login2.default }),
-	  _react2.default.createElement(_reactRouter.Route, { path: '/user', component: _auth2.default }),
-	  _react2.default.createElement(_reactRouter.Route, { path: '/user/analysis', component: _analysisView2.default }),
-	  _react2.default.createElement(_reactRouter.Route, { path: '/user/friends', components: _friends2.default })
+	  _react2.default.createElement(
+	    _reactRouter.Route,
+	    { path: '/user', component: _auth2.default },
+	    _react2.default.createElement(_reactRouter.Route, { path: '/user/analysis', component: _analysisView2.default }),
+	    _react2.default.createElement(_reactRouter.Route, { path: '/user/friends', components: _friends2.default })
+	  )
 	);
 
 /***/ },
@@ -27647,6 +27650,7 @@
 	    _this.props.setToken();
 	    _this.handleLogoutClick = _this.handleLogoutClick.bind(_this);
 	    _this.handleGetAnalysisClick = _this.handleGetAnalysisClick.bind(_this);
+	    _this.handleGetFriendsClick = _this.handleGetFriendsClick.bind(_this);
 	    return _this;
 	  }
 
@@ -27659,7 +27663,6 @@
 	      var screen_name = this.props.profile.screen_name;
 	      var location = this.props.profile.location;
 	      this.props.loadAnalysis(id, img, name, screen_name, location);
-	      console.log('analysis result:', this.props.analysisResult);
 	      this.context.router.push('/user/analysis');
 	    }
 	  }, {
@@ -27671,6 +27674,8 @@
 	  }, {
 	    key: 'handleGetFriendsClick',
 	    value: function handleGetFriendsClick() {
+	      var id = this.props.profile.user_id.split('|')[1];
+	      this.props.loadFriends(id);
 	      this.context.router.push('/user/friends');
 	    }
 	  }, {
@@ -27793,7 +27798,8 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, {
 	  loadAnalysis: _actions.loadAnalysis,
 	  logout: _actions.logout,
-	  setToken: _actions.setToken
+	  setToken: _actions.setToken,
+	  loadFriends: _actions.loadFriends
 	})(Auth);
 
 /***/ },
@@ -27949,6 +27955,7 @@
 	var FRIENDS_FAILURE = exports.FRIENDS_FAILURE = 'FRIENDS_FAILURE';
 
 	function fetchFriends(id) {
+	  console.log('fetchFriends called');
 	  var params = {
 	    id: id
 	  };
@@ -27961,6 +27968,7 @@
 	}
 
 	function loadFriends(id) {
+	  console.log('loadFriends called');
 	  return function (dispatch) {
 	    return dispatch(fetchFriends(id));
 	  };
@@ -27988,7 +27996,7 @@
 	var API_ROOT = exports.API_ROOT = 'http://localhost:5000/';
 
 	function callApi(endpoint, authenticatedRequest, params) {
-	  console.log(arguments);
+	  console.log('params:', params);
 
 	  var token = localStorage.getItem('id_token') || null;
 
@@ -101326,15 +101334,18 @@
 	var Friends = function (_Component) {
 	  _inherits(Friends, _Component);
 
-	  function Friends() {
+	  function Friends(props) {
 	    _classCallCheck(this, Friends);
 
-	    return _possibleConstructorReturn(this, (Friends.__proto__ || Object.getPrototypeOf(Friends)).apply(this, arguments));
+	    return _possibleConstructorReturn(this, (Friends.__proto__ || Object.getPrototypeOf(Friends)).call(this, props));
 	  }
 
 	  _createClass(Friends, [{
 	    key: 'render',
 	    value: function render() {
+	      var friendsList = this.props.friendsList;
+
+	      console.log('friends:', friendsList);
 	      return _react2.default.createElement(
 	        'div',
 	        null,
@@ -101346,7 +101357,18 @@
 	  return Friends;
 	}(_react.Component);
 
-	exports.default = Friends;
+	function mapStateToProps(state) {
+	  var friends = state.friends;
+	  var friendsList = friends.friendsList;
+	  var error = friends.error;
+
+	  return {
+	    friendsList: friendsList,
+	    error: error
+	  };
+	}
+
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, null)(Friends);
 
 /***/ },
 /* 679 */

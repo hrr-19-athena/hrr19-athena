@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { loadAnalysis, logout, setToken } from '../actions'
+import { loadAnalysis, logout, setToken,loadFriends } from '../actions'
 import Auth0Lock from 'auth0-lock'
 import AnalysisView from './analysisView'
 
@@ -17,6 +17,7 @@ class Auth extends Component {
     this.props.setToken()
     this.handleLogoutClick = this.handleLogoutClick.bind(this)
     this.handleGetAnalysisClick = this.handleGetAnalysisClick.bind(this)
+    this.handleGetFriendsClick = this.handleGetFriendsClick.bind(this)
   }
 
   handleGetAnalysisClick() {
@@ -26,7 +27,6 @@ class Auth extends Component {
     const screen_name = this.props.profile.screen_name
     const location =  this.props.profile.location
     this.props.loadAnalysis(id, img, name, screen_name, location)
-    console.log('analysis result:',this.props.analysisResult)
     this.context.router.push('/user/analysis')
   }
 
@@ -36,6 +36,8 @@ class Auth extends Component {
   }
 
   handleGetFriendsClick() {
+    const id = this.props.profile.user_id.split('|')[1]
+    this.props.loadFriends(id)
     this.context.router.push('/user/friends')
   }
 
@@ -89,5 +91,6 @@ function mapStateToProps(state) {
 export default connect(mapStateToProps, {
   loadAnalysis,
   logout,
-  setToken
+  setToken,
+  loadFriends
 })(Auth)
