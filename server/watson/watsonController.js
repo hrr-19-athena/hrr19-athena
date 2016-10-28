@@ -143,26 +143,16 @@ module.exports.massageAndSave = function(profile, query, res){
       // req.body.user='HackReactor';
       userController.addUser(data);
 
-  var data = {
-    id: query.id,
-    persona: profile.personality,
-    group: group,
-    name: query.name,
-    location: query.location,
-    screen_name: query.screen_name,
-    img: query.img
-  }
-  // req.body.user='HackReactor';
-  userController.addUser(data);
+      var sendBack = {
+        personalityScores: {
+          persona: profile.personality,
+        },
+        similarGroup: similarGroup,
+        dominantTrait: group
+      };
+      res.json(sendBack);
+    });
 
-  var sendBack = {
-    personalityScores: {
-      persona: profile.personality,
-    },
-    similarGroup: similarGroup,
-    dominantGroup: group
-  };
-  res.json(sendBack);
   // var data = profile.personality;
   // findUser({userId: id})
   //   .then(function(user){
