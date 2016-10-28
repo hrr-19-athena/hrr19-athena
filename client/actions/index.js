@@ -4,9 +4,6 @@ import Axios from 'axios'
 
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
 export const LOGIN_ERROR = 'LOGIN_ERROR'
-var AUTH0_CLIENT_ID = ''
-var AUTH0_DOMAIN = ''
-var lock = ''
 
 const options = {
   languageDictionary: {
@@ -45,36 +42,31 @@ function loginError(err) {
 }
 
 export function login() {
-  return (dispatch) => {
-    Axios('/api/clientcred')
-      .then(function(response) {
-          AUTH0_CLIENT_ID=response.data.AUTH0_CLIENT_ID
-          AUTH0_DOMAIN=response.data.AUTH0_DOMAIN
-          lock = new Auth0Lock(AUTH0_CLIENT_ID, AUTH0_DOMAIN,options)
-          lock.show()
-        })
-  }
+  Axios('/api/clientcred')
+    .then(function(response) {
+        const AUTH0_CLIENT_ID=response.data.AUTH0_CLIENT_ID
+        const AUTH0_DOMAIN=response.data.AUTH0_DOMAIN
+        const lock = new Auth0Lock(AUTH0_CLIENT_ID, AUTH0_DOMAIN,options)
+        lock.show()
+      })
 }
 
 export function setToken() {
   return function(dispatch) {
       const url = window.location.hash
-      console.log('url:',url)
-      const start = url.indexOf('&id_token')+10
-      const end=url.indexOf('&token_type')
-      const token=url.substring(start,end)
-      let profileStored = ''
+      const start = url.indexOf('&id_token') + 10
+      const end = url.indexOf('&token_type')
+      const token = localStorage.getItem('id_token') || url.substring(start,end)
       Axios('/api/clientcred')
       .then(function(response) {
-          AUTH0_CLIENT_ID=response.data.AUTH0_CLIENT_ID
-          AUTH0_DOMAIN=response.data.AUTH0_DOMAIN
-          lock = new Auth0Lock(AUTH0_CLIENT_ID, AUTH0_DOMAIN,{})
+          const AUTH0_CLIENT_ID = response.data.AUTH0_CLIENT_ID
+          const AUTH0_DOMAIN = response.data.AUTH0_DOMAIN
+          const lock = new Auth0Lock(AUTH0_CLIENT_ID, AUTH0_DOMAIN,{})
           lock.getProfile(token, function(error, profile) {
               if (error) {
-                console.log(error);
+                console.log(error)
+                return dispatch(loginError(error))
               }
-              console.log('profile:',profile)
-              profileStored = profile
               localStorage.setItem('id_token', token);
               localStorage.setItem('profile', JSON.stringify(profile))
               return dispatch(loginSuccess(profile))
@@ -99,22 +91,26 @@ export function logout() {
   }
 }
 
+// <============ fetch user personality analysis ===========>
+
 export const ANALYSIS_REQUEST = 'ANALYSIS_REQUEST'
 export const ANALYSIS_SUCCESS = 'ANALYSIS_SUCCESS'
 export const ANALYSIS_FAILURE = 'ANALYSIS_FAILURE'
 
 function fetchAnalysis(id, img, name, screen_name, location) {
-  console.log('id in fetchanalysis:',id)
-  return {
-    [CALL_API]: {
-      types: [ ANALYSIS_REQUEST, ANALYSIS_SUCCESS, ANALYSIS_FAILURE ],
-      endpoint: 'api/user/analysis',
-      authenticatedRequest: true,
+  const params = {
       id: id,
       img: img,
       name: name,
       screen_name: screen_name,
       location: location
+  }
+  return {
+    [CALL_API]: {
+      types: [ ANALYSIS_REQUEST, ANALYSIS_SUCCESS, ANALYSIS_FAILURE ],
+      endpoint: 'api/user/analysis',
+      authenticatedRequest: true,
+      params: params
     }
   }
 }
@@ -122,5 +118,31 @@ function fetchAnalysis(id, img, name, screen_name, location) {
 export function loadAnalysis(id, img, name, screen_name, location) {
   return dispatch => {
     return dispatch(fetchAnalysis(id, img, name, screen_name, location))
+  }
+}
+
+//<======= fetch list of similar users (friends) ========>
+
+export const FRIENDS_REQUEST = 'FRIENDS_REQUEST'
+export const FRIENDS_SUCCESS = 'FRIENDS_SUCCESS'
+export const FRIENDS_FAILURE = 'FRIENDS_FAILURE'
+
+function fetchFriends(id) {
+  const params = {
+      id: id
+  }
+  return {
+    [CALL_API]: {
+      types: [ FRIENDS_REQUEST, FRIENDS_SUCCESS, FRIENDS_FAILURE ],
+      endpoint: 'api/user/similarGroup',
+      authenticatedRequest: true,
+      params: params
+    }
+  }
+}
+
+export function loadFriends(id) {
+  return dispatch => {
+    return dispatch(fetchFriends(id))
   }
 }

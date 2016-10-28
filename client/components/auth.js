@@ -27,6 +27,7 @@ class Auth extends Component {
     const location =  this.props.profile.location
     this.props.loadAnalysis(id, img, name, screen_name, location)
     console.log('analysis result:',this.props.analysisResult)
+    this.context.router.push('/user/analysis')
   }
 
   handleLogoutClick() {
@@ -47,8 +48,8 @@ class Auth extends Component {
 
     if(!isAuthenticated) {
       return (
-        <div className='' style={{ marginTop: '10px'}}>
-          <h2>You need to sign in first</h2>
+        <div className = '' style = {{ marginTop: '10px'}}>
+          <p className = 'lead'>Loading...</p>
         </div>
       )
     } else {
@@ -65,7 +66,7 @@ class Auth extends Component {
               </ul>
             </div>
             <div className = 'col-md-9' >
-              <AnalysisResult data = { analysisResult.data }/>
+              {this.props.children}
             </div>
           </div>
       </div>

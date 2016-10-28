@@ -6,12 +6,14 @@ import Auth from './components/auth'
 import Login from './components/login'
 import Howitworks from './components/howitworks'
 import Friends from './components/friends'
+import AnalysisResult from './components/analysisresult'
 
 export default (
-  <Route path="/" component={App}>
-    <IndexRoute component={Login}/>
-    <Route path="/user" component={Auth} />
-    <Route path='/user/friends' components={Friends} />
+  <Route path = "/" component = { App }>
+    <IndexRoute component = { Login }/>
+    <Route path = "/user" component = { Auth } />
+      <Route path = '/user/analysis' component = { AnalysisResult } />
+      <Route path = '/user/friends' components = { Friends } />
   </Route>
 )
 
