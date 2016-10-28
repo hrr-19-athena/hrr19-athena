@@ -155,29 +155,6 @@ module.exports.massageAndSave = function(profile, query, res){
       };
       res.json(sendBack);
     });
-
-  // var data = profile.personality;
-  // findUser({userId: id})
-  //   .then(function(user){
-  //     console.log("GOT TO HERE ", id);
-  //     user.persona = data;
-  //   })
-  //   // .save()
-  //   .then(function(u){
-  //     console.log('FOUND THIS PERSON');
-  //     // console.log('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%');
-  //     res.json(profile.personality);
-  //   });
-    // .find()
-    // .where('userId').equals(id)
-    // .then(function(user){
-    //   console.log('found this user ', user);
-    //   console.log('data in here is ', data);
-    //   console.log(user.persona);
-    //   user.persona = data;
-    //   console.log(user);
-    //   user.save();
-    // });
 };
 
 //FOR WATSON LATER ON WITH REAL DATA -Vi
