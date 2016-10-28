@@ -138,7 +138,8 @@ module.exports.massageAndSave = function(profile, query, res){
         name:query.name,
         location:query.location,
         screen_name:query.screen_name,
-        img:query.img
+        img:query.img,
+        description: query.description
       };
       // req.body.user='HackReactor';
       userController.addUser(data);

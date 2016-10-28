@@ -32,7 +32,8 @@ module.exports = {
             name: data.name,
             location: data.location,
             screen_name: data.screen_name,
-            img: data.img
+            img: data.img,
+            description: data.description
         },
         facebook: {
             posts: []

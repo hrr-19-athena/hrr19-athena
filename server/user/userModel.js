@@ -8,7 +8,8 @@ var userSchema = mongoose.Schema({
         name: String,
         location: String,
         screen_name: String,
-        img: String
+        img: String,
+        description: String
         // group: Compasseionate, 5 groups with dominatnt trait
     },
     facebook: {

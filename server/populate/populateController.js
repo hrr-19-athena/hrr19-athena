@@ -25,7 +25,8 @@ module.exports = {
         screen_name: "",
         location: "",
         img: "",
-        name: ""
+        name: "",
+        description:""
       };
       userTweet.content = post.text;
       userTweet.contenttype = 'text/plain';
@@ -36,6 +37,7 @@ module.exports = {
       userTweet.location = post.user.location;
       userTweet.img = post.user.profile_image_url;
       userTweet.name = post.user.name;
+      userTweet.description = post.user.description;
 
       twitterPosts.push(userTweet);
       });
@@ -71,13 +73,16 @@ var gatherProfiles = function(seedProfile, postsPerUser, maxPopulation){
           var location = JSON.parse(posts)[0].location;
           var screen_name = JSON.parse(posts)[0].screen_name;
           var img = JSON.parse(posts)[0].img;
+          var description = JSON.parse(posts)[0].description;
+
           var req ={
             query: {
               id: id,
               name: name,
               location: location,
               screen_name: screen_name,
-              img: img
+              img: img,
+              description: description
             }
           };
           //console.log(req);
