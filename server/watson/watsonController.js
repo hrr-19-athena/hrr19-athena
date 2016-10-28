@@ -72,7 +72,7 @@ module.exports.handleWatsonPersona = function(twitterFeed, userId, res){
 };
 
 module.exports.findSimilar = function(profile, id) {
-  console.log('got into findSimialr!');
+  // console.log('got into findSimialr!');
   //var group
   // console.log('profile is ', profile);
   // console.log('profile.persona is ', profile.persona);
@@ -104,7 +104,7 @@ module.exports.findSimilar = function(profile, id) {
         for(var l = 0; l<userTS.length; l++) {
           gap += (curTS[l] - userTS[l]);
         }
-        console.log('gap is ', gap);
+        // console.log('gap is ', gap);
         if(Math.abs(gap) < 0.5 && users[j].userId !== curUserId){
           similarGroup.push(users[j]);
           // console.log(similarGroup);
