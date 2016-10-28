@@ -61,6 +61,7 @@ export function setToken() {
       .then(function(response) {
           const AUTH0_CLIENT_ID = response.data.AUTH0_CLIENT_ID
           const AUTH0_DOMAIN = response.data.AUTH0_DOMAIN
+          console.log(AUTH0_CLIENT_ID,AUTH0_DOMAIN)
           const lock = new Auth0Lock(AUTH0_CLIENT_ID, AUTH0_DOMAIN,{})
           lock.getProfile(token, function(error, profile) {
               if (error) {
