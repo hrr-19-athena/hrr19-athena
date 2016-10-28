@@ -74,8 +74,8 @@ module.exports.handleWatsonPersona = function(twitterFeed, userId, res){
 module.exports.findSimilar = function(profile, id) {
   console.log('got into findSimialr!');
   //var group
-  console.log('profile is ', profile);
-  console.log('profile.persona is ', profile.persona);
+  // console.log('profile is ', profile);
+  // console.log('profile.persona is ', profile.persona);
   // console.log('profile.persona[0].percentile is ', profile.persona[0].percentile);
   var curUserId = profile.userId || id;
   var profile = profile.persona || profile.personality;
@@ -104,7 +104,8 @@ module.exports.findSimilar = function(profile, id) {
         for(var l = 0; l<userTS.length; l++) {
           gap += (curTS[l] - userTS[l]);
         }
-        if(Math.abs(gap) < 0.03 && users[j].userId !== curUserId){
+        console.log('gap is ', gap);
+        if(Math.abs(gap) < 0.5 && users[j].userId !== curUserId){
           similarGroup.push(users[j]);
           // console.log(similarGroup);
         }
@@ -131,9 +132,13 @@ module.exports.massageAndSave = function(profile, query, res){
   module.exports.findSimilar(profile, id)
     .then(function(similarGroup){
       var data = {
-        id: id,
+        id: query.id,
         persona: profile.personality,
-        group: group
+        group: group,
+        name:query.name,
+        location:query.location,
+        screen_name:query.screen_name,
+        img:query.img
       };
       // req.body.user='HackReactor';
       userController.addUser(data);
