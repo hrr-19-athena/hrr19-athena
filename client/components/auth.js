@@ -39,11 +39,10 @@ class Auth extends Component {
   }
 
   componentDidUpdate() {
-    this.handleGetAnalysisClick()
+    // this.handleGetAnalysisClick()
   }
 
   render() {
-
     const {isAuthenticated, profile, analysisResult } = this.props
 
     if(!isAuthenticated) {
@@ -55,7 +54,7 @@ class Auth extends Component {
     } else {
     return (
       <div className = '' style = {{ marginTop: '10px' }}>
-          <div className = 'row' >
+          <div className = 'row' style = {{}} >
             <div className = 'col-md-3' style = {{ backgroundColor: '' }}>
               <ul className="nav nav-pills nav-stacked" style={{ marginLeft: '20px'}}>
                 <li><img src={profile.picture} height="50px" /></li>

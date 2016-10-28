@@ -27670,7 +27670,7 @@
 	  }, {
 	    key: 'componentDidUpdate',
 	    value: function componentDidUpdate() {
-	      this.handleGetAnalysisClick();
+	      // this.handleGetAnalysisClick()
 	    }
 	  }, {
 	    key: 'render',
@@ -27697,7 +27697,7 @@
 	          { className: '', style: { marginTop: '10px' } },
 	          _react2.default.createElement(
 	            'div',
-	            { className: 'row' },
+	            { className: 'row', style: {} },
 	            _react2.default.createElement(
 	              'div',
 	              { className: 'col-md-3', style: { backgroundColor: '' } },
@@ -75889,14 +75889,14 @@
 	          { style: { textAlign: 'center' } },
 	          'Your Overall Personality'
 	        ),
-	        _react2.default.createElement(_chart2.default, { data: props.data.personalityScores.persona[0],
+	        _react2.default.createElement(_chart2.default, { data: props.data.personalityScores.persona,
 	          title: 'Your personality',
 	          index: 0 })
 	      ),
 	      _react2.default.createElement(
 	        'div',
 	        { className: 'subCategories' },
-	        props.data.personalityScores.persona[0].map(function (subCategory, i) {
+	        props.data.personalityScores.persona.map(function (subCategory, i) {
 	          return _react2.default.createElement(
 	            'div',
 	            { className: 'col-md-12' },

@@ -7,12 +7,12 @@ const AnalysisResult = (props) => {
         <div>
           <div className='analysis container' style = {{textAlign: 'center'}}>
               <h4 style = {{textAlign: 'center'}}>Your Overall Personality</h4>
-              <Chart data = { props.data.personalityScores.persona[0] }
+              <Chart data = { props.data.personalityScores.persona }
                      title = { 'Your personality' }
                      index = { 0 }/>
           </div>
           <div className = 'subCategories' >
-            { props.data.personalityScores.persona[0]
+            { props.data.personalityScores.persona
               .map((subCategory, i) => {
                 return (
                   <div className = 'col-md-12'>
