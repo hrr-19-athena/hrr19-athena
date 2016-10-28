@@ -1,6 +1,6 @@
 import Axios from 'axios';
 
-export const API_ROOT = 'http://localhost:3000/'
+export const API_ROOT = 'http://localhost:5000/'
 
 function callApi(endpoint, authenticatedRequest, params) {
   console.log(arguments);
@@ -64,7 +64,7 @@ export default store => next => action => {
   const [ requestType, successType, failureType ] = types
   next(actionWith({ type: requestType }))
 
-  return callApi(API_ROOT + endpoint, authenticatedRequest, params).then(
+  return callApi(endpoint, authenticatedRequest, params).then(
     response => next(actionWith({
       response,
       authenticatedRequest,

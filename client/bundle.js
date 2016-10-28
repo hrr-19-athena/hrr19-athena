@@ -81,7 +81,7 @@
 
 	var _api2 = _interopRequireDefault(_api);
 
-	var _reducers = __webpack_require__(680);
+	var _reducers = __webpack_require__(679);
 
 	var _reducers2 = _interopRequireDefault(_reducers);
 
@@ -27495,7 +27495,7 @@
 
 	var _friends2 = _interopRequireDefault(_friends);
 
-	var _analysisView = __webpack_require__(684);
+	var _analysisView = __webpack_require__(599);
 
 	var _analysisView2 = _interopRequireDefault(_analysisView);
 
@@ -27621,7 +27621,7 @@
 
 	var _auth0Lock2 = _interopRequireDefault(_auth0Lock);
 
-	var _analysisView = __webpack_require__(684);
+	var _analysisView = __webpack_require__(599);
 
 	var _analysisView2 = _interopRequireDefault(_analysisView);
 
@@ -27985,7 +27985,7 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var API_ROOT = exports.API_ROOT = 'http://localhost:3000/';
+	var API_ROOT = exports.API_ROOT = 'http://localhost:5000/';
 
 	function callApi(endpoint, authenticatedRequest, params) {
 	  console.log(arguments);
@@ -28060,7 +28060,7 @@
 
 	      next(actionWith({ type: requestType }));
 
-	      return callApi(API_ROOT + endpoint, authenticatedRequest, params).then(function (response) {
+	      return callApi(endpoint, authenticatedRequest, params).then(function (response) {
 	        return next(actionWith({
 	          response: response,
 	          authenticatedRequest: authenticatedRequest,
@@ -75872,7 +75872,113 @@
 
 
 /***/ },
-/* 599 */,
+/* 599 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _chart = __webpack_require__(600);
+
+	var _chart2 = _interopRequireDefault(_chart);
+
+	var _reactRedux = __webpack_require__(244);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var AnalysisView = function (_Component) {
+	  _inherits(AnalysisView, _Component);
+
+	  function AnalysisView(props) {
+	    _classCallCheck(this, AnalysisView);
+
+	    return _possibleConstructorReturn(this, (AnalysisView.__proto__ || Object.getPrototypeOf(AnalysisView)).call(this, props));
+	  }
+
+	  _createClass(AnalysisView, [{
+	    key: 'render',
+	    value: function render() {
+	      var _props = this.props;
+	      var isAuthenticated = _props.isAuthenticated;
+	      var analysisResult = _props.analysisResult;
+
+	      if (analysisResult.data) {
+	        return _react2.default.createElement(
+	          'div',
+	          null,
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'analysis container', style: { textAlign: 'center' } },
+	            _react2.default.createElement(
+	              'h4',
+	              { style: { textAlign: 'center' } },
+	              'Your Overall Personality'
+	            ),
+	            _react2.default.createElement(_chart2.default, { data: analysisResult.data.personalityScores.persona,
+	              title: 'Your personality',
+	              index: 0 })
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'subCategories' },
+	            analysisResult.data.personalityScores.persona.map(function (subCategory, i) {
+	              return _react2.default.createElement(
+	                'div',
+	                { className: 'col-md-12' },
+	                _react2.default.createElement(
+	                  'p',
+	                  { className: 'lead', style: { textAlign: 'center' } },
+	                  subCategory.name
+	                ),
+	                _react2.default.createElement(_chart2.default, { data: subCategory.children, title: subCategory.name,
+	                  index: i + 1 })
+	              );
+	            })
+	          )
+	        );
+	      } else {
+	        return _react2.default.createElement('div', { className: 'analysis' });
+	      }
+	    }
+	  }]);
+
+	  return AnalysisView;
+	}(_react.Component);
+
+	function mapStateToProps(state) {
+	  var analysis = state.analysis;
+	  var auth = state.auth;
+	  var analysisResult = analysis.analysisResult;
+	  var error = analysis.error;
+	  var isAuthenticated = auth.isAuthenticated;
+	  var profile = auth.profile;
+
+	  return {
+	    analysisResult: analysisResult,
+	    error: error,
+	    isAuthenticated: isAuthenticated,
+	    profile: profile
+	  };
+	}
+
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, null)(AnalysisView);
+
+/***/ },
 /* 600 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -101243,8 +101349,7 @@
 	exports.default = Friends;
 
 /***/ },
-/* 679 */,
-/* 680 */
+/* 679 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -101263,7 +101368,7 @@
 
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
-	var jwtDecode = __webpack_require__(681);
+	var jwtDecode = __webpack_require__(680);
 
 	function checkTokenExpiry() {
 	  var jwt = localStorage.getItem('id_token');
@@ -101384,12 +101489,12 @@
 	exports.default = rootReducer;
 
 /***/ },
-/* 681 */
+/* 680 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var base64_url_decode = __webpack_require__(682);
+	var base64_url_decode = __webpack_require__(681);
 
 	module.exports = function (token,options) {
 	  if (typeof token !== 'string') {
@@ -101403,10 +101508,10 @@
 
 
 /***/ },
-/* 682 */
+/* 681 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var atob = __webpack_require__(683);
+	var atob = __webpack_require__(682);
 
 	function b64DecodeUnicode(str) {
 	  return decodeURIComponent(atob(str).replace(/(.)/g, function (m, p) {
@@ -101442,7 +101547,7 @@
 
 
 /***/ },
-/* 683 */
+/* 682 */
 /***/ function(module, exports) {
 
 	/**
@@ -101484,113 +101589,6 @@
 
 	module.exports = typeof window !== 'undefined' && window.atob && window.atob.bind(window) || polyfill;
 
-
-/***/ },
-/* 684 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(2);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _chart = __webpack_require__(600);
-
-	var _chart2 = _interopRequireDefault(_chart);
-
-	var _reactRedux = __webpack_require__(244);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var AnalysisView = function (_Component) {
-	  _inherits(AnalysisView, _Component);
-
-	  function AnalysisView(props) {
-	    _classCallCheck(this, AnalysisView);
-
-	    return _possibleConstructorReturn(this, (AnalysisView.__proto__ || Object.getPrototypeOf(AnalysisView)).call(this, props));
-	  }
-
-	  _createClass(AnalysisView, [{
-	    key: 'render',
-	    value: function render() {
-	      var _props = this.props;
-	      var isAuthenticated = _props.isAuthenticated;
-	      var analysisResult = _props.analysisResult;
-
-	      if (analysisResult.data) {
-	        return _react2.default.createElement(
-	          'div',
-	          null,
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'analysis container', style: { textAlign: 'center' } },
-	            _react2.default.createElement(
-	              'h4',
-	              { style: { textAlign: 'center' } },
-	              'Your Overall Personality'
-	            ),
-	            _react2.default.createElement(_chart2.default, { data: analysisResult.data.personalityScores.persona,
-	              title: 'Your personality',
-	              index: 0 })
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'subCategories' },
-	            analysisResult.data.personalityScores.persona.map(function (subCategory, i) {
-	              return _react2.default.createElement(
-	                'div',
-	                { className: 'col-md-12' },
-	                _react2.default.createElement(
-	                  'p',
-	                  { className: 'lead', style: { textAlign: 'center' } },
-	                  subCategory.name
-	                ),
-	                _react2.default.createElement(_chart2.default, { data: subCategory.children, title: subCategory.name,
-	                  index: i + 1 })
-	              );
-	            })
-	          )
-	        );
-	      } else {
-	        return _react2.default.createElement('div', { className: 'analysis' });
-	      }
-	    }
-	  }]);
-
-	  return AnalysisView;
-	}(_react.Component);
-
-	function mapStateToProps(state) {
-	  var analysis = state.analysis;
-	  var auth = state.auth;
-	  var analysisResult = analysis.analysisResult;
-	  var error = analysis.error;
-	  var isAuthenticated = auth.isAuthenticated;
-	  var profile = auth.profile;
-
-	  return {
-	    analysisResult: analysisResult,
-	    error: error,
-	    isAuthenticated: isAuthenticated,
-	    profile: profile
-	  };
-	}
-
-	exports.default = (0, _reactRedux.connect)(mapStateToProps, null)(AnalysisView);
 
 /***/ }
 /******/ ]);
