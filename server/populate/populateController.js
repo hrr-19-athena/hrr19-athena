@@ -95,7 +95,7 @@ module.exports.populate = function(seedProfiles, postsPerUser, maxPopulation){
   var count = 0;
   var maxPopulation = 10;
   var postsPerUser = 100;
-  var seedProfiles = ['@HackReactor'];
+  var seedProfiles = ['@VictoriasSecret'];
 
   seedProfiles.forEach(function(seedProfile){
     gatherProfiles(seedProfile, postsPerUser, maxPopulation);
