@@ -23,7 +23,7 @@ export default class App extends Component {
     }
     return (
       <div style={ style }>
-        <div className="navbar navbar-default" style={{ backgroundColor: '#CE93D8'}}>
+        <div className="navbar navbar-full " style={{ backgroundColor: '#CE93D8'}}>
           <div className="">
             <Link to='/' className="navbar-brand">
               <img src={ logo } style={ imgStyle }/>

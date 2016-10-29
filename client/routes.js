@@ -14,6 +14,7 @@ export default (
     <Route path = "/user" component = { Auth } >
       <Route path = '/user/analysis' component = { AnalysisView } />
       <Route path = '/user/friends' components = { Friends } />
+      <Route path = '/user/group' components = { Friends } />
     </Route>
   </Route>
 )

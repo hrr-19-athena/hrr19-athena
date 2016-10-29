@@ -27509,7 +27509,8 @@
 	    _reactRouter.Route,
 	    { path: '/user', component: _auth2.default },
 	    _react2.default.createElement(_reactRouter.Route, { path: '/user/analysis', component: _analysisView2.default }),
-	    _react2.default.createElement(_reactRouter.Route, { path: '/user/friends', components: _friends2.default })
+	    _react2.default.createElement(_reactRouter.Route, { path: '/user/friends', components: _friends2.default }),
+	    _react2.default.createElement(_reactRouter.Route, { path: '/user/group', components: _friends2.default })
 	  )
 	);
 
@@ -27575,7 +27576,7 @@
 	        { style: style },
 	        _react2.default.createElement(
 	          'div',
-	          { className: 'navbar navbar-default', style: { backgroundColor: '#CE93D8' } },
+	          { className: 'navbar navbar-full ', style: { backgroundColor: '#CE93D8' } },
 	          _react2.default.createElement(
 	            'div',
 	            { className: '' },
@@ -27618,6 +27619,8 @@
 
 	var _reactRedux = __webpack_require__(244);
 
+	var _reactRouter = __webpack_require__(160);
+
 	var _actions = __webpack_require__(258);
 
 	var _auth0Lock = __webpack_require__(285);
@@ -27650,7 +27653,8 @@
 	    _this.props.setToken();
 	    _this.handleLogoutClick = _this.handleLogoutClick.bind(_this);
 	    _this.handleGetAnalysisClick = _this.handleGetAnalysisClick.bind(_this);
-	    _this.handleGetFriendsClick = _this.handleGetFriendsClick.bind(_this);
+	    _this.handleGetSimilarUserClick = _this.handleGetSimilarUserClick.bind(_this);
+	    _this.handleGetGroupClick = _this.handleGetGroupClick.bind(_this);
 	    return _this;
 	  }
 
@@ -27662,8 +27666,8 @@
 	      var name = this.props.profile.name;
 	      var screen_name = this.props.profile.screen_name;
 	      var location = this.props.profile.location;
-	      this.props.loadAnalysis(id, img, name, screen_name, location);
-	      this.context.router.push('/user/analysis');
+	      var description = this.props.profile.description;
+	      this.props.loadAnalysis(id, img, name, screen_name, location, description);
 	    }
 	  }, {
 	    key: 'handleLogoutClick',
@@ -27672,11 +27676,18 @@
 	      this.context.router.push('/');
 	    }
 	  }, {
-	    key: 'handleGetFriendsClick',
-	    value: function handleGetFriendsClick() {
+	    key: 'handleGetSimilarUserClick',
+	    value: function handleGetSimilarUserClick() {
 	      var id = this.props.profile.user_id.split('|')[1];
-	      this.props.loadFriends(id);
-	      this.context.router.push('/user/friends');
+	      var group = this.props.analysisResult.dominantTrait;
+	      this.props.loadFriends(id, group, 'api/user/similarGroup');
+	    }
+	  }, {
+	    key: 'handleGetGroupClick',
+	    value: function handleGetGroupClick() {
+	      var id = this.props.profile.user_id.split('|')[1];
+	      var group = this.props.analysisResult.dominantTrait;
+	      this.props.loadFriends(id, group, 'api/user/dominantTraitGroup');
 	    }
 	  }, {
 	    key: 'componentDidUpdate',
@@ -27689,7 +27700,6 @@
 	      var _props = this.props;
 	      var isAuthenticated = _props.isAuthenticated;
 	      var profile = _props.profile;
-	      var analysisResult = _props.analysisResult;
 
 
 	      if (!isAuthenticated) {
@@ -27705,56 +27715,73 @@
 	      } else {
 	        return _react2.default.createElement(
 	          'div',
-	          { className: '', style: { marginTop: '10px' } },
+	          { className: '', style: { backgroundColor: '', paddingTop: '20px', height: '100%' } },
 	          _react2.default.createElement(
 	            'div',
-	            { className: 'row', style: {} },
+	            { className: '', style: { height: '100%' } },
 	            _react2.default.createElement(
 	              'div',
-	              { className: 'col-md-3', style: { backgroundColor: '' } },
+	              { className: 'col-md-3' },
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'navbar-header', style: { marginBottom: '50px' } },
+	                _react2.default.createElement('img', { src: profile.picture, height: '50px', style: { borderRadius: '50%' } }),
+	                _react2.default.createElement(
+	                  'span',
+	                  { className: 'navebar-brand' },
+	                  _react2.default.createElement(
+	                    'strong',
+	                    null,
+	                    '    Hello, ' + profile.nickname + '!'
+	                  )
+	                )
+	              ),
 	              _react2.default.createElement(
 	                'ul',
-	                { className: 'nav nav-pills nav-stacked', style: { marginLeft: '20px' } },
-	                _react2.default.createElement(
-	                  'li',
-	                  null,
-	                  _react2.default.createElement('img', { src: profile.picture, height: '50px' })
-	                ),
+	                { className: 'nav navbar-nav', style: { marginLeft: '20px', marginTop: '50px' } },
 	                _react2.default.createElement(
 	                  'li',
 	                  null,
 	                  _react2.default.createElement(
-	                    'span',
-	                    null,
-	                    'Hello, ',
-	                    profile.nickname,
-	                    '!'
+	                    _reactRouter.Link,
+	                    { to: '/user', className: 'nav-link' },
+	                    'Home'
 	                  )
 	                ),
 	                _react2.default.createElement(
 	                  'li',
-	                  null,
+	                  { onClick: this.handleGetAnalysisClick },
 	                  _react2.default.createElement(
-	                    'span',
-	                    { className: 'btn btn-success btn-sm', onClick: this.handleGetAnalysisClick },
-	                    'Analyze your personality'
+	                    _reactRouter.Link,
+	                    { to: '/user/analysis', className: 'nav-link' },
+	                    'Personality'
 	                  )
 	                ),
+	                _react2.default.createElement(
+	                  'li',
+	                  { onClick: this.handleGetSimilarUserClick },
+	                  _react2.default.createElement(
+	                    _reactRouter.Link,
+	                    { to: '/user/friends', className: 'nav-link' },
+	                    'Tribe'
+	                  )
+	                ),
+	                _react2.default.createElement(
+	                  'li',
+	                  { onClick: this.handleGetGroupClick },
+	                  _react2.default.createElement(
+	                    _reactRouter.Link,
+	                    { to: '/user/group', className: 'nav-link' },
+	                    'Group'
+	                  )
+	                ),
+	                _react2.default.createElement('br', null),
 	                _react2.default.createElement(
 	                  'li',
 	                  null,
 	                  _react2.default.createElement(
 	                    'span',
-	                    { className: 'btn btn-warning btn-sm', onClick: this.handleGetFriendsClick },
-	                    'Find your tribe'
-	                  )
-	                ),
-	                _react2.default.createElement(
-	                  'li',
-	                  null,
-	                  _react2.default.createElement(
-	                    'span',
-	                    { className: 'btn btn-primary btn-sm', onClick: this.handleLogoutClick },
+	                    { className: 'btn btn-info btn-sm', onClick: this.handleLogoutClick },
 	                    'Logout'
 	                  )
 	                )
@@ -27762,7 +27789,7 @@
 	            ),
 	            _react2.default.createElement(
 	              'div',
-	              { className: 'col-md-9' },
+	              { className: 'col-md-9', style: { backgroundColor: '', marginTop: '0px' } },
 	              this.props.children
 	            )
 	          )
@@ -27926,13 +27953,14 @@
 	var ANALYSIS_SUCCESS = exports.ANALYSIS_SUCCESS = 'ANALYSIS_SUCCESS';
 	var ANALYSIS_FAILURE = exports.ANALYSIS_FAILURE = 'ANALYSIS_FAILURE';
 
-	function fetchAnalysis(id, img, name, screen_name, location) {
+	function fetchAnalysis(id, img, name, screen_name, location, description) {
 	  var params = {
 	    id: id,
 	    img: img,
 	    name: name,
 	    screen_name: screen_name,
-	    location: location
+	    location: location,
+	    description: description
 	  };
 	  return _defineProperty({}, _api.CALL_API, {
 	    types: [ANALYSIS_REQUEST, ANALYSIS_SUCCESS, ANALYSIS_FAILURE],
@@ -27942,9 +27970,9 @@
 	  });
 	}
 
-	function loadAnalysis(id, img, name, screen_name, location) {
+	function loadAnalysis(id, img, name, screen_name, location, description) {
 	  return function (dispatch) {
-	    return dispatch(fetchAnalysis(id, img, name, screen_name, location));
+	    return dispatch(fetchAnalysis(id, img, name, screen_name, location, description));
 	  };
 	}
 
@@ -27954,23 +27982,24 @@
 	var FRIENDS_SUCCESS = exports.FRIENDS_SUCCESS = 'FRIENDS_SUCCESS';
 	var FRIENDS_FAILURE = exports.FRIENDS_FAILURE = 'FRIENDS_FAILURE';
 
-	function fetchFriends(id) {
+	function fetchFriends(id, group, endpoint) {
 	  console.log('fetchFriends called');
 	  var params = {
-	    id: id
+	    id: id,
+	    group: group
 	  };
 	  return _defineProperty({}, _api.CALL_API, {
 	    types: [FRIENDS_REQUEST, FRIENDS_SUCCESS, FRIENDS_FAILURE],
-	    endpoint: 'api/user/similarGroup',
+	    endpoint: endpoint,
 	    authenticatedRequest: true,
 	    params: params
 	  });
 	}
 
-	function loadFriends(id) {
+	function loadFriends(id, group, endpoint) {
 	  console.log('loadFriends called');
 	  return function (dispatch) {
-	    return dispatch(fetchFriends(id));
+	    return dispatch(fetchFriends(id, group, endpoint));
 	  };
 	}
 
@@ -101219,13 +101248,18 @@
 	          'How It Works'
 	        ),
 	        _react2.default.createElement('a', { href: '#howitworks' }),
+	        _react2.default.createElement('br', null),
 	        _react2.default.createElement(
 	          'div',
 	          { className: 'col-sm-6 col-md-4' },
 	          _react2.default.createElement(
 	            'div',
-	            { className: 'thumbnail' },
-	            _react2.default.createElement('img', { src: '...', alt: '...' }),
+	            { className: 'thumbnail', style: { textAlign: 'center' } },
+	            _react2.default.createElement(
+	              'p',
+	              null,
+	              _react2.default.createElement('i', { className: 'fa fa-link fa-5x' })
+	            ),
 	            _react2.default.createElement(
 	              'div',
 	              { className: 'caption' },
@@ -101247,8 +101281,12 @@
 	          { className: 'col-sm-6 col-md-4' },
 	          _react2.default.createElement(
 	            'div',
-	            { className: 'thumbnail' },
-	            _react2.default.createElement('img', { src: '...', alt: '...' }),
+	            { className: 'thumbnail', style: { textAlign: 'center' } },
+	            _react2.default.createElement(
+	              'p',
+	              null,
+	              _react2.default.createElement('i', { className: 'fa fa-bar-chart fa-5x' })
+	            ),
 	            _react2.default.createElement(
 	              'div',
 	              { className: 'caption' },
@@ -101270,8 +101308,12 @@
 	          { className: 'col-sm-6 col-md-4' },
 	          _react2.default.createElement(
 	            'div',
-	            { className: 'thumbnail' },
-	            _react2.default.createElement('img', { src: '...', alt: '...' }),
+	            { className: 'thumbnail', style: { textAlign: 'center' } },
+	            _react2.default.createElement(
+	              'p',
+	              null,
+	              _react2.default.createElement('i', { className: 'fa fa-users fa-5x' })
+	            ),
 	            _react2.default.createElement(
 	              'div',
 	              { className: 'caption' },
@@ -101341,15 +101383,102 @@
 	  }
 
 	  _createClass(Friends, [{
+	    key: 'renderList',
+	    value: function renderList(friend) {
+	      var name = friend.twitter.name;
+	      var location = friend.twitter.location;
+	      var image = friend.twitter.img;
+	      var description = friend.twitter.description;
+	      var twitterHandle = '@' + friend.twitter.screen_name;
+
+	      return _react2.default.createElement(
+	        'tr',
+	        { key: name },
+	        _react2.default.createElement(
+	          'td',
+	          null,
+	          _react2.default.createElement('image', { src: image, height: '50px', style: { borderRadius: '50%' } }),
+	          _react2.default.createElement(
+	            'p',
+	            null,
+	            ' ' + name
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'td',
+	          null,
+	          _react2.default.createElement(
+	            'span',
+	            null,
+	            description
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'td',
+	          null,
+	          _react2.default.createElement(
+	            'span',
+	            null,
+	            location
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'td',
+	          null,
+	          _react2.default.createElement(
+	            'span',
+	            null,
+	            _react2.default.createElement(
+	              'a',
+	              { target: '_blank', href: 'https://twitter.com/' + friend.twitter.screen_name },
+	              twitterHandle
+	            )
+	          )
+	        )
+	      );
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var friendsList = this.props.friendsList;
 
 	      console.log('friends:', friendsList);
 	      return _react2.default.createElement(
-	        'div',
-	        null,
-	        'friends'
+	        'table',
+	        { className: 'table table-hover' },
+	        _react2.default.createElement(
+	          'thead',
+	          null,
+	          _react2.default.createElement(
+	            'tr',
+	            null,
+	            _react2.default.createElement(
+	              'th',
+	              null,
+	              'Name'
+	            ),
+	            _react2.default.createElement(
+	              'th',
+	              null,
+	              'Description'
+	            ),
+	            _react2.default.createElement(
+	              'th',
+	              null,
+	              'Location'
+	            ),
+	            _react2.default.createElement(
+	              'th',
+	              null,
+	              'Twitter'
+	            )
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'tbody',
+	          null,
+	          friendsList.map(this.renderList)
+	        )
 	      );
 	    }
 	  }]);
@@ -101487,7 +101616,7 @@
 	    case ActionTypes.FRIENDS_SUCCESS:
 	      return Object.assign({}, state, {
 	        isFetching: false,
-	        friendsList: action.response,
+	        friendsList: action.response.data,
 	        error: ''
 	      });
 	    case ActionTypes.FRIENDS_FAILURE:

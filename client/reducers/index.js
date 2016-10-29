@@ -90,7 +90,7 @@ function friends(state = {
       case ActionTypes.FRIENDS_SUCCESS:
         return Object.assign({}, state, {
           isFetching: false,
-          friendsList: action.response,
+          friendsList: action.response.data,
           error: ''
         })
       case ActionTypes.FRIENDS_FAILURE:

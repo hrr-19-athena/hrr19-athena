@@ -98,13 +98,14 @@ export const ANALYSIS_REQUEST = 'ANALYSIS_REQUEST'
 export const ANALYSIS_SUCCESS = 'ANALYSIS_SUCCESS'
 export const ANALYSIS_FAILURE = 'ANALYSIS_FAILURE'
 
-function fetchAnalysis(id, img, name, screen_name, location) {
+function fetchAnalysis(id, img, name, screen_name, location, description) {
   const params = {
       id: id,
       img: img,
       name: name,
       screen_name: screen_name,
-      location: location
+      location: location,
+      description: description
   }
   return {
     [CALL_API]: {
@@ -116,9 +117,9 @@ function fetchAnalysis(id, img, name, screen_name, location) {
   }
 }
 
-export function loadAnalysis(id, img, name, screen_name, location) {
+export function loadAnalysis(id, img, name, screen_name, location, description) {
   return dispatch => {
-    return dispatch(fetchAnalysis(id, img, name, screen_name, location))
+    return dispatch(fetchAnalysis(id, img, name, screen_name, location, description))
   }
 }
 
@@ -128,24 +129,25 @@ export const FRIENDS_REQUEST = 'FRIENDS_REQUEST'
 export const FRIENDS_SUCCESS = 'FRIENDS_SUCCESS'
 export const FRIENDS_FAILURE = 'FRIENDS_FAILURE'
 
-function fetchFriends(id) {
+function fetchFriends(id, group, endpoint) {
   console.log('fetchFriends called')
   const params = {
-      id: id
+      id: id,
+      group: group
   }
   return {
     [CALL_API]: {
       types: [ FRIENDS_REQUEST, FRIENDS_SUCCESS, FRIENDS_FAILURE ],
-      endpoint: 'api/user/similarGroup',
+      endpoint: endpoint,
       authenticatedRequest: true,
       params: params
     }
   }
 }
 
-export function loadFriends(id) {
+export function loadFriends(id, group, endpoint) {
   console.log('loadFriends called')
   return dispatch => {
-    return dispatch(fetchFriends(id))
+    return dispatch(fetchFriends(id, group, endpoint))
   }
 }

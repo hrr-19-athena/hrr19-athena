@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
+import { Link } from 'react-router'
 import { loadAnalysis, logout, setToken,loadFriends } from '../actions'
 import Auth0Lock from 'auth0-lock'
 import AnalysisView from './analysisView'
@@ -17,7 +18,8 @@ class Auth extends Component {
     this.props.setToken()
     this.handleLogoutClick = this.handleLogoutClick.bind(this)
     this.handleGetAnalysisClick = this.handleGetAnalysisClick.bind(this)
-    this.handleGetFriendsClick = this.handleGetFriendsClick.bind(this)
+    this.handleGetSimilarUserClick = this.handleGetSimilarUserClick.bind(this)
+    this.handleGetGroupClick = this.handleGetGroupClick.bind(this)
   }
 
   handleGetAnalysisClick() {
@@ -26,8 +28,8 @@ class Auth extends Component {
     const name = this.props.profile.name
     const screen_name = this.props.profile.screen_name
     const location =  this.props.profile.location
-    this.props.loadAnalysis(id, img, name, screen_name, location)
-    this.context.router.push('/user/analysis')
+    const description = this.props.profile.description
+    this.props.loadAnalysis(id, img, name, screen_name, location, description)
   }
 
   handleLogoutClick() {
@@ -35,10 +37,16 @@ class Auth extends Component {
     this.context.router.push('/')
   }
 
-  handleGetFriendsClick() {
+  handleGetSimilarUserClick() {
     const id = this.props.profile.user_id.split('|')[1]
-    this.props.loadFriends(id)
-    this.context.router.push('/user/friends')
+    const group = this.props.analysisResult.dominantTrait
+    this.props.loadFriends(id, group, 'api/user/similarGroup')
+  }
+
+  handleGetGroupClick() {
+    const id = this.props.profile.user_id.split('|')[1]
+    const group = this.props.analysisResult.dominantTrait
+    this.props.loadFriends(id, group, 'api/user/dominantTraitGroup')
   }
 
   componentDidUpdate() {
@@ -46,7 +54,7 @@ class Auth extends Component {
   }
 
   render() {
-    const {isAuthenticated, profile, analysisResult } = this.props
+    const {isAuthenticated, profile } = this.props
 
     if(!isAuthenticated) {
       return (
@@ -56,18 +64,23 @@ class Auth extends Component {
       )
     } else {
     return (
-      <div className = '' style = {{ marginTop: '10px' }}>
-          <div className = 'row' style = {{}} >
-            <div className = 'col-md-3' style = {{ backgroundColor: '' }}>
-              <ul className="nav nav-pills nav-stacked" style={{ marginLeft: '20px'}}>
-                <li><img src={profile.picture} height="50px" /></li>
-                <li><span>Hello, {profile.nickname}!</span></li>
-                <li><span className="btn btn-success btn-sm" onClick={this.handleGetAnalysisClick}>Analyze your personality</span></li>
-                <li><span className="btn btn-warning btn-sm" onClick={this.handleGetFriendsClick}>Find your tribe</span></li>
-                <li><span className="btn btn-primary btn-sm" onClick={this.handleLogoutClick}>Logout</span></li>
+      <div className = '' style = {{ backgroundColor: '', paddingTop: '20px', height: '100%' }}>
+          <div className = '' style = {{height: '100%'}} >
+            <div className = 'col-md-3' >
+              <div className = 'navbar-header' style = {{ marginBottom: '50px' }}>
+                <img src={profile.picture} height="50px" style = {{borderRadius: '50%'}}/>
+                <span className = 'navebar-brand'><strong>{`    Hello, ${profile.nickname}!`}</strong></span>
+              </div>
+              <ul className="nav navbar-nav" style={{ marginLeft: '20px', marginTop: '50px'}}>
+                <li><Link to = '/user' className="nav-link">Home</Link></li>
+                <li onClick = {this.handleGetAnalysisClick}><Link to = '/user/analysis' className="nav-link">Personality</Link></li>
+                <li onClick = {this.handleGetSimilarUserClick}><Link to = '/user/friends' className="nav-link" >Tribe</Link></li>
+                <li onClick = {this.handleGetGroupClick}><Link to = '/user/group' className="nav-link" >Group</Link></li>
+                <br></br>
+                <li><span className="btn btn-info btn-sm" onClick = {this.handleLogoutClick}>Logout</span></li>
               </ul>
             </div>
-            <div className = 'col-md-9' >
+            <div className = 'col-md-9' style = {{backgroundColor: '', marginTop: '0px'}} >
               {this.props.children}
             </div>
           </div>
