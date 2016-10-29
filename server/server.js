@@ -53,30 +53,6 @@ app.get('/api/clientcred', function(req, res) {
 });
 
 //-------------- DATABASE ROUTES --------------------
-// app.post('/api/users/signin', userController.listOneUser);
-// app.post('/api/users/signup', userController.addUser);
-
-// app.get('/api/findAllUsers', userController.listAllUsers);
-// app.get('/api/findOneUser', userController.find);
-
-
-//personaController - where the magic happens
-// app.get('/api/user/analysis', Persona.personaData);
-
-//Creates a User
-// var req={};
-// req.body = {};
-// req.body.user='HackReactor';
-// userController.addUser(req);
-
-// var count = 0;
-// var maxPopulation = 5;
-// var postsPerUser = 100;
-// var seedProfiles = ['@HackReactor'];
-
-// genUsers.populate(seedProfiles, postsPerUser, maxPopulation);
-
-
 app.get('/api/user/analysis', Persona.personaData);
 
 app.get('/api/user/dominantTraitGroup', userController.getUsersInGroup);
@@ -85,9 +61,21 @@ app.get('/api/user/similarGroup', Persona.getSimilar);
 
 app.get('/api/user/populate', genUsers.populate);
 
-  //when profile page loads for user gets finished results for current
-
 app.get('*', function (request, response){
   response.sendFile(path.resolve(__dirname+'/../client/index.html'))
 })
 
+//-------------- TESTING PURPOSES --------------------
+//CREATING ONE USER
+// var req={};
+// req.body = {};
+// req.body.user='HackReactor';
+// userController.addUser(req);
+
+
+//GENERATES USERS
+// var count = 0;
+// var maxPopulation = 5;
+// var postsPerUser = 100;
+// var seedProfiles = ['@HackReactor'];
+// genUsers.populate(seedProfiles, postsPerUser, maxPopulation);
