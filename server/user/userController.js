@@ -7,6 +7,7 @@ var createUser = Q.nbind(User.create, User);
 var findAll = Q.nbind(User.find, User);
 
 module.exports = {
+  // Return all users in the list
   listAllUsers: function(req,res){
     findAll({})
       .then(function(users){
@@ -14,6 +15,7 @@ module.exports = {
         res.send(users);
     });
   },
+  // Return the user data requested from the Database
   listOneUser: function(req,res){
     var user = req.body.user;
     findUser({userId: user})
@@ -22,8 +24,8 @@ module.exports = {
         res.send(user);
     });
   },
+  // Add user requested into the Database
   addUser: function(data){
-    // var user = req.body.user;
     createUser({
        userId: data.id,
         twitter: {
@@ -45,6 +47,7 @@ module.exports = {
         personaGroup:data.group
     });
   },
+  // Returns the persona data from the Database from the user requested
   getData: function(req, res) {
     var user = req.body.userId;
     findUser({userId: user})
@@ -55,6 +58,7 @@ module.exports = {
         next(error);
       });
   },
+  // Returns the Group the user belongs to
   getUsersInGroup: function(req, res) {
     var group = req.query.group;
     findAll({personaGroup: group})
