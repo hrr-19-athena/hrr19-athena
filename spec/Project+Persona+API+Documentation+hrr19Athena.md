@@ -5,139 +5,90 @@
 
 The PERSONA API defines the messaging API between the server and client; and server and 3rd-party API services
 
+## * **API KEY Reference**
+### Method
+API keys are stored in <mark>.env</mark> in the root folder. This allows working locally and on deployed Heroku. The file referenced in .gitIngore to avoid being uploaded to git.
+
+### Example .env Format
+
+``` javascript
+AUTH0_CLIENT_ID='xxxx'
+AUTH0_DOMAIN='xxxx'
+AUTH0_CLIENT_SECRET='xxxx'
+TACC_TOKEN='xxxx'
+TACC_TSECRET= 'xxxx'
+TCONS_KEY= 'xxxxx'
+TCONS_SECRET= 'xxxxxx'
+WAT_PERS_PASS= 'xxxx'
+WAT_PERS_USRN= 'xxxxx'
+
+```
+
+## * **User Authentication**
+
+## Auth0 (modify to how you interact with the server) this a template
+
+### **Token Exchange** (template)
+
+path | type | description
+--- | --- | ---
+< PATH > | POST | initiate user crendials
+
+Actions
+
+> <mark>**POST**</mark> / < PATH >
+
+POST Example template
+
+``` javascript
+POST / < PATH >
+{
+	"userId" : "< USERID >",
+	"socialType" : "twitter",
+
+}
+```
+
+Response Example template
+
+``` javascript
+HTTP/1.1 201 OK
+Content-Type: application/json
+[
+ {
+  "someKey: "theKey",
+  "status": "success"
+ }
+]
+```
+
+
+
 ## * **Client API Reference**
 
 
 ## * **Server API Reference**
 This API refers to consuming and interacting with the Profile Analysis Data
 
-## User Usage
 
-Require Exports Controller
+## Profile Analysis
 
-```
-var User = require('./user/userController.js');
-```
-
-
-### **Find All Users**
-
-request all users | type | description
---- | --- | ---
-allUsers | GET | Returns all the DB users
-
-Actions
-
-> <mark>**GET**</mark> /api/allUsers
-
-POST Example
-
-``` javascript
-GET /api/allUsers
-{
-	"userID" : "83080832582303"
-}
-```
-
-Response Example
-
-``` javascript
-HTTP/1.1 201 OK
-Content-Type: application/json
-[
- {
-  "status": "success"
- }
-]
-```
-
-### **Find A User**
-
-get one user | type | description
---- | --- | ---
-< PATH > | POST | Returns only the provided DB user
-
-Actions
-
-> <mark>**POST**</mark> / < PATH >
-
-POST Example
-
-``` javascript
-POST / < PATH >
-{
-	KEY: VALUE
-}
-```
-
-Response Example
-
-``` javascript
-HTTP/1.1 201 OK
-Content-Type: application/json
-[
- {
-  "status": "success"
- }
-]
-
-```
-
-### **Add User**
-**see profile analysis
-
-add one user | type | description
---- | --- | ---
-< path > | POST | inser new DB user
-
-Actions
-
-> <mark>**POST**</mark> / < path >
-
-POST Example
-
-``` javascript
-POST / < path >
-{
-	KEY: VALUE
-}
-```
-
-Response Example
-
-``` javascript
-HTTP/1.1 201 OK
-Content-Type: application/json
-[
- {
-  "status": "success"
- }
-]
-
-```
-
-
-## Profile Analysis (example)
-
-### **Generate Twitter Analysis** (example)
+### **Generate Twitter Analysis** 
 
 begin analysis | type | description
 --- | --- | ---
-genAnalysis | POST | initiate AI analysis
+/api/user/analysis | GET | initiate analysis
 
 Actions
 
-> <mark>**POST**</mark> /api/user/analysis
+> <mark>**GET**</mark> /api/user/analysis
 
-POST Example
+
+Request Example
 
 ``` javascript
-POST /api/user/analysis
-{
-	"user" : "twitterUser",
-	"socialType" : "twitter",
+GET /api/user/analysis?id=8888&location=SanFran&name=hrr19&screen_name=hackreactor&img=http:///www.imgur.com/image.png&description=BestBootcampEver
 
-}
 ```
 
 Response Example
@@ -148,10 +99,10 @@ Content-Type: application/json
 {"personalityScores":{"_id":"58128a1706905f32caecea1a","userId":"VictoriasSecret","persona":[{"trait_id":"big5_openness","name":"Openness","category":"personality","percentile":0.9593268328268352,"raw_score":0.8042978562029528,"children":[{"trait_id":"facet_adventurousness","name":"Adventurousness","category":"personality","percentile":0.736080680561548,"raw_score":0.527270828457082},{"trait_id":"facet_artistic_interests","name":"Artistic interests","category":"personality","percentile":0.8621172024125769,"raw_score":0.7204981947934177},{"trait_id":"facet_emotionality","name":"Emotionality","category":"personality","percentile":0.43099944858166195,"raw_score":0.6411082198980798},{"trait_id":"facet_imagination","name":"Imagination","category":"personality","percentile":0.5488819453227549,"raw_score":0.7409600830632047},{"trait_id":"facet_intellect","name":"Intellect","category":"personality","percentile":0.8459043442727547,"raw_score":0.6544146298026056},{"trait_id":"facet_liberalism","name":"Authority-challenging","category":"personality","percentile":0.8577837529280956,"raw_score":0.5701423518281533}]},{"trait_id":"big5_conscientiousness","name":"Conscientiousness","category":"personality","percentile":0.21996860986369154,"raw_score":0.5920303104789135,"children":[{"trait_id":"facet_achievement_striving","name":"Achievement striving","category":"personality","percentile":0.5518548774471103,"raw_score":0.6952997160624715},{"trait_id":"facet_cautiousness","name":"Cautiousness","category":"personality","percentile":0.34014755663013385,"raw_score":0.4664621467073739},{"trait_id":"facet_dutifulness","name":"Dutifulness","category":"personality","percentile":0.05532004667309792,"raw_score":0.6198315422438281},{"trait_id":"facet_orderliness","name":"Orderliness","category":"personality","percentile":0.7419611944161886,"raw_score":0.5154277483043126},{"trait_id":"facet_self_discipline","name":"Self-discipline","category":"personality","percentile":0.581554371688625,"raw_score":0.5804604249481325},{"trait_id":"facet_self_efficacy","name":"Self-efficacy","category":"personality","percentile":0.7669842199771184,"raw_score":0.778735623989381}]},{"trait_id":"big5_extraversion","name":"Extraversion","category":"personality","percentile":0.9677293111646503,"raw_score":0.633489325476319,"children":[{"trait_id":"facet_activity_level","name":"Activity level","category":"personality","percentile":0.7170035004712384,"raw_score":0.5697483009959201},{"trait_id":"facet_assertiveness","name":"Assertiveness","category":"personality","percentile":0.5171361880659339,"raw_score":0.6462067116398654},{"trait_id":"facet_cheerfulness","name":"Cheerfulness","category":"personality","percentile":0.18753053820347543,"raw_score":0.5883702580653614},{"trait_id":"facet_excitement_seeking","name":"Excitement-seeking","category":"personality","percentile":0.35961457895696014,"raw_score":0.5883619461950217},{"trait_id":"facet_friendliness","name":"Outgoing","category":"personality","percentile":0.498910618486993,"raw_score":0.5603516825559564},{"trait_id":"facet_gregariousness","name":"Gregariousness","category":"personality","percentile":0.2227726876583369,"raw_score":0.41412430572001524}]},{"trait_id":"big5_agreeableness","name":"Agreeableness","category":"personality","percentile":0.5051441836509466,"raw_score":0.7427110652820806,"children":[{"trait_id":"facet_altruism","name":"Altruism","category":"personality","percentile":0.15555061541922016,"raw_score":0.6695557276151682},{"trait_id":"facet_cooperation","name":"Cooperation","category":"personality","percentile":0.5397182996267992,"raw_score":0.5853972378268448},{"trait_id":"facet_modesty","name":"Modesty","category":"personality","percentile":0.038543282480076047,"raw_score":0.355092393057523},{"trait_id":"facet_morality","name":"Uncompromising","category":"personality","percentile":0.3594330793590088,"raw_score":0.6088258399443284},{"trait_id":"facet_sympathy","name":"Sympathy","category":"personality","percentile":0.3484583801315462,"raw_score":0.648605903103546},{"trait_id":"facet_trust","name":"Trust","category":"personality","percentile":0.3926188222749327,"raw_score":0.5745755601369619}]},{"trait_id":"big5_neuroticism","name":"Emotional range","category":"personality","percentile":0.39040613354808223,"raw_score":0.4516797531216181,"children":[{"trait_id":"facet_anger","name":"Fiery","category":"personality","percentile":0.8896963937844775,"raw_score":0.6027008888375601},{"trait_id":"facet_anxiety","name":"Prone to worry","category":"personality","percentile":0.6583466188324382,"raw_score":0.6219332142832508},{"trait_id":"facet_depression","name":"Melancholy","category":"personality","percentile":0.5264924102496971,"raw_score":0.4526480356596926},{"trait_id":"facet_immoderation","name":"Immoderation","category":"personality","percentile":0.04333893569089303,"raw_score":0.43474673246367734},{"trait_id":"facet_self_consciousness","name":"Self-consciousness","category":"personality","percentile":0.3528395236481732,"raw_score":0.5268420105206859},{"trait_id":"facet_vulnerability","name":"Susceptible to stress","category":"personality","percentile":0.591576689961656,"raw_score":0.48237752112666576}]}],"personaGroup":"Extraversion","__v":0,"watson":{"results":[]},"facebook":{"posts":[]},"twitter":{"commonFriends":[],"posts":[]}},"similarGroup":[{"_id":"5812900605c4353392e7fb27","userId":"xoBetseyJohnson","persona":[{"trait_id":"big5_openness","name":"Openness","category":"personality","percentile":0.9132371202950289,"raw_score":0.7921029232285559,"children":[{"trait_id":"facet_adventurousness","name":"Adventurousness","category":"personality","percentile":0.5845441631187335,"raw_score":0.512412140574993},{"trait_id":"facet_artistic_interests","name":"Artistic interests","category":"personality","percentile":0.9661273015859321,"raw_score":0.7577982904491817},{"trait_id":"facet_emotionality","name":"Emotionality","category":"personality","percentile":0.4158334731560176,"raw_score":0.6395290847224081},{"trait_id":"facet_imagination","name":"Imagination","category":"personality","percentile":0.9266294724474047,"raw_score":0.8069373669111009},{"trait_id":"facet_intellect","name":"Intellect","category":"personality","percentile":0.6534192190337943,"raw_score":0.625510500709318},{"trait_id":"facet_liberalism","name":"Authority-challenging","category":"personality","percentile":0.9092584587077968,"raw_score":0.5835291505335274}]},{"trait_id":"big5_conscientiousness","name":"Conscientiousness","category":"personality","percentile":0.25499534055542117,"raw_score":0.5973215765692588,"children":[{"trait_id":"facet_achievement_striving","name":"Achievement striving","category":"personality","percentile":0.30417290323341883,"raw_score":0.6612677985096047},{"trait_id":"facet_cautiousness","name":"Cautiousness","category":"personality","percentile":0.19459572948623927,"raw_score":0.4381173017754853},{"trait_id":"facet_dutifulness","name":"Dutifulness","category":"personality","percentile":0.02321374119055325,"raw_score":0.6101296523110928},{"trait_id":"facet_orderliness","name":"Orderliness","category":"personality","percentile":0.6274864677643897,"raw_score":0.5048083015509244},{"trait_id":"facet_self_discipline","name":"Self-discipline","category":"personality","percentile":0.2628768674434781,"raw_score":0.5404282043966655},{"trait_id":"facet_self_efficacy","name":"Self-efficacy","category":"personality","percentile":0.629575745101021,"raw_score":0.7647308967601522}]},{"trait_id":"big5_extraversion","name":"Extraversion","category":"personality","percentile":0.9196767774940933,"raw_score":0.6136085912210645,"children":[{"trait_id":"facet_activity_level","name":"Activity level","category":"personality","percentile":0.7194088679417876,"raw_score":0.5701128063522307},{"trait_id":"facet_assertiveness","name":"Assertiveness","category":"personality","percentile":0.15645682845678865,"raw_score":0.5936122372750124},{"trait_id":"facet_cheerfulness","name":"Cheerfulness","category":"personality","percentile":0.12057566611179199,"raw_score":0.5788031917059315},{"trait_id":"facet_excitement_seeking","name":"Excitement-seeking","category":"personality","percentile":0.7087546315529829,"raw_score":0.6269137867873595},{"trait_id":"facet_friendliness","name":"Outgoing","category":"personality","percentile":0.15505719914942062,"raw_score":0.5095816471694006},{"trait_id":"facet_gregariousness","name":"Gregariousness","category":"personality","percentile":0.16329557397229116,"raw_score":0.40290957630590707}]},{"trait_id":"big5_agreeableness","name":"Agreeableness","category":"personality","percentile":0.3470351751712236,"raw_score":0.7265614814234025,"children":[{"trait_id":"facet_altruism","name":"Altruism","category":"personality","percentile":0.04866611862932313,"raw_score":0.6469281898312529},{"trait_id":"facet_cooperation","name":"Cooperation","category":"personality","percentile":0.2877593197047696,"raw_score":0.5456538808699926},{"trait_id":"facet_modesty","name":"Modesty","category":"personality","percentile":0.038269925713423414,"raw_score":0.3549193778449936},{"trait_id":"facet_morality","name":"Uncompromising","category":"personality","percentile":0.13485439111717756,"raw_score":0.5737322592279326},{"trait_id":"facet_sympathy","name":"Sympathy","category":"personality","percentile":0.24482768086682005,"raw_score":0.6370982184406168},{"trait_id":"facet_trust","name":"Trust","category":"personality","percentile":0.3182039334392731,"raw_score":0.5663267582365981}]},{"trait_id":"big5_neuroticism","name":"Emotional range","category":"personality","percentile":0.13099160527593545,"raw_score":0.4041327061919881,"children":[{"trait_id":"facet_anger","name":"Fiery","category":"personality","percentile":0.953172412144354,"raw_score":0.6273919728275233},{"trait_id":"facet_anxiety","name":"Prone to worry","category":"personality","percentile":0.9380574160721755,"raw_score":0.6990445912898182},{"trait_id":"facet_depression","name":"Melancholy","category":"personality","percentile":0.7880530490900337,"raw_score":0.499089313031848},{"trait_id":"facet_immoderation","name":"Immoderation","category":"personality","percentile":0.1227772002672397,"raw_score":0.45596152650284966},{"trait_id":"facet_self_consciousness","name":"Self-consciousness","category":"personality","percentile":0.8343149916214025,"raw_score":0.5978268446103172},{"trait_id":"facet_vulnerability","name":"Susceptible to stress","category":"personality","percentile":0.9152390594606103,"raw_score":0.5551446345199862}]}],"__v":0,"watson":{"results":[]},"facebook":{"posts":[]},"twitter":{"commonFriends":[],"posts":[]}}]}
 ```
 ### **Analyzing Watson Results for Group of users with similar personality analysis** (example)
-Reqeust Example
+Request Example
 
 ``` javascript
-GET /api/user/similarGroup
+GET /api/user/similarGroup?id=username
 ```
 
 Response Example
@@ -176,36 +127,6 @@ Response Example
 HTTP/1.1 200 OK
 Content-Type: application/json
 [{"_id":"58128a1706905f32caecea1a","userId":"VictoriasSecret","persona":[{"trait_id":"big5_openness","name":"Openness","category":"personality","percentile":0.9593268328268352,"raw_score":0.8042978562029528,"children":[{"trait_id":"facet_adventurousness","name":"Adventurousness","category":"personality","percentile":0.736080680561548,"raw_score":0.527270828457082},{"trait_id":"facet_artistic_interests","name":"Artistic interests","category":"personality","percentile":0.8621172024125769,"raw_score":0.7204981947934177},{"trait_id":"facet_emotionality","name":"Emotionality","category":"personality","percentile":0.43099944858166195,"raw_score":0.6411082198980798},{"trait_id":"facet_imagination","name":"Imagination","category":"personality","percentile":0.5488819453227549,"raw_score":0.7409600830632047},{"trait_id":"facet_intellect","name":"Intellect","category":"personality","percentile":0.8459043442727547,"raw_score":0.6544146298026056},{"trait_id":"facet_liberalism","name":"Authority-challenging","category":"personality","percentile":0.8577837529280956,"raw_score":0.5701423518281533}]},{"trait_id":"big5_conscientiousness","name":"Conscientiousness","category":"personality","percentile":0.21996860986369154,"raw_score":0.5920303104789135,"children":[{"trait_id":"facet_achievement_striving","name":"Achievement striving","category":"personality","percentile":0.5518548774471103,"raw_score":0.6952997160624715},{"trait_id":"facet_cautiousness","name":"Cautiousness","category":"personality","percentile":0.34014755663013385,"raw_score":0.4664621467073739},{"trait_id":"facet_dutifulness","name":"Dutifulness","category":"personality","percentile":0.05532004667309792,"raw_score":0.6198315422438281},{"trait_id":"facet_orderliness","name":"Orderliness","category":"personality","percentile":0.7419611944161886,"raw_score":0.5154277483043126},{"trait_id":"facet_self_discipline","name":"Self-discipline","category":"personality","percentile":0.581554371688625,"raw_score":0.5804604249481325},{"trait_id":"facet_self_efficacy","name":"Self-efficacy","category":"personality","percentile":0.7669842199771184,"raw_score":0.778735623989381}]},{"trait_id":"big5_extraversion","name":"Extraversion","category":"personality","percentile":0.9677293111646503,"raw_score":0.633489325476319,"children":[{"trait_id":"facet_activity_level","name":"Activity level","category":"personality","percentile":0.7170035004712384,"raw_score":0.5697483009959201},{"trait_id":"facet_assertiveness","name":"Assertiveness","category":"personality","percentile":0.5171361880659339,"raw_score":0.6462067116398654},{"trait_id":"facet_cheerfulness","name":"Cheerfulness","category":"personality","percentile":0.18753053820347543,"raw_score":0.5883702580653614},{"trait_id":"facet_excitement_seeking","name":"Excitement-seeking","category":"personality","percentile":0.35961457895696014,"raw_score":0.5883619461950217},{"trait_id":"facet_friendliness","name":"Outgoing","category":"personality","percentile":0.498910618486993,"raw_score":0.5603516825559564},{"trait_id":"facet_gregariousness","name":"Gregariousness","category":"personality","percentile":0.2227726876583369,"raw_score":0.41412430572001524}]},{"trait_id":"big5_agreeableness","name":"Agreeableness","category":"personality","percentile":0.5051441836509466,"raw_score":0.7427110652820806,"children":[{"trait_id":"facet_altruism","name":"Altruism","category":"personality","percentile":0.15555061541922016,"raw_score":0.6695557276151682},{"trait_id":"facet_cooperation","name":"Cooperation","category":"personality","percentile":0.5397182996267992,"raw_score":0.5853972378268448},{"trait_id":"facet_modesty","name":"Modesty","category":"personality","percentile":0.038543282480076047,"raw_score":0.355092393057523},{"trait_id":"facet_morality","name":"Uncompromising","category":"personality","percentile":0.3594330793590088,"raw_score":0.6088258399443284},{"trait_id":"facet_sympathy","name":"Sympathy","category":"personality","percentile":0.3484583801315462,"raw_score":0.648605903103546},{"trait_id":"facet_trust","name":"Trust","category":"personality","percentile":0.3926188222749327,"raw_score":0.5745755601369619}]},{"trait_id":"big5_neuroticism","name":"Emotional range","category":"personality","percentile":0.39040613354808223,"raw_score":0.4516797531216181,"children":[{"trait_id":"facet_anger","name":"Fiery","category":"personality","percentile":0.8896963937844775,"raw_score":0.6027008888375601},{"trait_id":"facet_anxiety","name":"Prone to worry","category":"personality","percentile":0.6583466188324382,"raw_score":0.6219332142832508},{"trait_id":"facet_depression","name":"Melancholy","category":"personality","percentile":0.5264924102496971,"raw_score":0.4526480356596926},{"trait_id":"facet_immoderation","name":"Immoderation","category":"personality","percentile":0.04333893569089303,"raw_score":0.43474673246367734},{"trait_id":"facet_self_consciousness","name":"Self-consciousness","category":"personality","percentile":0.3528395236481732,"raw_score":0.5268420105206859},{"trait_id":"facet_vulnerability","name":"Susceptible to stress","category":"personality","percentile":0.591576689961656,"raw_score":0.48237752112666576}]}],"personaGroup":"Extraversion","__v":0,"watson":{"results":[]},"facebook":{"posts":[]},"twitter":{"commonFriends":[],"posts":[]}},{"_id":"5813db0799d3a83aee90d16e","userId":"loft","persona":[{"trait_id":"big5_openness","name":"Openness","category":"personality","percentile":0.9464499015424139,"raw_score":0.800097495472915,"children":[{"trait_id":"facet_adventurousness","name":"Adventurousness","category":"personality","percentile":0.7470343030167471,"raw_score":0.528475717434034},{"trait_id":"facet_artistic_interests","name":"Artistic interests","category":"personality","percentile":0.873400826165487,"raw_score":0.723167786506406},{"trait_id":"facet_emotionality","name":"Emotionality","category":"personality","percentile":0.3764271681185443,"raw_score":0.6353578748952265},{"trait_id":"facet_imagination","name":"Imagination","category":"personality","percentile":0.5757051654407457,"raw_score":0.7443416990320595},{"trait_id":"facet_intellect","name":"Intellect","category":"personality","percentile":0.8428063386617681,"raw_score":0.653814482246209},{"trait_id":"facet_liberalism","name":"Authority-challenging","category":"personality","percentile":0.924723412112175,"raw_score":0.5886351998862936}]},{"trait_id":"big5_conscientiousness","name":"Conscientiousness","category":"personality","percentile":0.2439210353626342,"raw_score":0.5956941416595289,"children":[{"trait_id":"facet_achievement_striving","name":"Achievement striving","category":"personality","percentile":0.5518525236250916,"raw_score":0.695299401016851},{"trait_id":"facet_cautiousness","name":"Cautiousness","category":"personality","percentile":0.36447563922902937,"raw_score":0.4705993596408933},{"trait_id":"facet_dutifulness","name":"Dutifulness","category":"personality","percentile":0.0600187574727184,"raw_score":0.6208284301154667},{"trait_id":"facet_orderliness","name":"Orderliness","category":"personality","percentile":0.6776144129275695,"raw_score":0.5092576841115743},{"trait_id":"facet_self_discipline","name":"Self-discipline","category":"personality","percentile":0.577696396202282,"raw_score":0.5799903616983029},{"trait_id":"facet_self_efficacy","name":"Self-efficacy","category":"personality","percentile":0.7626484449013418,"raw_score":0.7782396344503942}]},{"trait_id":"big5_extraversion","name":"Extraversion","category":"personality","percentile":0.9591974655090905,"raw_score":0.6287157842904532,"children":[{"trait_id":"facet_activity_level","name":"Activity level","category":"personality","percentile":0.817633280817548,"raw_score":0.58675784221066},{"trait_id":"facet_assertiveness","name":"Assertiveness","category":"personality","percentile":0.47381950069059714,"raw_score":0.6407758084731401},{"trait_id":"facet_cheerfulness","name":"Cheerfulness","category":"personality","percentile":0.10870248537380334,"raw_score":0.5767445392299764},{"trait_id":"facet_excitement_seeking","name":"Excitement-seeking","category":"personality","percentile":0.40189884811140764,"raw_score":0.5930706465262399},{"trait_id":"facet_friendliness","name":"Outgoing","category":"personality","percentile":0.4734084735701219,"raw_score":0.5571430392333341},{"trait_id":"facet_gregariousness","name":"Gregariousness","category":"personality","percentile":0.231167549940913,"raw_score":0.41555636316077516}]},{"trait_id":"big5_agreeableness","name":"Agreeableness","category":"personality","percentile":0.4506891143743956,"raw_score":0.7372720291634716,"children":[{"trait_id":"facet_altruism","name":"Altruism","category":"personality","percentile":0.11156122117612277,"raw_score":0.6623517817892601},{"trait_id":"facet_cooperation","name":"Cooperation","category":"personality","percentile":0.5437912631329141,"raw_score":0.5860157239055652},{"trait_id":"facet_modesty","name":"Modesty","category":"personality","percentile":0.029108988472070607,"raw_score":0.3484329020176024},{"trait_id":"facet_morality","name":"Uncompromising","category":"personality","percentile":0.22900497154502558,"raw_score":0.5907942926550973},{"trait_id":"facet_sympathy","name":"Sympathy","category":"personality","percentile":0.3394891338591266,"raw_score":0.6476752760277814},{"trait_id":"facet_trust","name":"Trust","category":"personality","percentile":0.5595549366420466,"raw_score":0.5919748243904877}]},{"trait_id":"big5_neuroticism","name":"Emotional range","category":"personality","percentile":0.32391786341661943,"raw_score":0.44161682047666706,"children":[{"trait_id":"facet_anger","name":"Fiery","category":"personality","percentile":0.8761986291014345,"raw_score":0.5989427028059157},{"trait_id":"facet_anxiety","name":"Prone to worry","category":"personality","percentile":0.7855628438891955,"raw_score":0.648063910100089},{"trait_id":"facet_depression","name":"Melancholy","category":"personality","percentile":0.5610965700155178,"raw_score":0.45817710021837},{"trait_id":"facet_immoderation","name":"Immoderation","category":"personality","percentile":0.07269810464596776,"raw_score":0.4446321310953687},{"trait_id":"facet_self_consciousness","name":"Self-consciousness","category":"personality","percentile":0.44835477371312105,"raw_score":0.5398835467542248},{"trait_id":"facet_vulnerability","name":"Susceptible to stress","category":"personality","percentile":0.6599346362950611,"raw_score":0.4938890022731256}]}],"personaGroup":"Extraversion","__v":0,"watson":{"results":[]},"facebook":{"posts":[]},"twitter":{"commonFriends":[],"posts":[]}}]
-```
-
-### **Twitter Anayzed Profile Results** (example)
-
-analyze results | type | description
---- | --- | ---
-analysis/twitter | GET | Retrieves the analyzed profile
-
-Actions
-
-> <mark>**GET**</mark> /analysis/twitter
-
-Reqeust Example
-
-``` javascript
-GET /analysis/twitter
-
-```
-
-Response Example
-
-``` javascript
-HTTP/1.1 200 OK
-Content-Type: application/json
-[
- {
-  'profile':'abcdefabcdef',
-  'type': 'twitter'
- }
-]
 ```
 
 
@@ -298,111 +219,157 @@ This gives access to the Twitter API
 
 twitter results | type | description
 --- | --- | ---
-personality_insights.profiler(params, callback) | API | Retrieves Twitter Data
+twitter.getUserTimeline(params, error, success);| API | Retrieves Twitter Data
 Actions
 
 > <mark>**API**</mark>
 
 Request Example
 
-``` javascript
-NEED API DETAILS
+params
 
+``` javascript
+{ 
+	id: id, 
+	count: count
+}
 ```
 
 Response Example
 
 
 ``` javascript
+[
+    {
+      "coordinates": null,
+      "favorited": false,
+      "truncated": false,
+      "created_at": "Mon Sep 24 03:35:21 +0000 2012",
+      "id_str": "250075927172759552",
+      "entities": {
+        "urls": [
 
+        ],
+        "hashtags": [
+          {
+            "text": "freebandnames",
+            "indices": [
+              20,
+              34
+            ]
+          }
+        ],
+        "user_mentions": [
 
+        ]
+      },
+      "in_reply_to_user_id_str": null,
+      "contributors": null,
+      "text": "Aggressive Ponytail #freebandnames",
+      "metadata": {
+        "iso_language_code": "en",
+        "result_type": "recent"
+      },
+      "retweet_count": 0,
+      "in_reply_to_status_id_str": null,
+      "id": 250075927172759552,
+      "geo": null,
+      "retweeted": false,
+      "in_reply_to_user_id": null,
+      "place": null,
+      "user": {
+        "profile_sidebar_fill_color": "DDEEF6",
+        "profile_sidebar_border_color": "C0DEED",
+        "profile_background_tile": false,
+        "name": "Sean Cummings",
+        "profile_image_url": "http://a0.twimg.com/profile_images/2359746665/1v6zfgqo8g0d3mk7ii5s_normal.jpeg",
+        "created_at": "Mon Apr 26 06:01:55 +0000 2010",
+        "location": "LA, CA",
+        "follow_request_sent": null,
+        "profile_link_color": "0084B4",
+        "is_translator": false,
+        "id_str": "137238150",
+        "entities": {
+          "url": {
+            "urls": [
+              {
+                "expanded_url": null,
+                "url": "",
+                "indices": [
+                  0,
+                  0
+                ]
+              }
+            ]
+          },
+          "description": {
+            "urls": [
+
+            ]
+          }
+        },
+        "default_profile": true,
+        "contributors_enabled": false,
+        "favourites_count": 0,
+        "url": null,
+        "profile_image_url_https": "https://si0.twimg.com/profile_images/2359746665/1v6zfgqo8g0d3mk7ii5s_normal.jpeg",
+        "utc_offset": -28800,
+        "id": 137238150,
+        "profile_use_background_image": true,
+        "listed_count": 2,
+        "profile_text_color": "333333",
+        "lang": "en",
+        "followers_count": 70,
+        "protected": false,
+        "notifications": null,
+        "profile_background_image_url_https": "https://si0.twimg.com/images/themes/theme1/bg.png",
+        "profile_background_color": "C0DEED",
+        "verified": false,
+        "geo_enabled": true,
+        "time_zone": "Pacific Time (US & Canada)",
+        "description": "Born 330 Live 310",
+        "default_profile_image": false,
+        "profile_background_image_url": "http://a0.twimg.com/images/themes/theme1/bg.png",
+        "statuses_count": 579,
+        "friends_count": 110,
+        "following": null,
+        "show_all_inline_media": false,
+        "screen_name": "sean_cummings"
+      },
+...see API for more: 
+//https://dev.twitter.com/rest/reference/get/search/tweets
 ```
 
-
-
-## FaceBook API
 
 ## * **DATABASE**
 Tech Stack: Mongo + Mongoose
 ## Model Schema
 
 ```
-// without Auth0
-var userSchema = mongoose.Schema({
-    username: String,
-    password: String,
-    twitter: {
-        posts: [String]
-        commonFriends: [String]
-    },
-    facebook: {
-        posts: [String]
-    }
-    watson: {
-        results: [String] //May need to convert toSchema.Types.Mixed
-    }
-});
-
-// with Auth0
 var userSchema = mongoose.Schema({
     userId: String,
     twitter: {
-        posts: [String]
-        commonFriends: [String]
+        posts: [String],
+        commonFriends: [String],
+        name: String,
+        location: String,
+        screen_name: String,
+        img: String,
+        description: String
     },
     facebook: {
         posts: [String]
-    }
+    },
     watson: {
-        results: [String] //May need to convert toSchema.Types.Mixed
-    }
+        results: [String]
+    },
+    persona:Object,
+    personaGroup:String
 });
-
 //export
 module.exports = mongoose.model('User', userSchema);
 ```
 
 
 
-
-
-
-
-## * **User Authentication**
-
-## Auth0
-
-### **Token Exchange** (template)
-
-begin analysis | type | description
---- | --- | ---
-< PATH > | POST | initiate user crendials
-
-Actions
-
-> <mark>**POST**</mark> / < PATH >
-
-POST Example
-
-``` javascript
-POST / < PATH >
-{
-	"userId" : "< USERID >",
-	"socialType" : "twitter",
-
-}
-```
-
-Response Example
-
-``` javascript
-HTTP/1.1 201 OK
-Content-Type: application/json
-[
- {
-  "someKey: "theKey",
-  "status": "success"
- }
-]
-```
 
