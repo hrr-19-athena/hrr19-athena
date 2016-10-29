@@ -1,7 +1,6 @@
 # Persona
 
-> project description
-  A social network built on personality analysis performed on user's twitter feed. Users get their personality analyzed and a list of other users with similar personality scores to themselves.
+A social network built on personality analysis performed on user's twitter feed. Users get their personality analyzed and a list of other users with similar personality scores to themselves.
 
 ## Table of Contents
 
