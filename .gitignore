@@ -2,6 +2,7 @@ node_modules/
 bower_components/
 *.log
 /_.*
+_.*
 
 npm-debug.log
 .DS_Store
