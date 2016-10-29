@@ -11,14 +11,14 @@ var _ = require('underscore');
 require('dotenv').config();
 
 
-//CREDENTIALS SECTION - Vi
+//CREDENTIALS SECTION
 module.exports.personality_insights = new PersonalityInsightsV3({
   username: keys.watsonPersonality.username,
   password: keys.watsonPersonality.password,
   version_date: '2016-10-20'
 });
 
-
+//PASSES TWITTER FEED INTO WATSON TO GENERATE PERSONALITY ANALYSIS
 module.exports.handleWatsonPersona = function(twitterFeed, userId, res){
   id = userId || 'HackReactor';
   var regex = /[a-zA-Z0-9^/:" "{},]/g;
@@ -42,6 +42,10 @@ module.exports.handleWatsonPersona = function(twitterFeed, userId, res){
   });
 };
 
+//FINDS USERS WITH AN OVERALL SIMILAR SCORE
+  //calculated by creating an array of numbers representing the deviation from the average (0.5) for each of the 5 personality traits
+  //compares the current user's deviation array with that of everyone elses to find the total difference.
+  //below a threshold of 0.5, add that person to the user's group of similar people
 module.exports.findSimilar = function(profile, id) {
   var curUserId = profile.userId || id;
   var profile = profile.persona || profile.personality;
@@ -58,7 +62,6 @@ module.exports.findSimilar = function(profile, id) {
         for(var k = 0; k<curUser.length; k++) {
           userTS.push(0.5 - curUser[k].percentile);
         }
-    //calculate gap for each
         var gap = 0;
         for(var l = 0; l<userTS.length; l++) {
           gap += (curTS[l] - userTS[l]);
@@ -71,8 +74,9 @@ module.exports.findSimilar = function(profile, id) {
     });
 };
 
+//FORMATS THE DATA RETURNED BACK FROM WATSON AND FORMATS IT
+//SAVES THE DATA FOR EACH USER IN DATABASE
 module.exports.massageAndSave = function(profile, query, res){
-  console.log("GENERATING NEW ANALYSIS!!!!");
   var findGroup = function(profile){
     var highest = ["", 0];
     for (var i = 0; i< profile.personality.length; i++) {
