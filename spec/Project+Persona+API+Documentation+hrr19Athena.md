@@ -5,6 +5,18 @@
 
 The PERSONA API defines the messaging API between the server and client; and server and 3rd-party API services
 
+## * **API KEY Reference**
+### Method
+API keys are stored in <mark>.env</mark> in the root folder. This aloww
+
+### Example .env
+
+``` javascript
+
+
+```
+
+
 ## * **Client API Reference**
 
 
