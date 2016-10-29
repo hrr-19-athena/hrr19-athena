@@ -1,3 +1,6 @@
+// This controller is a helper function only used to help populate user in the database locally or via a deployed server
+// Both populateController and twitterController can be refactored for more code reuse.
+
 // Add Persona Controller to feed Twitter data into
 var Persona = require('../persona/personaController.js');
 
@@ -94,6 +97,7 @@ var gatherProfiles = function(seedProfile, postsPerUser, maxPopulation){
             }
           };
           // Need to refactor as a syncrounous call to the database to minimize anomalies.
+          // Limited by rate limits
           Persona.personaData(req);
         });
       }
