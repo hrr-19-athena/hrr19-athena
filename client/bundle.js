@@ -27679,14 +27679,15 @@
 	    key: 'handleGetSimilarUserClick',
 	    value: function handleGetSimilarUserClick() {
 	      var id = this.props.profile.user_id.split('|')[1];
-	      var group = this.props.analysisResult.dominantTrait;
+	      var group = '';
 	      this.props.loadFriends(id, group, 'api/user/similarGroup');
 	    }
 	  }, {
 	    key: 'handleGetGroupClick',
 	    value: function handleGetGroupClick() {
 	      var id = this.props.profile.user_id.split('|')[1];
-	      var group = this.props.analysisResult.dominantTrait;
+	      var group = this.props.analysisResult.data.dominantTrait;
+	      console.log('id and group:', id, group);
 	      this.props.loadFriends(id, group, 'api/user/dominantTraitGroup');
 	    }
 	  }, {

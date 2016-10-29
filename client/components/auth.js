@@ -39,13 +39,14 @@ class Auth extends Component {
 
   handleGetSimilarUserClick() {
     const id = this.props.profile.user_id.split('|')[1]
-    const group = this.props.analysisResult.dominantTrait
+    const group = ''
     this.props.loadFriends(id, group, 'api/user/similarGroup')
   }
 
   handleGetGroupClick() {
     const id = this.props.profile.user_id.split('|')[1]
-    const group = this.props.analysisResult.dominantTrait
+    const group = this.props.analysisResult.data.dominantTrait
+    console.log('id and group:',id,group)
     this.props.loadFriends(id, group, 'api/user/dominantTraitGroup')
   }
 
