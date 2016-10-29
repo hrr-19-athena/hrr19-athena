@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import Scrollchor from 'react-scrollchor' //a module for making hash links work without redirecting to a different page
 import { login } from '../actions'
 import Howitworks from './howitworks'
+const backGround = require('../style/assets/bgcropped.png')
 
 class Login extends Component {
   constructor(props) {
@@ -16,7 +17,7 @@ class Login extends Component {
 
   render() {
     const style = {
-        backgroundColor: '#ED660A',
+        backgroundImage: 'url('+backGround+')',
         backgroundSize: 'cover',
         overflow: 'hidden',
         margin: '0px'
@@ -27,7 +28,6 @@ class Login extends Component {
                style = { style }>
             <div className = 'col-md-7 offset-md-1'
                  style = {{ color: '#ECECEC' }}>
-               <h1 className = 'display-1'>Welcome to Persona</h1>
                <h1 className = 'display-3'>The social network built on who you really are</h1>
                <p className = 'lead'>Join 4 other people on the planet today to discover the tribes you truly belong to</p>
                <Scrollchor to = '#howitworks'
