@@ -2,7 +2,6 @@ var watsonCtrl = require('../watson/watsonController');
 var twitterCtrl = require('../twitter/twitterController');
 var userCtrl = require('../user/userController');
 var Q = require('q');
-
 var User = require('../user/userModel.js');
 
 //check if user saved in db (check for persona data)
@@ -13,13 +12,19 @@ module.exports = {
     //need to handle flow if data exists send back data if not continue w/ function
     var userId = req.query.id;
     var query = req.query;
+<<<<<<< HEAD
 
     // Default number of tweets returned
+=======
+>>>>>>> cleaned personaController.js
     var count = 100;
 
     Q(User.findOne({userId: userId}).exec())
       .then(function(user) {
+<<<<<<< HEAD
         // Found this user
+=======
+>>>>>>> cleaned personaController.js
         if(user) {
           var similarGroup = {};
           watsonCtrl.findSimilar(user)
@@ -57,4 +62,9 @@ module.exports = {
       }
     });
  }
+<<<<<<< HEAD
 };
+=======
+
+};
+>>>>>>> cleaned personaController.js
