@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import { Link } from 'react-router'
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import Auth from '../components/auth'
 import Login from '../components/login'
 const backGround = require('../style/assets/background2.jpg')
@@ -28,20 +29,22 @@ export default class App extends Component {
       height: '65px'
     }
     return (
-      <div style = { style }>
-        <div className = "navbar navbar-full " style = { style2 }>
-          <div className = "">
-            <Link to = '/' className = "navbar-brand">
-              <img src = { logo } style = { imgStyle }/>
-            </Link>
+      <MuiThemeProvider>
+        <div style = { style }>
+          <div className = "navbar navbar-full " style = { style2 }>
+            <div className = "">
+              <Link to = '/' className = "navbar-brand">
+                <img src = { logo } style = { imgStyle }/>
+              </Link>
+            </div>
+          </div>
+
+          <div className="">
+            {this.props.children}
+
           </div>
         </div>
-
-        <div className="">
-          {this.props.children}
-
-        </div>
-      </div>
+      </MuiThemeProvider>
     )
   }
 }

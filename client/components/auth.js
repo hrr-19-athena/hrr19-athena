@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
+import Paper from 'material-ui/Paper'
 import { loadAnalysis, logout, setToken,loadFriends } from '../actions'
 import Auth0Lock from 'auth0-lock'
 import AnalysisView from './analysisView'
@@ -81,9 +82,10 @@ class Auth extends Component {
                 <li><span className="btn btn-info btn-sm" onClick = {this.handleLogoutClick}>Logout</span></li>
               </ul>
             </div>
-            <div className = 'col-md-9' style = {{backgroundColor: '', marginTop: '0px'}} >
+
+            <Paper zDepth = { 5 } className = 'col-md-8' style = {{backgroundColor: '', marginTop: '0px'}} >
               {this.props.children}
-            </div>
+            </Paper>
           </div>
       </div>
     )}

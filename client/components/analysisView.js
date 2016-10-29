@@ -11,8 +11,8 @@ class AnalysisView extends Component {
     const {isAuthenticated, analysisResult } = this.props
     if(analysisResult.data) {
       return (
-        <div>
-          <div className='analysis container' style = {{textAlign: 'center'}}>
+        <div >
+          <div className='analysis container' style = {{textAlign: 'center', paddingTop: '50px'}}>
               <h4 style = {{textAlign: 'center'}}>Your Overall Personality</h4>
               <Chart data = { analysisResult.data.personalityScores.persona }
                      title = { 'Your personality' }
