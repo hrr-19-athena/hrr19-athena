@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import { Link } from 'react-router'
 import Auth from '../components/auth'
 import Login from '../components/login'
+const backGround = require('../style/assets/background2.jpg')
 const logo = require('../style/assets/horizontallogo.png')
 
 
@@ -16,17 +17,22 @@ export default class App extends Component {
     const style = {
       margin: '0px',
       padding: '0px',
-      border: '0px'
+      border: '0px',
+    }
+    const style2 = {
+      backgroundImage: 'url('+backGround+')',
+      backgroundSize: 'cover',
+      overflow: 'hidden'
     }
     const imgStyle = {
-      height: '85px'
+      height: '65px'
     }
     return (
-      <div style={ style }>
-        <div className="navbar navbar-full " style={{ backgroundColor: '#CE93D8'}}>
-          <div className="">
-            <Link to='/' className="navbar-brand">
-              <img src={ logo } style={ imgStyle }/>
+      <div style = { style }>
+        <div className = "navbar navbar-full " style = { style2 }>
+          <div className = "">
+            <Link to = '/' className = "navbar-brand">
+              <img src = { logo } style = { imgStyle }/>
             </Link>
           </div>
         </div>
