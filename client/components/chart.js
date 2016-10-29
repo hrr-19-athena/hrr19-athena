@@ -1,3 +1,4 @@
+//==============render individual chart for personality analysis=====
 import React, { Component } from 'react'
 import { BarHorizontalChart, BarChart } from 'react-d3-basic'
 
@@ -19,7 +20,6 @@ const Chart = (props) => {
         y = d => +d,
         xScale = 'ordinal',
         yTicks = [10, '%']
-  console.log('subCategory title:',props.title)
 
   return (
     <div style = {{textAlign: 'center'}}>

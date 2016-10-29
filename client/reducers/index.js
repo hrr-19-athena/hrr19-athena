@@ -1,3 +1,4 @@
+//========== all the reducers! ==============
 import * as ActionTypes from '../actions'
 import { routerReducer as routing } from 'react-router-redux'
 import { combineReducers } from 'redux'
@@ -23,6 +24,7 @@ function getProfile() {
 
 function auth(state = {
     isAuthenticated: checkTokenExpiry(),
+    isLogging: false,
     profile: getProfile(),
     error: ''
   }, action) {
@@ -30,12 +32,18 @@ function auth(state = {
     case ActionTypes.LOGIN_SUCCESS:
       return Object.assign({}, state, {
         isAuthenticated: true,
+        isLogging: false,
         profile: action.profile,
         error: ''
+      })
+    case ActionTypes.LOGIN_INPROCESS:
+      return Object.assign({}, state, {
+        isLogging: true
       })
     case ActionTypes.LOGIN_ERROR:
       return Object.assign({}, state, {
         isAuthenticated: false,
+        isLogging: false,
         profile: null,
         error: action.error
       })

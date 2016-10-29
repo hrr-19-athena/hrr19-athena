@@ -1,17 +1,18 @@
-import { CALL_API } from '../middleware/api'
+import { CALL_API } from '../middleware/api' // import the sympol from middleware file, which will be used as an innumerable property on the object returned by fetchAnalysis and fetchFriends actions
 import Auth0Lock from 'auth0-lock'
-import Axios from 'axios'
+import Axios from 'axios' //for making http requests
 
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
+export const LOGIN_INPROCESS = 'LOGIN_INPROCESS'
 export const LOGIN_ERROR = 'LOGIN_ERROR'
 
-const options = {
+const options = {  // options for Auth0 lock displayed on log in page
   languageDictionary: {
     emailInputPlaceholder: "me@example.com",
     title: 'Persona'
   },
   theme: {
-    primaryColor: 'purple',
+    primaryColor: '#108DBD',
     logo: '../style/assets/logosmall.png'
   },
   container: 'login-widget-container',
@@ -27,10 +28,18 @@ const options = {
 
 };
 
+//<=========== actions for handling log in and log out ==========>
+
 function loginSuccess(profile) {
   return {
     type: LOGIN_SUCCESS,
     profile
+  }
+}
+
+function loginInProcess() {
+  return {
+    type: LOGIN_INPROCESS
   }
 }
 
@@ -41,7 +50,8 @@ function loginError(err) {
   }
 }
 
-export function login() {
+
+export function login() {  //function for displaying the lock on login page
   Axios('/api/clientcred')
     .then(function(response) {
         const AUTH0_CLIENT_ID=response.data.AUTH0_CLIENT_ID
@@ -51,8 +61,9 @@ export function login() {
       })
 }
 
-export function setToken() {
-  return function(dispatch) {
+export function setToken() {  //function for checking if user is authenticated, called before the auth.js component is mounted to DOM. The way this is implemented below is rather hacky, i.e. grabbing the id_token from the returned url by Auth0 and store it in local storage. But the non-hacky way specified in the Auth0 docs, i.e. using lock.on('authenticated', function(){...}) does not work for some reason
+  return function(dispatch) { //we're able to use the dispatch method to make action-creator functions return dispatch(action) because we used reduxThunk middleware. It's set up in client/index.js. Check https://github.com/gaearon/redux-thunk for details
+      dispatch(loginInProcess())
       const url = window.location.hash
       const start = url.indexOf('&id_token') + 10
       const end = url.indexOf('&token_type')
@@ -61,7 +72,6 @@ export function setToken() {
       .then(function(response) {
           const AUTH0_CLIENT_ID = response.data.AUTH0_CLIENT_ID
           const AUTH0_DOMAIN = response.data.AUTH0_DOMAIN
-          console.log(AUTH0_CLIENT_ID,AUTH0_DOMAIN)
           const lock = new Auth0Lock(AUTH0_CLIENT_ID, AUTH0_DOMAIN,{})
           lock.getProfile(token, function(error, profile) {
               if (error) {
@@ -92,7 +102,7 @@ export function logout() {
   }
 }
 
-// <============ fetch user personality analysis ===========>
+// <============ actions for fetching user personality analysis ===========>
 
 export const ANALYSIS_REQUEST = 'ANALYSIS_REQUEST'
 export const ANALYSIS_SUCCESS = 'ANALYSIS_SUCCESS'
@@ -107,7 +117,7 @@ function fetchAnalysis(id, img, name, screen_name, location, description) {
       location: location,
       description: description
   }
-  return {
+  return { // this object will be passed onto api middleware and the api calls will be made over there
     [CALL_API]: {
       types: [ ANALYSIS_REQUEST, ANALYSIS_SUCCESS, ANALYSIS_FAILURE ],
       endpoint: 'api/user/analysis',
@@ -136,7 +146,7 @@ function fetchFriends(id, group, endpoint) {
       group: group
   }
   return {
-    [CALL_API]: {
+    [CALL_API]: {  // this object will be passed onto api middleware and the api calls will be made over there
       types: [ FRIENDS_REQUEST, FRIENDS_SUCCESS, FRIENDS_FAILURE ],
       endpoint: endpoint,
       authenticatedRequest: true,

@@ -1,3 +1,4 @@
+//========== render the tribe list and group list=============
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 
@@ -12,23 +13,27 @@ class Friends extends Component {
     const image = friend.twitter.img
     const description = friend.twitter.description
     const twitterHandle = `@${friend.twitter.screen_name}`
-
     return (
       <tr key = { name }>
-        <td><image src={ image } height="50px" style = {{borderRadius: '50%'}} /><p>{ ` ${name}` }</p></td>
+        <td>
+          <image src={ image } height="50px" style = {{borderRadius: '50%'}} />
+          <p>{ ` ${name}` }</p>
+        </td>
         <td><span>{ description }</span></td>
         <td><span>{ location }</span></td>
-        <td><span><a target = '_blank' href = {`https://twitter.com/${friend.twitter.screen_name}`}>{ twitterHandle }</a></span></td>
+        <td>
+          <span>
+            <a target = '_blank' href = {`https://twitter.com/${friend.twitter.screen_name}`}>{ twitterHandle }</a>
+          </span>
+        </td>
       </tr>
     )
   }
 
-
   render() {
     const { friendsList } = this.props
-    console.log('friends:', friendsList)
     return (
-      <table className="table table-hover">
+      <table className = "table table-hover">
         <thead>
           <tr>
             <th>Name</th>

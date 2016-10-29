@@ -3,6 +3,7 @@ bower_components/
 *.log
 /_.*
 _.*
+_*
 
 npm-debug.log
 .DS_Store

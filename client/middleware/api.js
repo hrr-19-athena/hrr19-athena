@@ -1,12 +1,9 @@
-import Axios from 'axios';
-
+//======= middleware to make api calls to the backend and return analysis results and similar user lists ============
+import Axios from 'axios'
 export const API_ROOT = 'http://localhost:5000/'
 
 function callApi(endpoint, authenticatedRequest, params) {
-  console.log('params:', params)
-
-  let token = localStorage.getItem('id_token') || null
-
+  const token = localStorage.getItem('id_token') || null
   let config = {}
 
   if(authenticatedRequest) {
@@ -22,12 +19,13 @@ function callApi(endpoint, authenticatedRequest, params) {
 
   // return Axios(API_ROOT + endpoint, config)
   return Axios.get(API_ROOT + endpoint,config)
-    .then(function (response) {
+    .then(function(response) {
       console.log('response',response);
       return response
     })
     .catch(function(err) {
       console.log(err)
+      return (err)
     })
 }
 
@@ -37,7 +35,7 @@ export default store => next => action => {
 
   const callAPI = action[CALL_API]
 
-  if (typeof callAPI === 'undefined') {
+  if (typeof callAPI === 'undefined') { //if the action doesn't have the callAPI property (e.g. actions for login and logout), pass it through to reducer without modification
     return next(action)
   }
 
@@ -62,7 +60,7 @@ export default store => next => action => {
   }
 
   const [ requestType, successType, failureType ] = types
-  next(actionWith({ type: requestType }))
+  next(actionWith({ type: requestType })) //pass the request action to reducer before making the api call
 
   return callApi(endpoint, authenticatedRequest, params).then(
     response => next(actionWith({

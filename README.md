@@ -1,24 +1,20 @@
-# Project Name
-Persona
+# Persona
 
-> project description
-  - a social network built on personality analysis performed on user's twitter feed. Users get their personality analyzed and a list of other users with similar personality scores to themselves.
+A social network built on personality analysis performed on user's twitter feed. Users get their personality analyzed and a list of other users with similar personality scores to themselves.
+
+## Table of Contents
+
+1. [Team](#team)
+1. [Usage](#Usage)
+1. [Requirements](#requirements)
+1. [Development](#development)
+    1. [Installing Dependencies](#installing-dependencies)
 
 ## Team
 
   - __Product Owner__: Vi Vo
   - __Scrum Master__: Natasha Che
   - __Development Team Members__: Nam Huynh, Michael Oliver
-
-## Table of Contents
-
-1. [Usage](#Usage)
-1. [Requirements](#requirements)
-1. [Development](#development)
-    1. [Installing Dependencies](#installing-dependencies)
-    1. [Tasks](#tasks)
-1. [Team](#team)
-1. [Contributing](#contributing)
 
 ## Usage
 
@@ -47,13 +43,4 @@ From within the root directory:
 npm install
 ```
 
-### Roadmap
 
-View the project roadmap
-Implement React Node Isomorphic Javascript
-Add Facebook API
-
-
-## Contributing
-
-See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines.
