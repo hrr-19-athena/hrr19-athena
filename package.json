@@ -48,6 +48,7 @@
     "react-redux": "^4.0.0",
     "react-router": "^2.0.1",
     "react-router-redux": "^4.0.6",
+    "react-scrollchor": "^2.1.4",
     "redux": "^3.0.4",
     "redux-thunk": "^2.1.0",
     "request": "^2.75.0",

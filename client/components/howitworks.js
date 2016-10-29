@@ -1,12 +1,18 @@
 import React, { Component} from 'react'
-
+const backGround = require('../style/assets/background2.jpg')
 
 export default class Howitworks extends Component {
+
   render() {
+    const style = {
+        backgroundImage: 'url('+backGround+')',
+        backgroundSize: 'cover',
+        overflow: 'hidden',
+        margin: '0px'
+    }
     return (
-          <div className='row jumbotron' style={{backgroundColor: 'white'}}>
+          <div id = 'howitworks' className = ' jumbotron' style = { style }>
             <h1 className='display-3' style={{textAlign: 'center'}}>How It Works</h1>
-            <a href='#howitworks'></a>
             <br></br>
             <div className="col-sm-6 col-md-4">
               <div className = "thumbnail" style = {{textAlign: 'center'}}>
