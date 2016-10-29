@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 
+// Define User Schema
 var userSchema = mongoose.Schema({
     userId: String,
     twitter: {
@@ -10,7 +11,6 @@ var userSchema = mongoose.Schema({
         screen_name: String,
         img: String,
         description: String
-        // group: Compasseionate, 5 groups with dominatnt trait
     },
     facebook: {
         posts: [String]
@@ -20,10 +20,7 @@ var userSchema = mongoose.Schema({
     },
     persona:Object,
     personaGroup:String
-    // persona: {
-    //     group: String,
-    //     personalityAnalysis: String //BIG 5 only for now
-    // }
 });
 
+// Export User Model
 module.exports = mongoose.model('User', userSchema);
