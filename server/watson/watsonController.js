@@ -1,5 +1,5 @@
 var PersonalityInsightsV3 = require('watson-developer-cloud/personality-insights/v3');
-var keys = require('../api-services.js');
+//var keys = require('../api-services.js');
 var UserModel = require('../user/userModel.js');
 var Q = require('q');
 var findUser = Q.nbind(UserModel.findOne, UserModel);
@@ -13,8 +13,8 @@ require('dotenv').config();
 
 //CREDENTIALS SECTION
 module.exports.personality_insights = new PersonalityInsightsV3({
-  username: keys.watsonPersonality.username,
-  password: keys.watsonPersonality.password,
+  username: process.env.WAT_PERS_USRN,
+  password: process.env.WAT_PERS_PASS,
   version_date: '2016-10-20'
 });
 
