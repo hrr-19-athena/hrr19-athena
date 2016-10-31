@@ -108,7 +108,7 @@ var gatherProfiles = function(seedProfile, postsPerUser, maxPopulation){
 // Used by the API routes to generate new users with a seed Profile
 module.exports.populate = function(seedProfiles, postsPerUser, maxPopulation){
   var count = 0;
-  var maxPopulation = 10;
+  var maxPopulation = 1;
   var postsPerUser = 100;
   var seedProfiles = ['@VictoriasSecret'];
 
