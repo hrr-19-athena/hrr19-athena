@@ -7,6 +7,7 @@ import Divider from 'material-ui/Divider'
 import ReactTooltip from 'react-tooltip'
 import { loadAnalysis, logout, setToken,loadFriends } from '../actions'
 import AnalysisView from './analysisView'
+import Home from './home'
 
 class Auth extends Component { //need this for redirecting user after logging out (line 37)
   static contextTypes = {
