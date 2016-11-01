@@ -110,7 +110,7 @@ module.exports.populate = function(seedProfiles, postsPerUser, maxPopulation){
   var count = 0;
   var maxPopulation = 1;
   var postsPerUser = 100;
-  var seedProfiles = ['@coldplay'];
+  var seedProfiles = ['@Coheed'];
 
   // Allows the loading of an array of diverse seed profiles.
   seedProfiles.forEach(function(seedProfile){
