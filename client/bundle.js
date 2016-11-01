@@ -91711,7 +91711,7 @@
 	            _react2.default.createElement(
 	              'div',
 	              { className: 'thumbnail' },
-	              _react2.default.createElement('image', { className: 'media-object watson', src: watson, style: style }),
+	              _react2.default.createElement('img', { className: 'media-object watson', src: watson, style: style }),
 	              _react2.default.createElement(
 	                'div',
 	                { className: 'caption' },
@@ -91786,7 +91786,8 @@
 	                      role: 'button' },
 	                    'Analyze your Personality!'
 	                  )
-	                )
+	                ),
+	                _react2.default.createElement('br', null)
 	              )
 	            )
 	          )
@@ -92431,7 +92432,7 @@
 	        _react2.default.createElement(
 	          'td',
 	          null,
-	          _react2.default.createElement('image', { src: image, height: '50px', style: { borderRadius: '50%' } }),
+	          _react2.default.createElement('img', { src: image, height: '50px', style: { borderRadius: '50%' } }),
 	          _react2.default.createElement(
 	            'p',
 	            null,
