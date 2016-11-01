@@ -16,7 +16,7 @@ class Friends extends Component {
     return (
       <tr key = { name }>
         <td>
-          <image src={ image } height="50px" style = {{borderRadius: '50%'}} />
+          <img src={ image } height="50px" style = {{borderRadius: '50%'}} />
           <p>{ ` ${name}` }</p>
         </td>
         <td><span>{ description }</span></td>

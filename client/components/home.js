@@ -31,7 +31,7 @@ class Home extends Component {
         <div className="row">
           <div className="col-sm-6 col-md-11" style = {{paddingLeft: '5em'}}>
             <div className="thumbnail">
-              <image className = "media-object watson" src = { watson } style = { style }></image>
+              <img className = "media-object watson" src = { watson } style = { style }></img>
               <div className="caption">
                 <h3>What your personality analysis entails: </h3>
                   <h6>Big Five personality characteristics represent the most widely used model for generally describing how a person engages with the world. The model includes five primary dimensions:</h6>
@@ -48,6 +48,7 @@ class Home extends Component {
                         Analyze your Personality!
                   </Link>
                 </p>
+                <br></br>
               </div>
             </div>
           </div>
