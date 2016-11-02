@@ -8,7 +8,8 @@ export default class Howitworks extends Component {
         backgroundImage: 'url('+backGround+')',
         backgroundSize: 'cover',
         overflow: 'hidden',
-        margin: '0px'
+        paddingTop: '1em',
+        marginBottom: '0em'
     }
     return (
           <div id = 'howitworks'

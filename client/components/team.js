@@ -3,11 +3,10 @@ import React, { Component} from 'react'
 export default class Team extends Component {
   render() {
     const style = {
-        backgroundImage: 'url('+backGround+')',
         backgroundSize: 'cover',
         overflow: 'hidden',
         margin: '0px',
-        PaddingTop: '1em'
+        paddingTop: '0.5em'
     }
     const members = [
       {
@@ -40,7 +39,7 @@ export default class Team extends Component {
                className = ' jumbotron'
                style = { style }>
             <h1 className='display-3'
-                style={{ textAlign: 'center' }}>
+                style={{ textAlign: 'center', paddingBottom:'0.5em' }}>
                 Development Team
             </h1>
             <br></br>
@@ -51,14 +50,15 @@ export default class Team extends Component {
                          style = {{ textAlign: 'center' }}>
                       <a href = { member.linkedin }>
                         <img src = { member.image }
-                             height="90px"
+                             height="200px"
                              style = {{borderRadius: '50%'}}></img>
                       </a>
+                      <br></br>
                       <div className = "caption">
                         <h3>{ member.name }</h3>
                         <div>
-                        <a href = { member.linkedin }><i className = "fa fa-linkedin fa-2x" aria-hidden = "true"></i>&nbsp;&nbsp;</a>
-                        <a href = { member.github }><i className = "fa fa-github fa-2x" aria-hidden = "true"></i></a>
+                        <a href = { member.linkedin }><i className = "fa fa-linkedin fa-lg" aria-hidden = "true"></i>&nbsp;&nbsp;</a>
+                        <a href = { member.github }><i className = "fa fa-github fa-lg" aria-hidden = "true"></i></a>
                         </div>
                       </div>
                     </div>
