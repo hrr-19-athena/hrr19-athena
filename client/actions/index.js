@@ -67,7 +67,17 @@ export function setToken() {  //function for checking if user is authenticated, 
       const url = window.location.hash
       const start = url.indexOf('&id_token') + 10
       const end = url.indexOf('&token_type')
-      const token = localStorage.getItem('id_token') || url.substring(start,end)
+      var jwt = localStorage.getItem('id_token')
+      if(jwt) {
+        var jwtExp = jwtDecode(jwt).exp
+        var expiryDate = new Date(0)
+        expiryDate.setUTCSeconds(jwtExp)
+      }
+      if(jwt && (new Date() < expiryDate)) {
+        var token = localStorage.getItem('id_token')
+      } else {
+        var token = url.substring(start,end)
+      }
       Axios('/api/clientcred')
       .then(function(response) {
           const AUTH0_CLIENT_ID = response.data.AUTH0_CLIENT_ID

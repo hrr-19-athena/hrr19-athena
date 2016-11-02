@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import Scrollchor from 'react-scrollchor' //a module for making hash links work without redirecting to a different page
 import { login } from '../actions'
 import Howitworks from './howitworks'
+import Team from './team'
 const backGround = require('../style/assets/bgcropped.png')
 
 class Login extends Component {
@@ -41,6 +42,7 @@ class Login extends Component {
               className=''></div>
           </div>
           <Howitworks />
+          <Team />
         </div>
     )
   }
