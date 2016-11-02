@@ -1,3 +1,4 @@
+const jwtDecode = require('jwt-decode')
 import { CALL_API } from '../middleware/api' // import the sympol from middleware file, which will be used as an innumerable property on the object returned by fetchAnalysis and fetchFriends actions
 import Auth0Lock from 'auth0-lock'
 import Axios from 'axios' //for making http requests
