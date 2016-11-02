@@ -44,35 +44,27 @@ export default class Team extends Component {
                 Development Team
             </h1>
             <br></br>
-            <div className="col-sm-6 col-md-4">
-              <div className = "thumbnail"
-                   style = {{ textAlign: 'center' }}>
-                <p><i className = "fa fa-link fa-5x"></i></p>
-                <div className = "caption">
-                  <h3>Link your social accounts</h3>
-                  <p>Sign up for Persona and have your twitter, facebook, and LinkedLin accounts linked to Persona</p>
-                </div>
-              </div>
-            </div>
-            <div className = "col-sm-6 col-md-4">
-              <div className = "thumbnail"
-                   style = {{ textAlign: 'center' }}>
-                <p><i className = "fa fa-bar-chart fa-5x"></i></p>
-                <div className = "caption">
-                  <h3>Analyze your personality</h3>
-                  <p>Persona's smart robots will look at your posts on social media and run an analysis on your personality and values</p>
-                </div>
-              </div>
-            </div>
-            <div className = "col-sm-6 col-md-4">
-              <div className = "thumbnail" style = {{ textAlign: 'center' }}>
-                <p><i className = "fa fa-users fa-5x"></i></p>
-                <div className = "caption">
-                  <h3>Find true friends</h3>
-                  <p>We will then introduce you to other people in your area who share similar personality traits and value systems with you.</p>
-                </div>
-              </div>
-            </div>
+            { members.map(member => {
+              return (
+                  <div className="col-sm-6 col-md-3">
+                    <div className = "thumbnail"
+                         style = {{ textAlign: 'center' }}>
+                      <a href = { member.linkedin }>
+                        <img src = { member.image }
+                             height="90px"
+                             style = {{borderRadius: '50%'}}></img>
+                      </a>
+                      <div className = "caption">
+                        <h3>{ member.name }</h3>
+                        <div>
+                        <a href = { member.linkedin }><i className = "fa fa-linkedin fa-2x" aria-hidden = "true"></i>&nbsp;&nbsp;</a>
+                        <a href = { member.github }><i className = "fa fa-github fa-2x" aria-hidden = "true"></i></a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+              )
+            })}
           </div>
     )
   }
